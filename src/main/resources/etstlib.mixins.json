@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "com.c2h6s.etstlib.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.7",
+  "refmap": "etstlib.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "GuiGraphicsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

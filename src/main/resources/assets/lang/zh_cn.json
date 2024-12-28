@@ -1,0 +1,15 @@
+{
+  "tooltip.etstlib.energy_storage": "能量存储",
+  "tooltip.etstlib.max_transfer": "能量传输",
+  "tooltip.etstlib.air": "压缩空气",
+  "tooltip.etstlib.base_volume": "基础压缩空气容量",
+  "tooltip.etstlib.max_pressure": "最大压力",
+
+  "modifier.etstlib.forge_energy_basic": "基础能量存储",
+  "modifier.etstlib.forge_energy_basic.flavor": "点亮一颗小电容",
+  "modifier.etstlib.forge_energy_basic.description":"工具获得每级10kFE存储和1kFE/t最大传输。",
+
+  "modifier.etstlib.forge_energy_basic": "基础压缩空气存储",
+  "modifier.etstlib.forge_energy_basic.flavor": "点亮一颗小电容",
+  "modifier.etstlib.forge_energy_basic.description":"工具获得每级10kFE存储和1kFE/t最大传输。"
+}
