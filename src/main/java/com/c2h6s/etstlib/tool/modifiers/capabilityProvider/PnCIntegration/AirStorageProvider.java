@@ -1,6 +1,7 @@
 package com.c2h6s.etstlib.tool.modifiers.capabilityProvider.PnCIntegration;
 
 import com.c2h6s.etstlib.EtSTLib;
+import com.c2h6s.etstlib.register.EtSTLibToolStat;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.pressure.IPressurizableItem;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerItem;
@@ -15,13 +16,13 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
 import java.util.function.Supplier;
 
+import static com.c2h6s.etstlib.register.EtSTLibToolStat.*;
+
 public class AirStorageProvider implements ToolCapabilityProvider.IToolCapabilityProvider, IPressurizableItem {
     public final Supplier<? extends IToolStackView> tool;
     public final LazyOptional<IPressurizableItem> capOptional;
     public final float maxPressure;
     public final LazyOptional<IAirHandlerItem> airHandlerItemLazyOptional;
-    public static final ResourceLocation LOCATION_BASE_VOLUME =new ResourceLocation(EtSTLib.MODID,"base_volume");
-    public static final ResourceLocation LOCATION_MAX_PRESSURE =new ResourceLocation(EtSTLib.MODID,"max_pressure");
     public static final ResourceLocation LOCATION_AIR_STORAGE =new ResourceLocation(EtSTLib.MODID,"air");
 
     public final AirHandlerItemStack airHandlerItemStack;
@@ -30,7 +31,7 @@ public class AirStorageProvider implements ToolCapabilityProvider.IToolCapabilit
     public AirStorageProvider(ItemStack stack, Supplier<? extends IToolStackView> tool) {
         this.tool = tool;
         this.capOptional = LazyOptional.of(()->this);
-        this.maxPressure =tool.get().getVolatileData().getInt(LOCATION_MAX_PRESSURE);
+        this.maxPressure =tool.get().getStats().get(MAX_PRESSURE);
         this.airHandlerItemStack =new AirHandlerItemStack(new ItemStack(ModItems.REINFORCED_AIR_CANISTER.get())){
             @Override
             public int getAir() {
@@ -48,7 +49,7 @@ public class AirStorageProvider implements ToolCapabilityProvider.IToolCapabilit
 
             @Override
             public int getBaseVolume() {
-                return tool.get().getVolatileData().getInt(LOCATION_BASE_VOLUME);
+                return tool.get().getStats().getInt(BASIC_AIR_CAPACITY);
             }
 
             @Override
@@ -67,7 +68,7 @@ public class AirStorageProvider implements ToolCapabilityProvider.IToolCapabilit
 
             @Override
             public float maxPressure() {
-                return tool.get().getVolatileData().getFloat(LOCATION_MAX_PRESSURE);
+                return tool.get().getStats().get(MAX_PRESSURE);
             }
         };
         this.airHandlerItemLazyOptional =LazyOptional.of(()->this.airHandlerItemStack);
@@ -75,7 +76,7 @@ public class AirStorageProvider implements ToolCapabilityProvider.IToolCapabilit
 
     @Override
     public <T> LazyOptional<T> getCapability(IToolStackView iToolStackView, Capability<T> capability) {
-        if (tool.get().getVolatileData().getInt(LOCATION_BASE_VOLUME)>0) {
+        if (tool.get().getStats().getInt(BASIC_AIR_CAPACITY)>0) {
             return PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY.orEmpty(capability,airHandlerItemLazyOptional);
         }
         return LazyOptional.empty();
@@ -83,7 +84,7 @@ public class AirStorageProvider implements ToolCapabilityProvider.IToolCapabilit
 
     @Override
     public int getBaseVolume() {
-        return tool.get().getVolatileData().getInt(LOCATION_BASE_VOLUME);
+        return tool.get().getStats().getInt(BASIC_AIR_CAPACITY);
     }
 
     @Override
@@ -112,7 +113,7 @@ public class AirStorageProvider implements ToolCapabilityProvider.IToolCapabilit
     }
 
     public static float getPressure(IToolStackView tool){
-        return (float) tool.getPersistentData().getInt(LOCATION_AIR_STORAGE) /tool.getVolatileData().getInt(LOCATION_BASE_VOLUME);
+        return (float) tool.getPersistentData().getInt(LOCATION_AIR_STORAGE) /tool.getStats().getInt(BASIC_AIR_CAPACITY);
     }
 
     public static int getAir(IToolStackView tool){
@@ -131,10 +132,10 @@ public class AirStorageProvider implements ToolCapabilityProvider.IToolCapabilit
     }
 
     public static int getBaseVolume(IToolStackView tool){
-        return tool.getVolatileData().getInt(LOCATION_BASE_VOLUME);
+        return tool.getStats().getInt(BASIC_AIR_CAPACITY);
     }
 
     public static float getMaxPressure(IToolStackView tool){
-        return tool.getVolatileData().getInt(LOCATION_MAX_PRESSURE);
+        return tool.getStats().getInt(MAX_PRESSURE);
     }
 }

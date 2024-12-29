@@ -1,0 +1,12 @@
+{
+  "modifier.etstlib": {
+    "energy_shield": "#FF3C00",
+    "radiation_shielding": "#86BF79",
+    "energy_loaded": "#FF3C00",
+    "applied_fixing": "#C5FFFB",
+    "atomic_decompose": "#5D2670"
+  },
+  "material.etstlib": {
+
+  }
+}

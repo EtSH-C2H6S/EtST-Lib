@@ -1,0 +1,31 @@
+{
+  "tooltip.etstlib.energy_storage": "能量存储",
+  "tooltip.etstlib.max_transfer": "能量传输",
+  "tooltip.etstlib.air": "压缩空气存储",
+  "tooltip.etstlib.base_volume": "基础压缩空气容量",
+  "tooltip.etstlib.max_pressure": "压力",
+
+  "modifier.etstlib.anti_stun_glasses": "防眩目镜",
+  "modifier.etstlib.anti_stun_glasses.flavor": "指的是防止屏幕前的你晕眩",
+  "modifier.etstlib.anti_stun_glasses.description":"取消受伤时的屏幕抖动。",
+
+  "modifier.etstlib.energy_shield": "能量护盾",
+  "modifier.etstlib.energy_shield.flavor": "谁会不喜欢一面能量力场组成的护盾呢？",
+  "modifier.etstlib.energy_shield.description":"消耗FE格挡伤害，每10kFE格挡1伤害。若装备的当前电量无法完全格挡，则以一半的FE效率消耗全身带有此属性的装备的能量格挡。",
+
+  "modifier.etstlib.radiation_shielding": "辐射防护",
+  "modifier.etstlib.radiation_shielding.flavor": "拜拜辐射",
+  "modifier.etstlib.radiation_shielding.description":"每级提供10%的辐射防护",
+
+  "modifier.etstlib.energy_loaded": "能量装载",
+  "modifier.etstlib.energy_loaded.flavor": "电动工具！",
+  "modifier.etstlib.energy_loaded.description":"你的工具会优先消耗能量存储而非耐久。",
+
+  "modifier.etstlib.applied_fixing": "Fluix能量修复",
+  "modifier.etstlib.applied_fixing.flavor": "如同水晶般生长",
+  "modifier.etstlib.applied_fixing.description":"置于AE2充能器中时缓缓修复自身。",
+
+  "modifier.etstlib.atomic_decompose": "原子分解",
+  "modifier.etstlib.atomic_decompose.flavor": "原子级解离！",
+  "modifier.etstlib.atomic_decompose.description":"你的挖掘速度固定为工具的挖掘速度，无视挖掘等级。"
+}

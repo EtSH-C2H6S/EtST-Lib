@@ -6,7 +6,7 @@ public class MathUtil {
         int b =a/3;
         switch (b){
             default-> {
-                return String.valueOf(amount);
+                return amount + " ";
             }
             case 1->{
                 return String.format("%.2f",(float)amount/1E+3)+" k";

@@ -20,8 +20,8 @@ public class GuiGraphicsMixin {
     public void renderItemDecorations(Font p_282005_, ItemStack stack, int x, int y, String p_282803_, CallbackInfo ci) {
         GuiGraphics graphics = (GuiGraphics) (Object)this;
         if (stack.getItem() instanceof IModifiable) {
-            //draw Pressure Bar
             ToolStack tool = ToolStack.from(stack);
+            //draw Pressure Bar
             boolean showPressureBar =false;
             int PressureBarWidth =0;
             ModifierEntry entry0 = null;
@@ -36,9 +36,10 @@ public class GuiGraphicsMixin {
                 PressureBarWidth = entry0.getHook(EtSTLibHooks.PRESSURE_BAR).getPressureBarWidth(tool,entry0);
             }
             if (showPressureBar) {
-                graphics.fill(RenderType.guiOverlay(),x + 2, y + 12, x + 15, y + 13, 0xFF000000);
-                graphics.fill(RenderType.guiOverlay(),x + 2, y + 12, x + 2 + PressureBarWidth, y + 13, 0xFFC9C9C9);
+                graphics.fill(RenderType.guiOverlay(),x + 2, y + 12 , x + 15, y + 13 , 0xFF000000);
+                graphics.fill(RenderType.guiOverlay(),x + 2, y + 12 , x + 2 + PressureBarWidth, y + 13 , 0xFFC9C9C9);
             }
+
 
             //draw FE bar
             boolean showFEBar =false;
@@ -58,8 +59,8 @@ public class GuiGraphicsMixin {
                 if (!showPressureBar){
                     graphics.fill(RenderType.guiOverlay(),x + 2, y + 12, x + 15, y + 13, 0xFF000000);
                 }
-                graphics.fill(RenderType.guiOverlay(),x + 2, y + 11, x + 15, y + 12, 0xFF000000);
-                graphics.fill(RenderType.guiOverlay(),x + 2, y + 11, x + 2 + FEBarWidth, y + 12, 0xFFFF3000);
+                graphics.fill(RenderType.guiOverlay(),x + 2, y + 11, x + 15, y + 12 , 0xFF000000);
+                graphics.fill(RenderType.guiOverlay(),x + 2, y + 11, x + 2 + FEBarWidth, y + 12 , 0xFFFF3000);
             }
         }
     }

@@ -1,7 +1,6 @@
 package com.c2h6s.etstlib.tool.modifiers.capabilityProvider;
 
 import com.c2h6s.etstlib.EtSTLib;
-import com.c2h6s.etstlib.register.EtSTLibToolStat;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
@@ -14,12 +13,13 @@ import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
 import java.util.function.Supplier;
 
+import static com.c2h6s.etstlib.register.EtSTLibToolStat.*;
+
 public class FEStorageProvider implements ToolCapabilityProvider.IToolCapabilityProvider,IEnergyStorage {
     public final Supplier<? extends IToolStackView> tool;
     public final LazyOptional<IEnergyStorage> capOptional;
 
     public static final ResourceLocation LOCATION_ENERGY_STORAGE =new ResourceLocation(EtSTLib.MODID,"energy_storage");
-    public static final ResourceLocation LOCATION_MAX_ENERGY =new ResourceLocation(EtSTLib.MODID,"max_energy");
 
     public FEStorageProvider(ItemStack stack,Supplier<? extends IToolStackView> toolStack) {
         this.tool = toolStack;
@@ -28,24 +28,12 @@ public class FEStorageProvider implements ToolCapabilityProvider.IToolCapability
 
     @Override
     public int receiveEnergy(int amount, boolean simulate) {
-        amount = Math.min(amount,this.tool.get().getStats().getInt(EtSTLibToolStat.MAX_TRANSFER));
-        amount = Math.min(this.getMaxEnergyStored()-this.getEnergyStored(),amount);
-        if (!simulate){
-            ModDataNBT nbt = this.tool.get().getPersistentData();
-            nbt.putInt(LOCATION_ENERGY_STORAGE,this.getEnergyStored()+amount);
-        }
-        return amount;
+        return receiveEnergy(this.tool.get(),amount,simulate,false);
     }
 
     @Override
     public int extractEnergy(int amount, boolean simulate) {
-        amount = Math.min(amount,this.tool.get().getStats().getInt(EtSTLibToolStat.MAX_TRANSFER));
-        amount = Math.min(this.getEnergyStored(),amount);
-        if (!simulate){
-            ModDataNBT nbt = this.tool.get().getPersistentData();
-            nbt.putInt(LOCATION_ENERGY_STORAGE,this.getEnergyStored()-amount);
-        }
-        return amount;
+        return extractEnergy(this.tool.get(),amount,simulate,false);
     }
 
     @Override
@@ -55,17 +43,17 @@ public class FEStorageProvider implements ToolCapabilityProvider.IToolCapability
 
     @Override
     public int getMaxEnergyStored() {
-        return this.tool.get().getVolatileData().getInt(LOCATION_MAX_ENERGY);
+        return this.tool.get().getStats().getInt(MAX_ENERGY);
     }
 
     @Override
     public boolean canExtract() {
-        return this.tool.get().getStats().getInt(EtSTLibToolStat.MAX_TRANSFER)>0;
+        return getMaxTransfer(tool.get())>0;
     }
 
     @Override
     public boolean canReceive() {
-        return this.tool.get().getStats().getInt(EtSTLibToolStat.MAX_TRANSFER)>0;
+        return getMaxTransfer(tool.get())>0;
     }
 
     public static int getEnergy(IToolStackView tool){
@@ -73,15 +61,39 @@ public class FEStorageProvider implements ToolCapabilityProvider.IToolCapability
     }
 
     public static int getMaxEnergy(IToolStackView tool) {
-        return tool.getVolatileData().getInt(LOCATION_MAX_ENERGY);
+        return tool.getStats().getInt(MAX_ENERGY);
     }
 
     public static int getMaxTransfer(IToolStackView tool){
-        return tool.getStats().getInt(EtSTLibToolStat.MAX_TRANSFER);
+        return tool.getStats().getInt(MAX_TRANSFER);
+    }
+
+    public static int extractEnergy(IToolStackView tool,int amount,boolean simulate,boolean bypassMaxTransfer){
+        if (!bypassMaxTransfer) {
+            amount = Math.min(amount, getMaxTransfer(tool));
+        }
+        amount = Math.min(getEnergy(tool),amount);
+        if (!simulate){
+            ModDataNBT nbt = tool.getPersistentData();
+            nbt.putInt(LOCATION_ENERGY_STORAGE,getEnergy(tool)-amount);
+        }
+        return amount;
+    }
+
+    public static int receiveEnergy(IToolStackView tool,int amount,boolean simulate,boolean bypassMaxTransfer){
+        if (!bypassMaxTransfer) {
+            amount = Math.min(amount, getMaxTransfer(tool));
+        }
+        amount = Math.min(getMaxEnergy(tool) - getEnergy(tool),amount);
+        if (!simulate){
+            ModDataNBT nbt = tool.getPersistentData();
+            nbt.putInt(LOCATION_ENERGY_STORAGE,getEnergy(tool)+amount);
+        }
+        return amount;
     }
 
     @Override
     public <T> LazyOptional<T> getCapability(IToolStackView tool, Capability<T> capability) {
-        return tool.getVolatileData().getInt(LOCATION_MAX_ENERGY)>0?ForgeCapabilities.ENERGY.orEmpty(capability, this.capOptional):LazyOptional.empty();
+        return tool.getStats().getInt(MAX_ENERGY)>0?ForgeCapabilities.ENERGY.orEmpty(capability, this.capOptional):LazyOptional.empty();
     }
 }

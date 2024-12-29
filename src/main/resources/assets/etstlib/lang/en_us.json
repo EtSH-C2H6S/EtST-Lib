@@ -1,0 +1,31 @@
+{
+  "tooltip.etstlib.energy_storage": "Energy Storage",
+  "tooltip.etstlib.max_transfer": "Max FE Transfer",
+  "tooltip.etstlib.air": "Air Storage",
+  "tooltip.etstlib.base_volume": "Base Air Volume",
+  "tooltip.etstlib.max_pressure": "Pressure",
+
+  "modifier.etstlib.anti_stun_glasses": "Anti Stun Glasses",
+  "modifier.etstlib.anti_stun_glasses.flavor": "Prevent you from stunning",
+  "modifier.etstlib.anti_stun_glasses.description":"Cancel hurt shaking and field of view effect.",
+
+  "modifier.etstlib.energy_shield": "Energy Shield",
+  "modifier.etstlib.energy_shield.flavor": "Built-in force field generator.",
+  "modifier.etstlib.energy_shield.description":"Blocks damage using FE,drains 10kFE per damage.If energy storage from one armor is not sufficient,then consume 2x energy from all the armor containing this modifier to cancel damage.",
+
+  "modifier.etstlib.radiation_shielding": "Radiation Shielding",
+  "modifier.etstlib.radiation_shielding.flavor": "Rad,rad,go away!",
+  "modifier.etstlib.radiation_shielding.description":"Gains 10% radiation immunity each level.",
+
+  "modifier.etstlib.energy_loaded": "Energy Loaded",
+  "modifier.etstlib.energy_loaded.flavor": "Electric powered tool!",
+  "modifier.etstlib.energy_loaded.description":"Your tool consumes energy instead of durability when is powered.",
+
+  "modifier.etstlib.applied_fixing": "Applied Energy Fixing",
+  "modifier.etstlib.applied_fixing.flavor": "Growing as crystals.",
+  "modifier.etstlib.applied_fixing.description":"Self-repairs when placed inside AE2 charger.",
+
+  "modifier.etstlib.atomic_decompose": "Atom Decompose",
+  "modifier.etstlib.atomic_decompose.flavor": "Atom-grade decomposition.",
+  "modifier.etstlib.atomic_decompose.description":"Fix your mining speed to your tool's mining speed.Ignores harvest tier."
+}

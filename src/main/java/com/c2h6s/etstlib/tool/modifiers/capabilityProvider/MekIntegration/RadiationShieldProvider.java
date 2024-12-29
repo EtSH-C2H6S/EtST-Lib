@@ -1,10 +1,9 @@
 package com.c2h6s.etstlib.tool.modifiers.capabilityProvider.MekIntegration;
 
 import com.c2h6s.etstlib.EtSTLib;
+import com.c2h6s.etstlib.register.EtSTLibToolStat;
 import mekanism.api.radiation.capability.IRadiationShielding;
 import mekanism.common.capabilities.Capabilities;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -16,7 +15,6 @@ import java.util.function.Supplier;
 public class RadiationShieldProvider implements ToolCapabilityProvider.IToolCapabilityProvider, IRadiationShielding {
     public final Supplier<? extends IToolStackView> tool;
     public final LazyOptional<IRadiationShielding> capOptional;
-    public static final ResourceLocation LOCATION_RADIATION_SHIELDING = EtSTLib.getResourceLocation("radiation_shielding");
     public RadiationShieldProvider(ItemStack stack, Supplier<? extends IToolStackView> toolStack){
         tool =toolStack;
         capOptional =LazyOptional.of(()->this);
@@ -24,7 +22,7 @@ public class RadiationShieldProvider implements ToolCapabilityProvider.IToolCapa
 
     @Override
     public double getRadiationShielding() {
-        return this.tool.get().getVolatileData().get(LOCATION_RADIATION_SHIELDING, CompoundTag::getDouble);
+        return this.tool.get().getStats().get(EtSTLibToolStat.RADIATION_PROTECT);
     }
 
     @Override

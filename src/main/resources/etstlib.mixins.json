@@ -5,8 +5,13 @@
   "minVersion": "0.7",
   "refmap": "etstlib.refmap.json",
   "mixins": [
+    "ItemStackMixin",
+    "AEMixin.ChargerBlockEntityMixin",
+    "AEMixin.ChargerRecipesMixin"
   ],
   "client": [
+    "AbstractClientPlayerMixin",
+    "GameRendererMixin",
     "GuiGraphicsMixin"
   ],
   "injectors": {
