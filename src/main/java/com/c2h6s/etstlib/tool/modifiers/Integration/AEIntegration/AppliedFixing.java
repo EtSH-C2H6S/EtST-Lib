@@ -1,4 +1,4 @@
-package com.c2h6s.etstlib.tool.modifiers.Combat.AEIntegration;
+package com.c2h6s.etstlib.tool.modifiers.Integration.AEIntegration;
 
 import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;
 

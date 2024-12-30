@@ -1,4 +1,4 @@
-package com.c2h6s.etstlib.tool.modifiers.Combat.MekIntegration;
+package com.c2h6s.etstlib.tool.modifiers.Integration.MekIntegration;
 
 import com.c2h6s.etstlib.register.EtSTLibToolStat;
 import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;

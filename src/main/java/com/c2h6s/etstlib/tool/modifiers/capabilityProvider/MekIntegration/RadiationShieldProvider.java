@@ -1,6 +1,5 @@
 package com.c2h6s.etstlib.tool.modifiers.capabilityProvider.MekIntegration;
 
-import com.c2h6s.etstlib.EtSTLib;
 import com.c2h6s.etstlib.register.EtSTLibToolStat;
 import mekanism.api.radiation.capability.IRadiationShielding;
 import mekanism.common.capabilities.Capabilities;

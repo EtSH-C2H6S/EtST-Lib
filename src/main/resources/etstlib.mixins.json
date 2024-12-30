@@ -6,8 +6,10 @@
   "refmap": "etstlib.refmap.json",
   "mixins": [
     "ItemStackMixin",
+    "LivingEntityMixin",
     "AEMixin.ChargerBlockEntityMixin",
-    "AEMixin.ChargerRecipesMixin"
+    "AEMixin.ChargerRecipesMixin",
+    "TconMixin.ToolAttackUtilMixin"
   ],
   "client": [
     "AbstractClientPlayerMixin",

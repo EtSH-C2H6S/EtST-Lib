@@ -3,8 +3,12 @@
     "energy_shield": "#FF3C00",
     "radiation_shielding": "#86BF79",
     "energy_loaded": "#FF3C00",
-    "applied_fixing": "#C5FFFB",
-    "atomic_decompose": "#5D2670"
+    "applied_fixing": "#E4C2FF",
+    "atomic_decompose": "#5D2670",
+    "aerial_reinforced": "#ADADAD",
+    "energetic_attack": "#E4FFFE",
+    "radiation_inflict": "#DEFF59",
+    "momentum_accelerate": "#9896A3"
   },
   "material.etstlib": {
 

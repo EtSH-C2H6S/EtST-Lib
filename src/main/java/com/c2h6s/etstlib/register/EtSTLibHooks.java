@@ -2,8 +2,16 @@ package com.c2h6s.etstlib.register;
 
 import com.c2h6s.etstlib.EtSTLib;
 import com.c2h6s.etstlib.tool.hooks.AirStorage.CustomPressureBarModifierHook;
+import com.c2h6s.etstlib.tool.hooks.CriticalAttackModifierHook;
+import com.c2h6s.etstlib.tool.hooks.EffectApplicableModifierHook;
 import com.c2h6s.etstlib.tool.hooks.EnergyStorage.CustomEnergyBarModifierHook;
 import com.c2h6s.etstlib.tool.hooks.CorrectDropModifierHook;
+import com.c2h6s.etstlib.tool.hooks.ModifyDamageSourceModifierHook;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.module.ModuleHook;
@@ -29,4 +37,12 @@ public class EtSTLibHooks {
         }
     } );
     public static final ModuleHook<CorrectDropModifierHook> CORRECT_TOOL = ModifierHooks.register(EtSTLib.getResourceLocation("correct_tool"), CorrectDropModifierHook.class, CorrectDropModifierHook.AllMerger::new,(tool, entry, state, drop)->drop);
+    public static final ModuleHook<EffectApplicableModifierHook> EFFECT_APPLICABLE = ModifierHooks.register(EtSTLib.getResourceLocation("effect_applicable"), EffectApplicableModifierHook.class, EffectApplicableModifierHook.AllMerger::new,(tool, entry, equipmentSlot,instance, applicable)->applicable);
+    public static final ModuleHook<CriticalAttackModifierHook> CRITICAL_ATTACK = ModifierHooks.register(EtSTLib.getResourceLocation("critical_attack"), CriticalAttackModifierHook.class, CriticalAttackModifierHook.AllMerger::new,(tool,entry,attacker,hand,target,sourceSlot,isFullyCharged,isExtraAttack,isCritical)->isCritical);
+    public static final ModuleHook<ModifyDamageSourceModifierHook> MODIFY_DAMAGE_SOURCE = ModifierHooks.register(EtSTLib.getResourceLocation("modify_damage_source"), ModifyDamageSourceModifierHook.class, ModifyDamageSourceModifierHook.AllMerger::new, new ModifyDamageSourceModifierHook() {
+        @Override
+        public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical) {
+            return null;
+        }
+    });
 }

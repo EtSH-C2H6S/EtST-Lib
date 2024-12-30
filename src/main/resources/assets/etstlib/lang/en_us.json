@@ -4,10 +4,11 @@
   "tooltip.etstlib.air": "Air Storage",
   "tooltip.etstlib.base_volume": "Base Air Volume",
   "tooltip.etstlib.max_pressure": "Pressure",
+  "tooltip.etstlib.pressure_bonus": "Aerial Bonus",
 
   "modifier.etstlib.anti_stun_glasses": "Anti Stun Glasses",
   "modifier.etstlib.anti_stun_glasses.flavor": "Prevent you from stunning",
-  "modifier.etstlib.anti_stun_glasses.description":"Cancel hurt shaking and field of view effect.",
+  "modifier.etstlib.anti_stun_glasses.description":"Cancel hurt shaking and field of view effect.Immune to nausea effect.",
 
   "modifier.etstlib.energy_shield": "Energy Shield",
   "modifier.etstlib.energy_shield.flavor": "Built-in force field generator.",
@@ -27,5 +28,25 @@
 
   "modifier.etstlib.atomic_decompose": "Atom Decompose",
   "modifier.etstlib.atomic_decompose.flavor": "Atom-grade decomposition.",
-  "modifier.etstlib.atomic_decompose.description":"Fix your mining speed to your tool's mining speed.Ignores harvest tier."
+  "modifier.etstlib.atomic_decompose.description":"Fix your mining speed to your tool's mining speed.Ignores harvest tier.",
+
+  "modifier.etstlib.aerial_reinforced": "Arial Dynamic",
+  "modifier.etstlib.aerial_reinforced.flavor": "Pressure reinforced!",
+  "modifier.etstlib.aerial_reinforced.description":"Boosts attack speed,attack damage,arrow speed,armor,armor toughness and knockback resistance.Consume air instead of durability on use.",
+
+  "modifier.etstlib.clearing": "Clearing",
+  "modifier.etstlib.clearing.flavor": "Cleaning dirty.",
+  "modifier.etstlib.clearing.description":"Immune to wither and poison effect.",
+
+  "modifier.etstlib.energetic_attack": "Energetic Attack",
+  "modifier.etstlib.energetic_attack.flavor": "Zap!",
+  "modifier.etstlib.energetic_attack.description":"Deals extra magic damage on full charge attack.",
+
+  "modifier.etstlib.radiation_inflict": "Radiation Inflict",
+  "modifier.etstlib.radiation_inflict.flavor": "Radioactive weapons.",
+  "modifier.etstlib.radiation_inflict.description":"Inflicts 100mSv radiation on full charge attack.",
+
+  "modifier.etstlib.momentum_accelerate": "Momentum Accelerate",
+  "modifier.etstlib.momentum_accelerate.flavor": "p=mv",
+  "modifier.etstlib.momentum_accelerate.description":"-20% Attack speed and mining speed but speeds up when constantly using."
 }

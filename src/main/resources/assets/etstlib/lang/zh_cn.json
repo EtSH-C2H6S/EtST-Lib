@@ -4,10 +4,11 @@
   "tooltip.etstlib.air": "压缩空气存储",
   "tooltip.etstlib.base_volume": "基础压缩空气容量",
   "tooltip.etstlib.max_pressure": "压力",
+  "tooltip.etstlib.pressure_bonus": "压缩空气属性增幅",
 
   "modifier.etstlib.anti_stun_glasses": "防眩目镜",
   "modifier.etstlib.anti_stun_glasses.flavor": "指的是防止屏幕前的你晕眩",
-  "modifier.etstlib.anti_stun_glasses.description":"取消受伤时的屏幕抖动。",
+  "modifier.etstlib.anti_stun_glasses.description":"取消受伤时的屏幕抖动和视角场效果，免疫反胃。",
 
   "modifier.etstlib.energy_shield": "能量护盾",
   "modifier.etstlib.energy_shield.flavor": "谁会不喜欢一面能量力场组成的护盾呢？",
@@ -27,5 +28,38 @@
 
   "modifier.etstlib.atomic_decompose": "原子分解",
   "modifier.etstlib.atomic_decompose.flavor": "原子级解离！",
-  "modifier.etstlib.atomic_decompose.description":"你的挖掘速度固定为工具的挖掘速度，无视挖掘等级。"
+  "modifier.etstlib.atomic_decompose.description":"你的挖掘速度固定为工具的挖掘速度，无视挖掘等级。",
+
+  "modifier.etstlib.aerial_reinforced": "空气动力学",
+  "modifier.etstlib.aerial_reinforced.flavor": "压缩空气强化！",
+  "modifier.etstlib.aerial_reinforced.description":"根据气压提升攻击速度、攻击力、箭矢速度、护甲、护甲韧性和击退抗性。使用时优先消耗压缩空气而非耐久。",
+
+  "modifier.etstlib.clearing": "洁净",
+  "modifier.etstlib.clearing.flavor": "清除污浊",
+  "modifier.etstlib.clearing.description":"免疫中毒和凋零效果。",
+
+  "modifier.etstlib.energetic_attack": "充能打击",
+  "modifier.etstlib.energetic_attack.flavor": "压电",
+  "modifier.etstlib.energetic_attack.description":"全力打击时对目标施加少量魔法伤害。",
+
+  "modifier.etstlib.radiation_inflict": "辐射附加",
+  "modifier.etstlib.radiation_inflict.flavor": "铀辐同享",
+  "modifier.etstlib.radiation_inflict.description":"全力打击时对目标施加100mSv辐射。",
+
+  "modifier.etstlib.momentum_accelerate": "惯性加速",
+  "modifier.etstlib.momentum_accelerate.flavor": "p=mv",
+  "modifier.etstlib.momentum_accelerate.description":"工具-20%攻击速度和挖掘速度，但是会随着使用变得更加趁手。",
+
+  "modifier.etstlib.magic_strike": "魔法打击",
+  "modifier.etstlib.magic_strike.flavor": "给你变个法术！",
+  "modifier.etstlib.magic_strike.description":"全力打击时将工具的近战伤害转换为魔法伤害。",
+
+  "modifier.etstlib.critical": "暴击",
+  "modifier.etstlib.critical.flavor": "致命一击",
+  "modifier.etstlib.critical.description":"全力打击时必定暴击。",
+
+  "modifier.etstlib.armor_piercing": "护甲穿透",
+  "modifier.etstlib.armor_piercing.flavor": "最利之矛",
+  "modifier.etstlib.armor_piercing.description":"近战攻击时，每级提供25%穿甲。"
+
 }

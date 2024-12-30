@@ -28,7 +28,7 @@ public abstract class BasicPressurizableModifier extends EtSTBaseModifier implem
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
         super.registerHooks(hookBuilder);
-        hookBuilder.addHook(this,ModifierHooks.REMOVE, ModifierHooks.TOOLTIP, EtSTLibHooks.PRESSURE_BAR);
+        hookBuilder.addHook(this,ModifierHooks.REMOVE, ModifierHooks.TOOLTIP, EtSTLibHooks.PRESSURE_BAR,ModifierHooks.TOOL_STATS);
     }
 
     @Nullable
