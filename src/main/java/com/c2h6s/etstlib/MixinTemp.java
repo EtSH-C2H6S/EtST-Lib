@@ -10,6 +10,7 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 public class MixinTemp {
     public static boolean isProcessingDamageSource;
     public static float damageBeforeArmorAbs;
+    public static Entity arrowHit ;
     public static class attackUtilTemp{
         public static IToolStackView tool;
         public static LivingEntity attacker;

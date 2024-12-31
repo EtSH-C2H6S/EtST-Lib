@@ -8,7 +8,12 @@
     "aerial_reinforced": "#ADADAD",
     "energetic_attack": "#E4FFFE",
     "radiation_inflict": "#DEFF59",
-    "momentum_accelerate": "#9896A3"
+    "momentum_accelerate": "#9896A3",
+    "magic_strike": "#FF8BFD",
+    "critical": "#FF6D6F",
+    "armor_piercing": "#878787",
+    "mana_repair": "#5794FF",
+    "terra_beam": "#78FF77"
   },
   "material.etstlib": {
 

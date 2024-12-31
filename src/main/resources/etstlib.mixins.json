@@ -5,6 +5,7 @@
   "minVersion": "0.7",
   "refmap": "etstlib.refmap.json",
   "mixins": [
+    "AbstractArrowMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
     "AEMixin.ChargerBlockEntityMixin",

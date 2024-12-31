@@ -1,17 +1,16 @@
 package com.c2h6s.etstlib.register;
 
 import com.c2h6s.etstlib.EtSTLib;
+import com.c2h6s.etstlib.tool.hooks.*;
 import com.c2h6s.etstlib.tool.hooks.AirStorage.CustomPressureBarModifierHook;
-import com.c2h6s.etstlib.tool.hooks.CriticalAttackModifierHook;
-import com.c2h6s.etstlib.tool.hooks.EffectApplicableModifierHook;
 import com.c2h6s.etstlib.tool.hooks.EnergyStorage.CustomEnergyBarModifierHook;
-import com.c2h6s.etstlib.tool.hooks.CorrectDropModifierHook;
-import com.c2h6s.etstlib.tool.hooks.ModifyDamageSourceModifierHook;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.module.ModuleHook;
@@ -45,4 +44,6 @@ public class EtSTLibHooks {
             return null;
         }
     });
+
+    public static final ModuleHook<LeftClickModifierHook> LEFT_CLICK = ModifierHooks.register(EtSTLib.getResourceLocation("left_click"), LeftClickModifierHook.class, LeftClickModifierHook.AllMerger::new, new LeftClickModifierHook() {});
 }

@@ -5,6 +5,7 @@
   "tooltip.etstlib.base_volume": "基础压缩空气容量",
   "tooltip.etstlib.max_pressure": "压力",
   "tooltip.etstlib.pressure_bonus": "压缩空气属性增幅",
+  "tooltip.etstlib.radiation_shielding": "辐射防护",
 
   "modifier.etstlib.anti_stun_glasses": "防眩目镜",
   "modifier.etstlib.anti_stun_glasses.flavor": "指的是防止屏幕前的你晕眩",
@@ -52,7 +53,7 @@
 
   "modifier.etstlib.magic_strike": "魔法打击",
   "modifier.etstlib.magic_strike.flavor": "给你变个法术！",
-  "modifier.etstlib.magic_strike.description":"全力打击时将工具的近战伤害转换为魔法伤害。",
+  "modifier.etstlib.magic_strike.description":"全力打击时将工具的伤害转换为魔法伤害。",
 
   "modifier.etstlib.critical": "暴击",
   "modifier.etstlib.critical.flavor": "致命一击",
@@ -60,6 +61,14 @@
 
   "modifier.etstlib.armor_piercing": "护甲穿透",
   "modifier.etstlib.armor_piercing.flavor": "最利之矛",
-  "modifier.etstlib.armor_piercing.description":"近战攻击时，每级提供25%穿甲。"
+  "modifier.etstlib.armor_piercing.description":"每级提供25%穿甲。",
+
+  "modifier.etstlib.mana_repair": "魔力修复",
+  "modifier.etstlib.mana_repair.flavor": "魔力与熵",
+  "modifier.etstlib.mana_repair.description":"工具会缓慢消耗魔力修复自身。",
+
+  "modifier.etstlib.terra_beam": "泰拉射线",
+  "modifier.etstlib.terra_beam.flavor": "并非泰拉",
+  "modifier.etstlib.terra_beam.description":"挥舞武器时，消耗魔力释放泰拉射线。"
 
 }

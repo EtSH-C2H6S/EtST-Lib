@@ -5,6 +5,7 @@
   "tooltip.etstlib.base_volume": "Base Air Volume",
   "tooltip.etstlib.max_pressure": "Pressure",
   "tooltip.etstlib.pressure_bonus": "Aerial Bonus",
+  "tooltip.etstlib.radiation_shielding": "Radiation Protection",
 
   "modifier.etstlib.anti_stun_glasses": "Anti Stun Glasses",
   "modifier.etstlib.anti_stun_glasses.flavor": "Prevent you from stunning",
@@ -48,5 +49,25 @@
 
   "modifier.etstlib.momentum_accelerate": "Momentum Accelerate",
   "modifier.etstlib.momentum_accelerate.flavor": "p=mv",
-  "modifier.etstlib.momentum_accelerate.description":"-20% Attack speed and mining speed but speeds up when constantly using."
+  "modifier.etstlib.momentum_accelerate.description":"-20% Attack speed and mining speed but speeds up when constantly using.",
+
+  "modifier.etstlib.magic_strike": "Magic Strike",
+  "modifier.etstlib.magic_strike.flavor": "",
+  "modifier.etstlib.magic_strike.description":"Transfer your damage into magic damage on full charge attack.",
+
+  "modifier.etstlib.critical": "Critical Attack",
+  "modifier.etstlib.critical.flavor": "Attacks that is 'Critical'",
+  "modifier.etstlib.critical.description":"100% Critical on full charge attack.",
+
+  "modifier.etstlib.armor_piercing": "Armor Piercing",
+  "modifier.etstlib.armor_piercing.flavor": "Sharp weapon.",
+  "modifier.etstlib.armor_piercing.description":"Each level provides 25% armor-piercing.",
+
+  "modifier.etstlib.mana_repair": "Mana Repair",
+  "modifier.etstlib.mana_repair.flavor": "Mana and entropy.",
+  "modifier.etstlib.mana_repair.description":"Your tool will slowly consume mana to repair itself.",
+
+  "modifier.etstlib.terra_beam": "Terra Beam",
+  "modifier.etstlib.terra_beam.flavor": "Terra intended.",
+  "modifier.etstlib.terra_beam.description":"Consume mana to shoot terra beam on swinging."
 }

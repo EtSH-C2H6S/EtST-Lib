@@ -5,6 +5,8 @@ import com.c2h6s.etstlib.tool.modifiers.Combat.ArmorPiercing;
 import com.c2h6s.etstlib.tool.modifiers.Combat.Critical;
 import com.c2h6s.etstlib.tool.modifiers.Combat.MagicStrike;
 import com.c2h6s.etstlib.tool.modifiers.Integration.AEIntegration.*;
+import com.c2h6s.etstlib.tool.modifiers.Integration.BOTIntegration.ManaRepair;
+import com.c2h6s.etstlib.tool.modifiers.Integration.BOTIntegration.TerraBeam;
 import com.c2h6s.etstlib.tool.modifiers.Integration.PnCIntegration.*;
 import com.c2h6s.etstlib.tool.modifiers.Integration.MekIntegration.*;
 import com.c2h6s.etstlib.tool.modifiers.Common.*;
@@ -18,6 +20,7 @@ public class EtSTLibModifier {
     public static ModifierDeferredRegister PnC_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
     public static ModifierDeferredRegister Mek_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
     public static ModifierDeferredRegister AE_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
+    public static ModifierDeferredRegister BOT_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
 
     //无集成词条
     public static final StaticModifier<AntiStunGlasses> anti_stun_glasses =MODIFIERS.register("anti_stun_glasses",AntiStunGlasses::new);
@@ -43,4 +46,9 @@ public class EtSTLibModifier {
     //AE集成词条
     public static final StaticModifier<AppliedFixing> applied_fixing = Mek_MODIFIERS.register("applied_fixing",AppliedFixing::new);
     public static final StaticModifier<EnergeticAttack> energetic_attack = Mek_MODIFIERS.register("energetic_attack",EnergeticAttack::new);
+
+
+    //植魔集成词条
+    public static final StaticModifier<ManaRepair> mana_repair = BOT_MODIFIERS.register("mana_repair",ManaRepair::new);
+    public static final StaticModifier<TerraBeam> terra_beam = BOT_MODIFIERS.register("terra_beam",TerraBeam::new);
 }

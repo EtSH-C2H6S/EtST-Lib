@@ -3,10 +3,10 @@ package com.c2h6s.etstlib.tool.modifiers.base;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import com.c2h6s.etstlib.tool.hooks.CriticalAttackModifierHook;
 import com.c2h6s.etstlib.tool.hooks.EffectApplicableModifierHook;
+import com.c2h6s.etstlib.tool.hooks.LeftClickModifierHook;
 import com.c2h6s.etstlib.tool.hooks.ModifyDamageSourceModifierHook;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -33,7 +33,7 @@ import slimeknights.tconstruct.library.tools.nbt.NamespacedNBT;
 
 import javax.annotation.Nullable;
 
-public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, MeleeDamageModifierHook, ProjectileHitModifierHook, ProjectileLaunchModifierHook, ToolDamageModifierHook, InventoryTickModifierHook , EffectApplicableModifierHook , ModifierRemovalHook , CriticalAttackModifierHook, ModifyDamageSourceModifierHook {
+public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, MeleeDamageModifierHook, ProjectileHitModifierHook, ProjectileLaunchModifierHook, ToolDamageModifierHook, InventoryTickModifierHook , EffectApplicableModifierHook , ModifierRemovalHook , CriticalAttackModifierHook, ModifyDamageSourceModifierHook , LeftClickModifierHook {
     public boolean isNoLevels(){
         return false;
     }
@@ -44,7 +44,7 @@ public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, 
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
         super.registerHooks(hookBuilder);
-        hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE,ModifierHooks.MELEE_HIT,ModifierHooks.PROJECTILE_LAUNCH,ModifierHooks.PROJECTILE_HIT,ModifierHooks.TOOL_DAMAGE, EtSTLibHooks.EFFECT_APPLICABLE,ModifierHooks.INVENTORY_TICK,EtSTLibHooks.CRITICAL_ATTACK,EtSTLibHooks.MODIFY_DAMAGE_SOURCE);
+        hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE,ModifierHooks.MELEE_HIT,ModifierHooks.PROJECTILE_LAUNCH,ModifierHooks.PROJECTILE_HIT,ModifierHooks.TOOL_DAMAGE, EtSTLibHooks.EFFECT_APPLICABLE,ModifierHooks.INVENTORY_TICK,EtSTLibHooks.CRITICAL_ATTACK,EtSTLibHooks.MODIFY_DAMAGE_SOURCE,EtSTLibHooks.LEFT_CLICK);
     }
 
     @Override
@@ -76,11 +76,6 @@ public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, 
     public boolean setCritical(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical) {
         return this.modifierSetCritical(tool,entry,attacker,hand,target,sourceSlot,isFullyCharged,isExtraAttack,isCritical);
     }
-    @Override
-    public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical) {
-        return this.onGetDamageSource(tool,entry,attacker,hand,target,sourceSlot,isFullyCharged,isExtraAttack,isCritical);
-    }
-
 
     public float onGetMeleeDamage(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float baseDamage, float damage) {
         return damage;
@@ -102,9 +97,6 @@ public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, 
     }
     public boolean modifierSetCritical(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical) {
         return isCritical;
-    }
-    public DamageSource onGetDamageSource(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical) {
-        return null;
     }
 
 
