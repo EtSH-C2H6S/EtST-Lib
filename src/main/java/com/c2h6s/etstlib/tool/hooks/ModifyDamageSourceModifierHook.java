@@ -18,30 +18,30 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 public interface ModifyDamageSourceModifierHook {
-    default DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical){
-        return null;
+    default DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical,DamageSource source){
+        return source;
     }
-    default DamageSource modifyArrowDamageSource(ModifierNBT modifiers, NamespacedNBT persistentData, ModifierEntry modifier, AbstractArrow arrow, @Nullable LivingEntity attacker, @Nullable LivingEntity target){
-        return null;
+    default DamageSource modifyArrowDamageSource(ModifierNBT modifiers, NamespacedNBT persistentData, ModifierEntry modifier, AbstractArrow arrow, @Nullable LivingEntity attacker, @Nullable LivingEntity target,DamageSource source){
+        return source;
     }
     record AllMerger(Collection<ModifyDamageSourceModifierHook> modules) implements ModifyDamageSourceModifierHook {
         @Override
-        public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack,boolean isCritical) {
-            DamageSource source = null;
+        public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack,boolean isCritical,DamageSource source) {
+            DamageSource damageSource =source;
             for (ModifyDamageSourceModifierHook module:this.modules){
-                source =module.modifyDamageSource(tool, entry,attacker,hand,target,sourceSlot,isFullyCharged,isExtraAttack,isCritical);
-                if (source!=null) break;
+                damageSource =module.modifyDamageSource(tool, entry,attacker,hand,target,sourceSlot,isFullyCharged,isExtraAttack,isCritical,damageSource);
+                if (damageSource!=source) break;
             }
-            return source;
+            return damageSource;
         }
         @Override
-        public DamageSource modifyArrowDamageSource(ModifierNBT modifiers, NamespacedNBT persistentData, ModifierEntry modifier, @NotNull AbstractArrow arrow, @Nullable LivingEntity attacker, @Nullable LivingEntity target){
-            DamageSource source = null;
+        public DamageSource modifyArrowDamageSource(ModifierNBT modifiers, NamespacedNBT persistentData, ModifierEntry modifier, @NotNull AbstractArrow arrow, @Nullable LivingEntity attacker, @Nullable LivingEntity target,DamageSource source){
+            DamageSource damageSource =source;
             for (ModifyDamageSourceModifierHook module:this.modules){
-                source =module.modifyArrowDamageSource(modifiers, persistentData,modifier,arrow,attacker,target);
-                if (source!=null) break;
+                damageSource =module.modifyArrowDamageSource(modifiers, persistentData,modifier,arrow,attacker,target,damageSource);
+                if (damageSource!=source) break;
             }
-            return source;
+            return damageSource;
         }
     }
 }

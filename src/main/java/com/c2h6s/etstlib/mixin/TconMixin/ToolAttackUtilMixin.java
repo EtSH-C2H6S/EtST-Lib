@@ -68,26 +68,19 @@ public class ToolAttackUtilMixin {
         attackUtilTemp.isCritical=false;
     }
 
-    @Inject(at = @At(value = "HEAD"),method = "dealDefaultDamage")
-    private static void getDamageSource(LivingEntity attacker, Entity target, float damage, CallbackInfoReturnable<Boolean> cir){
-        if (MixinTemp.isProcessingDamageSource){
+    @ModifyArg(method = "dealDefaultDamage",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;m_6469_(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
+    private static DamageSource modifyDamageSource(DamageSource par1){
+        if (MixinTemp.isProcessingDamageSource) {
             IToolStackView tool = attackUtilTemp.tool;
-            DamageSource damageSource =null;
+            DamageSource damageSource = par1;
             for (ModifierEntry entry : tool.getModifierList()) {
-                damageSource = entry.getHook(EtSTLibHooks.MODIFY_DAMAGE_SOURCE).modifyDamageSource(tool,entry,attackUtilTemp.attacker,attackUtilTemp.hand,attackUtilTemp.target,attackUtilTemp.sourceSlot,attackUtilTemp.isFullyCharged,attackUtilTemp.isExtraAttack,false);
-                if (damageSource!=null){
-                    attackUtilTemp.damageSource =damageSource;
+                damageSource = entry.getHook(EtSTLibHooks.MODIFY_DAMAGE_SOURCE).modifyDamageSource(tool, entry, attackUtilTemp.attacker, attackUtilTemp.hand, attackUtilTemp.target, attackUtilTemp.sourceSlot, attackUtilTemp.isFullyCharged, attackUtilTemp.isExtraAttack, false,damageSource);
+                if (damageSource != par1) {
                     break;
                 }
             }
-            if (damageSource==null) MixinTemp.isProcessingDamageSource =false;
-        }
-    }
-
-    @ModifyArg(method = "dealDefaultDamage",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;m_6469_(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
-    private static DamageSource modifyDamageSource(DamageSource par1){
-        if (MixinTemp.isProcessingDamageSource&&attackUtilTemp.damageSource!=null){
-            return attackUtilTemp.damageSource;
+            MixinTemp.isProcessingDamageSource=false;
+            return damageSource;
         }
         return par1;
     }

@@ -30,12 +30,12 @@ public class AbstractArrowMixin {
         if (!modifiers.isEmpty()&&MixinTemp.arrowHit instanceof LivingEntity target) {
             NamespacedNBT nbt = PersistentDataCapability.getOrWarn(arrow);
             LivingEntity attacker = arrow.getOwner() instanceof LivingEntity living?living:null;
-            DamageSource damageSource = null;
+            DamageSource damageSource = source0;
             for (ModifierEntry entry:modifiers.getModifiers()){
-                damageSource = entry.getHook(EtSTLibHooks.MODIFY_DAMAGE_SOURCE).modifyArrowDamageSource(modifiers,nbt,entry,arrow,attacker,target);
-                if (damageSource!=null) break;
+                damageSource = entry.getHook(EtSTLibHooks.MODIFY_DAMAGE_SOURCE).modifyArrowDamageSource(modifiers,nbt,entry,arrow,attacker,target,damageSource);
+                if (damageSource!=source0) break;
             }
-            if (damageSource!=null) return damageSource;
+            return damageSource;
         }
         return source0;
     }

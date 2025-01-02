@@ -11,7 +11,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class PercentageBypassArmorSource extends DamageSource {
+public class PercentageBypassArmorSource extends AncientDamageSource {
     private final float percentage;
     public PercentageBypassArmorSource(Holder<DamageType> holder, @Nullable Entity directEntity, @Nullable Entity causingEntity, @Nullable Vec3 sourcePos,float percentage) {
         super(holder, directEntity, causingEntity, sourcePos);
@@ -30,13 +30,13 @@ public class PercentageBypassArmorSource extends DamageSource {
 
 
     public static PercentageBypassArmorSource playerAttack(@NotNull Player player, float percentage){
-        return new PercentageBypassArmorSource(player.level().damageSources().playerAttack(player).typeHolder(),player,percentage);
+        return new PercentageBypassArmorSource(player.damageSources().playerAttack(player).typeHolder(),player,percentage);
     }
     public static PercentageBypassArmorSource mobAttack(@NotNull LivingEntity living, float percentage){
-        return new PercentageBypassArmorSource(living.level().damageSources().mobAttack(living).typeHolder(),living,percentage);
+        return new PercentageBypassArmorSource(living.damageSources().mobAttack(living).typeHolder(),living,percentage);
     }
     public static PercentageBypassArmorSource projectileHit(@NotNull Projectile projectile, float percentage){
-        return new PercentageBypassArmorSource(projectile.level().damageSources().mobProjectile(projectile,projectile.getOwner() instanceof LivingEntity living?living:null).typeHolder(),projectile,projectile.getOwner(),percentage);
+        return new PercentageBypassArmorSource(projectile.damageSources().mobProjectile(projectile,projectile.getOwner() instanceof LivingEntity living?living:null).typeHolder(),projectile,projectile.getOwner(),percentage);
     }
     public static PercentageBypassArmorSource Any(Holder<DamageType> holder,Entity directEntity,Entity causingEntity, float percentage){
         return new PercentageBypassArmorSource(holder,directEntity,causingEntity,percentage);

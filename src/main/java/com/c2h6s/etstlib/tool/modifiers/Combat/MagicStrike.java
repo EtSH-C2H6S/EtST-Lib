@@ -1,5 +1,6 @@
 package com.c2h6s.etstlib.tool.modifiers.Combat;
 
+import com.c2h6s.etstlib.entity.specialDamageSources.AncientDamageSource;
 import com.c2h6s.etstlib.entity.specialDamageSources.PercentageBypassArmorSource;
 import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;
 import net.minecraft.world.InteractionHand;
@@ -16,12 +17,12 @@ import slimeknights.tconstruct.library.tools.nbt.NamespacedNBT;
 
 public class MagicStrike extends EtSTBaseModifier {
     @Override
-    public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical) {
-        return isFullyCharged ? new DamageSource(attacker.level().damageSources().magic().typeHolder(),attacker):null;
+    public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical,DamageSource source) {
+        return isFullyCharged ? new AncientDamageSource(attacker.damageSources().magic().typeHolder(),attacker):source;
     }
 
     @Override
-    public DamageSource modifyArrowDamageSource(ModifierNBT modifiers, NamespacedNBT persistentData, ModifierEntry modifier, AbstractArrow arrow, @Nullable LivingEntity attacker, @Nullable LivingEntity target) {
-        return arrow.isCritArrow()? new DamageSource(arrow.level().damageSources().magic().typeHolder(),attacker):null;
+    public DamageSource modifyArrowDamageSource(ModifierNBT modifiers, NamespacedNBT persistentData, ModifierEntry modifier, AbstractArrow arrow, @Nullable LivingEntity attacker, @Nullable LivingEntity target,DamageSource source) {
+        return arrow.isCritArrow()? new DamageSource(arrow.damageSources().magic().typeHolder(),attacker):source;
     }
 }
