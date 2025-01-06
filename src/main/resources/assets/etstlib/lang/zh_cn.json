@@ -69,6 +69,9 @@
 
   "modifier.etstlib.terra_beam": "泰拉射线",
   "modifier.etstlib.terra_beam.flavor": "并非泰拉",
-  "modifier.etstlib.terra_beam.description":"挥舞武器时，消耗魔力释放泰拉射线。"
+  "modifier.etstlib.terra_beam.description":"挥舞武器时，消耗魔力释放泰拉射线。",
 
+  "modifier.etstlib.reality_breaker": "现实毁灭者",
+  "modifier.etstlib.reality_breaker.flavor": "毁灭“目标无敌”的现实",
+  "modifier.etstlib.reality_breaker.description":"你的攻击能无视无敌。"
 }

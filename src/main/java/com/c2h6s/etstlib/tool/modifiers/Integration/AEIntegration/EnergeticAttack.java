@@ -2,7 +2,7 @@ package com.c2h6s.etstlib.tool.modifiers.Integration.AEIntegration;
 
 import appeng.core.AppEng;
 import appeng.core.sync.packets.LightningPacket;
-import com.c2h6s.etstlib.entity.specialDamageSources.AncientDamageSource;
+import com.c2h6s.etstlib.entity.specialDamageSources.LegacyDamageSource;
 import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -25,9 +25,7 @@ public class EnergeticAttack extends EtSTBaseModifier {
         Entity entity = context.getTarget();
         Level level  = context.getLevel();
         if (!level.isClientSide&&context.isFullyCharged()) {
-            AncientDamageSource source = new AncientDamageSource(level.damageSources().magic().typeHolder(), context.getAttacker());
-            source.setBypassInvulnerableTime();
-            entity.hurt(source, 3 + modifier.getLevel());
+            entity.hurt(LegacyDamageSource.indirectMagic(context.getAttacker()).setBypassInvulnerableTime(), 3 + modifier.getLevel());
             final AABB entityBoundingBox = entity.getBoundingBox();
             final float dx = (float) (entity.level().getRandom().nextFloat() * entity.getBbWidth() + entityBoundingBox.minX);
             final float dy = (float) (entity.level().getRandom().nextFloat() * entity.getBbHeight() + entityBoundingBox.minY);

@@ -69,5 +69,9 @@
 
   "modifier.etstlib.terra_beam": "Terra Beam",
   "modifier.etstlib.terra_beam.flavor": "Terra intended.",
-  "modifier.etstlib.terra_beam.description":"Consume mana to shoot terra beam on swinging."
+  "modifier.etstlib.terra_beam.description":"Consume mana to shoot terra beam on swinging.",
+
+  "modifier.etstlib.reality_breaker": "Reality Breaker",
+  "modifier.etstlib.reality_breaker.flavor": "Break the reality that 'Target is invulnerable'",
+  "modifier.etstlib.reality_breaker.description":"Make your attack bypasses invulnerable."
 }

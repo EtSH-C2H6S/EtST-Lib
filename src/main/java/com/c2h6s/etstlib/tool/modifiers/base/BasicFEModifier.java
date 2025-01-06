@@ -2,6 +2,7 @@ package com.c2h6s.etstlib.tool.modifiers.base;
 
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import com.c2h6s.etstlib.register.EtSTLibToolStat;
+import com.c2h6s.etstlib.tool.hooks.CustomBarDisplayModifierHook;
 import com.c2h6s.etstlib.tool.hooks.EnergyStorage.CustomEnergyBarModifierHook;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.FEStorageProvider;
 import com.c2h6s.etstlib.util.MathUtil;
@@ -9,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.phys.Vec2;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.library.modifiers.Modifier;
@@ -22,14 +24,20 @@ import slimeknights.tconstruct.library.tools.nbt.IToolContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.stat.ModifierStatsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BasicFEModifier extends EtSTBaseModifier implements ModifierRemovalHook, TooltipModifierHook, CustomEnergyBarModifierHook,ToolStatsModifierHook {
+public abstract class BasicFEModifier extends EtSTBaseModifier implements ModifierRemovalHook, TooltipModifierHook,ToolStatsModifierHook, CustomBarDisplayModifierHook {
+
+    @Override
+    public int getPriority() {
+        return 25;
+    }
 
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
         super.registerHooks(hookBuilder);
-        hookBuilder.addHook(this,ModifierHooks.REMOVE, ModifierHooks.TOOLTIP, EtSTLibHooks.ENERGY_BAR,ModifierHooks.TOOL_STATS);
+        hookBuilder.addHook(this,ModifierHooks.REMOVE, ModifierHooks.TOOLTIP,ModifierHooks.TOOL_STATS,EtSTLibHooks.CUSTOM_BAR);
     }
 
     @Nullable
@@ -43,8 +51,14 @@ public abstract class BasicFEModifier extends EtSTBaseModifier implements Modifi
 
     @Override
     public void addTooltip(IToolStackView tool, ModifierEntry modifierEntry, @Nullable Player player, List<Component> list, TooltipKey tooltipKey, TooltipFlag tooltipFlag) {
-        list.add(Component.translatable("tooltip.etstlib.energy_storage").append(":").append(" "+ MathUtil.getEnergyString(FEStorageProvider.getEnergy(tool))+"/"+MathUtil.getEnergyString(FEStorageProvider.getMaxEnergy(tool))).withStyle(Style.EMPTY.withColor(0xFF3000)));
-        list.add(Component.translatable("tooltip.etstlib.max_transfer").append(":").append(" "+MathUtil.getEnergyString(FEStorageProvider.getMaxTransfer(tool))).withStyle(Style.EMPTY.withColor(0xFF3000)));
+        List<Component> ls = new ArrayList<>(List.of());
+        ls.add(Component.translatable("tooltip.etstlib.energy_storage").append(":").append(" "+ MathUtil.getEnergyString(FEStorageProvider.getEnergy(tool))+"/"+MathUtil.getEnergyString(FEStorageProvider.getMaxEnergy(tool))).withStyle(Style.EMPTY.withColor(0xFF3000)));
+        ls.add(Component.translatable("tooltip.etstlib.max_transfer").append(":").append(" "+MathUtil.getEnergyString(FEStorageProvider.getMaxTransfer(tool))).withStyle(Style.EMPTY.withColor(0xFF3000)));
+        for (Component component:ls){
+            if (!list.contains(component)&&player!=null){
+                list.add(component);
+            }
+        }
     }
 
     @Override
@@ -58,14 +72,27 @@ public abstract class BasicFEModifier extends EtSTBaseModifier implements Modifi
     public abstract int getMaxTransfer(ModifierEntry modifier);
 
     @Override
-    public boolean showEnergyBar(IToolStackView tool, ModifierEntry entry) {
+    public boolean showBar(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
         return FEStorageProvider.getEnergy(tool)>0;
     }
 
     @Override
-    public int getEnergyBarWidth(IToolStackView tool, ModifierEntry entry) {
-        float FE = FEStorageProvider.getEnergy(tool);
-        float maxEnergy =FEStorageProvider.getMaxEnergy(tool);
-        return (int)Math.min ( (FE *13/ maxEnergy)+1,13);
+    public int getBarRGB(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
+        return 0xFFFF6500;
+    }
+
+    @Override
+    public Vec2 getBarXYSize(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
+        int FE = FEStorageProvider.getEnergy(tool);
+        int maxStorage = FEStorageProvider.getMaxEnergy(tool);
+        if (maxStorage>0) {
+            return new Vec2(Math.min(13, 13 * FE / maxStorage), 1);
+        }
+        return new Vec2(0,0);
+    }
+
+    @Override
+    public String barId(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
+        return "etstlib:fe_bar";
     }
 }

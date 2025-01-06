@@ -1,8 +1,8 @@
 package com.c2h6s.etstlib.mixin.TconMixin;
 
 import com.c2h6s.etstlib.MixinTemp;
+import com.c2h6s.etstlib.entity.specialDamageSources.LegacyDamageSource;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -39,10 +39,13 @@ public class ToolAttackUtilMixin {
         if (!attackUtilTemp.isExtraAttack) {
             IToolStackView tool = attackUtilTemp.tool;
             for (ModifierEntry entry : tool.getModifierList()) {
-                isCritical = entry.getHook(EtSTLibHooks.CRITICAL_ATTACK).setCritical(tool,entry,attackUtilTemp.attacker,attackUtilTemp.hand,attackUtilTemp.target,attackUtilTemp.sourceSlot,attackUtilTemp.isFullyCharged,attackUtilTemp.isExtraAttack,isCritical);
-                if (isCritical) break;
+                Boolean IsCritical = entry.getHook(EtSTLibHooks.CRITICAL_ATTACK).setCritical(tool,entry,attackUtilTemp.attacker,attackUtilTemp.hand,attackUtilTemp.target,attackUtilTemp.sourceSlot,attackUtilTemp.isFullyCharged,attackUtilTemp.isExtraAttack,isCritical);
+                if (IsCritical!=null){
+                    attackUtilTemp.isCritical = IsCritical;
+                    return IsCritical;
+                }
+                else attackUtilTemp.isCritical=isCritical;
             }
-            attackUtilTemp.isCritical = isCritical;
         }
         return isCritical;
     }
@@ -72,12 +75,9 @@ public class ToolAttackUtilMixin {
     private static DamageSource modifyDamageSource(DamageSource par1){
         if (MixinTemp.isProcessingDamageSource) {
             IToolStackView tool = attackUtilTemp.tool;
-            DamageSource damageSource = par1;
+            LegacyDamageSource damageSource = new LegacyDamageSource(par1);
             for (ModifierEntry entry : tool.getModifierList()) {
                 damageSource = entry.getHook(EtSTLibHooks.MODIFY_DAMAGE_SOURCE).modifyDamageSource(tool, entry, attackUtilTemp.attacker, attackUtilTemp.hand, attackUtilTemp.target, attackUtilTemp.sourceSlot, attackUtilTemp.isFullyCharged, attackUtilTemp.isExtraAttack, false,damageSource);
-                if (damageSource != par1) {
-                    break;
-                }
             }
             MixinTemp.isProcessingDamageSource=false;
             return damageSource;

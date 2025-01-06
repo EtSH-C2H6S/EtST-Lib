@@ -1,18 +1,23 @@
 package com.c2h6s.etstlib.mixin;
 
+import com.c2h6s.etstlib.client.objects.CustomBar;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.phys.Vec2;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
+import slimeknights.tconstruct.library.modifiers.hook.display.DurabilityDisplayModifierHook;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Mixin(value = GuiGraphics.class)
 public class GuiGraphicsMixin {
@@ -21,46 +26,33 @@ public class GuiGraphicsMixin {
         GuiGraphics graphics = (GuiGraphics) (Object)this;
         if (stack.getItem() instanceof IModifiable) {
             ToolStack tool = ToolStack.from(stack);
-            //draw Pressure Bar
-            boolean showPressureBar =false;
-            int PressureBarWidth =0;
-            ModifierEntry entry0 = null;
-            for (ModifierEntry entry:tool.getModifierList()){
-                showPressureBar = entry.getHook(EtSTLibHooks.PRESSURE_BAR).showPressureBar(tool,entry);
-                if (showPressureBar){
-                    entry0 =entry;
-                    break;
+            int barCount = DurabilityDisplayModifierHook.showDurabilityBar(stack) ? 1 : 0;
+            Map<String, CustomBar> map = new HashMap<>();
+            for (ModifierEntry entry : tool.getModifierList()) {
+                boolean showBar = entry.getHook(EtSTLibHooks.CUSTOM_BAR).showBar(tool, entry, barCount);
+                String id = entry.getHook(EtSTLibHooks.CUSTOM_BAR).barId(tool, entry, barCount);
+                if (showBar && id != null) {
+                    int BarCount = barCount;
+                    if (map.containsKey(id)){
+                        BarCount = map.get(id).barCount;
+                    }
+                    int col = entry.getHook(EtSTLibHooks.CUSTOM_BAR).getBarRGB(tool, entry, BarCount);
+                    Vec2 Pos = entry.getHook(EtSTLibHooks.CUSTOM_BAR).getBarXYPos(tool, entry, BarCount);
+                    Vec2 Size = entry.getHook(EtSTLibHooks.CUSTOM_BAR).getBarXYSize(tool, entry, BarCount);
+                    boolean showShadow = entry.getHook(EtSTLibHooks.CUSTOM_BAR).showShadow(tool, entry, BarCount);
+                    Vec2 ShadowPos = entry.getHook(EtSTLibHooks.CUSTOM_BAR).getShadowXYOffset(tool, entry, BarCount);
+                    Vec2 ShadowSize = entry.getHook(EtSTLibHooks.CUSTOM_BAR).getShadowXYSize(tool, entry, BarCount);
+                    if (!map.containsKey(id)){
+                        barCount++;
+                    }
+                    map.put(id,new CustomBar(Pos,Size,col,showShadow,ShadowPos,ShadowSize,showBar,BarCount));
                 }
             }
-            if (entry0!=null){
-                PressureBarWidth = entry0.getHook(EtSTLibHooks.PRESSURE_BAR).getPressureBarWidth(tool,entry0);
-            }
-            if (showPressureBar) {
-                graphics.fill(RenderType.guiOverlay(),x + 2, y + 12 , x + 15, y + 13 , 0xFF000000);
-                graphics.fill(RenderType.guiOverlay(),x + 2, y + 12 , x + 2 + PressureBarWidth, y + 13 , 0xFFC9C9C9);
-            }
-
-
-            //draw FE bar
-            boolean showFEBar =false;
-            int FEBarWidth =0;
-            ModifierEntry entry00 = null;
-            for (ModifierEntry entry:tool.getModifierList()){
-                showFEBar = entry.getHook(EtSTLibHooks.ENERGY_BAR).showEnergyBar(tool,entry);
-                if (showFEBar){
-                    entry00 =entry;
-                    break;
+            if (!map.isEmpty()) {
+                for (String id : map.keySet()) {
+                    CustomBar bar = map.get(id);
+                    bar.drawBar(graphics,x,y);
                 }
-            }
-            if (entry00 !=null){
-                FEBarWidth = entry00.getHook(EtSTLibHooks.ENERGY_BAR).getEnergyBarWidth(tool, entry00);
-            }
-            if (showFEBar) {
-                if (!showPressureBar){
-                    graphics.fill(RenderType.guiOverlay(),x + 2, y + 12, x + 15, y + 13, 0xFF000000);
-                }
-                graphics.fill(RenderType.guiOverlay(),x + 2, y + 11, x + 15, y + 12 , 0xFF000000);
-                graphics.fill(RenderType.guiOverlay(),x + 2, y + 11, x + 2 + FEBarWidth, y + 12 , 0xFFFF3000);
             }
         }
     }

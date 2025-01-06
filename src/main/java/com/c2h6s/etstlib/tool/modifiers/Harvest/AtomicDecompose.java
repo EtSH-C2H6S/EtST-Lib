@@ -26,7 +26,7 @@ public class AtomicDecompose extends EtSTBaseModifier implements BreakSpeedModif
     }
 
     @Override
-    public boolean isCorrectToolForDrop(IToolStackView tool, ModifierEntry entry, BlockState state, boolean drop) {
+    public Boolean isCorrectToolForDrop(IToolStackView tool, ModifierEntry entry, BlockState state, Boolean drop) {
         return true;
     }
 }

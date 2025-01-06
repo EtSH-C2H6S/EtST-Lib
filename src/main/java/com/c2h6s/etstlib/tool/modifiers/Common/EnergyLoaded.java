@@ -10,11 +10,11 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 public class EnergyLoaded extends BasicFEModifier {
     @Override
     public int getCapacity(ModifierEntry modifier) {
-        return 10000;
+        return 10000*modifier.getLevel();
     }
     @Override
     public int getMaxTransfer(ModifierEntry modifier) {
-        return 1000;
+        return 1000*modifier.getLevel();
     }
 
     @Override

@@ -7,13 +7,16 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import java.util.Collection;
 
 public interface CorrectDropModifierHook {
-    boolean isCorrectToolForDrop(IToolStackView tool, ModifierEntry entry, BlockState state, boolean drop);
-    record AllMerger(Collection<CorrectDropModifierHook> modules) implements CorrectDropModifierHook {
+    //Used to determine if tool is suitable for dropping item when breaking a block.
+    Boolean isCorrectToolForDrop(IToolStackView tool, ModifierEntry entry, BlockState state, Boolean drop);
+    record FirstMerger(Collection<CorrectDropModifierHook> modules) implements CorrectDropModifierHook {
         @Override
-        public boolean isCorrectToolForDrop(IToolStackView tool, ModifierEntry entry, BlockState state,boolean drop) {
+        public Boolean isCorrectToolForDrop(IToolStackView tool, ModifierEntry entry, BlockState state,Boolean drop) {
             for (CorrectDropModifierHook module:this.modules){
-                drop =module.isCorrectToolForDrop(tool,entry,state,drop);
-                if (drop) break;
+                Boolean isDrop =module.isCorrectToolForDrop(tool,entry,state,drop);
+                if (isDrop!=null){
+                    return isDrop;
+                }
             }
             return drop;
         }

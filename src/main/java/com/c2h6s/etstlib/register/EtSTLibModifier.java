@@ -4,6 +4,7 @@ import com.c2h6s.etstlib.EtSTLib;
 import com.c2h6s.etstlib.tool.modifiers.Combat.ArmorPiercing;
 import com.c2h6s.etstlib.tool.modifiers.Combat.Critical;
 import com.c2h6s.etstlib.tool.modifiers.Combat.MagicStrike;
+import com.c2h6s.etstlib.tool.modifiers.Combat.RealityBreaker;
 import com.c2h6s.etstlib.tool.modifiers.Integration.AEIntegration.*;
 import com.c2h6s.etstlib.tool.modifiers.Integration.BOTIntegration.ManaRepair;
 import com.c2h6s.etstlib.tool.modifiers.Integration.BOTIntegration.TerraBeam;
@@ -32,6 +33,7 @@ public class EtSTLibModifier {
     public static final StaticModifier<MagicStrike> magic_strike =MODIFIERS.register("magic_strike",MagicStrike::new);
     public static final StaticModifier<Critical> critical =MODIFIERS.register("critical",Critical::new);
     public static final StaticModifier<ArmorPiercing> armor_piercing =MODIFIERS.register("armor_piercing",ArmorPiercing::new);
+    public static final StaticModifier<RealityBreaker> reality_breaker =MODIFIERS.register("reality_breaker",RealityBreaker::new);
 
 
     //PnC集成词条

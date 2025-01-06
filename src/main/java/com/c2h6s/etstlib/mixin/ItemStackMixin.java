@@ -18,14 +18,14 @@ public class ItemStackMixin {
         ItemStack stack = (ItemStack) (Object) this;
         if (stack.getItem() instanceof IModifiable){
             ToolStack tool = ToolStack.from(stack);
-            boolean drop = cir.getReturnValueZ();
+            Boolean drop = cir.getReturnValueZ();
             for (ModifierEntry entry:tool.getModifierList()){
                 drop = entry.getHook(EtSTLibHooks.CORRECT_TOOL).isCorrectToolForDrop(tool,entry,state,drop);
-                if (drop){
+                if (drop!=null){
+                    cir.setReturnValue(drop);
                     break;
                 }
             }
-            cir.setReturnValue(drop);
         }
     }
 }

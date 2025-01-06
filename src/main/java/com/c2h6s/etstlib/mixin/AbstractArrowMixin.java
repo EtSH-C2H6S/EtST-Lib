@@ -1,6 +1,7 @@
 package com.c2h6s.etstlib.mixin;
 
 import com.c2h6s.etstlib.MixinTemp;
+import com.c2h6s.etstlib.entity.specialDamageSources.LegacyDamageSource;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,10 +31,9 @@ public class AbstractArrowMixin {
         if (!modifiers.isEmpty()&&MixinTemp.arrowHit instanceof LivingEntity target) {
             NamespacedNBT nbt = PersistentDataCapability.getOrWarn(arrow);
             LivingEntity attacker = arrow.getOwner() instanceof LivingEntity living?living:null;
-            DamageSource damageSource = source0;
+            LegacyDamageSource damageSource = new LegacyDamageSource(source0);
             for (ModifierEntry entry:modifiers.getModifiers()){
                 damageSource = entry.getHook(EtSTLibHooks.MODIFY_DAMAGE_SOURCE).modifyArrowDamageSource(modifiers,nbt,entry,arrow,attacker,target,damageSource);
-                if (damageSource!=source0) break;
             }
             return damageSource;
         }

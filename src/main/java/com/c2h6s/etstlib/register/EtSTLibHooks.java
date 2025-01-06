@@ -4,13 +4,7 @@ import com.c2h6s.etstlib.EtSTLib;
 import com.c2h6s.etstlib.tool.hooks.*;
 import com.c2h6s.etstlib.tool.hooks.AirStorage.CustomPressureBarModifierHook;
 import com.c2h6s.etstlib.tool.hooks.EnergyStorage.CustomEnergyBarModifierHook;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec2;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.module.ModuleHook;
@@ -35,15 +29,35 @@ public class EtSTLibHooks {
             return 0;
         }
     } );
-    public static final ModuleHook<CorrectDropModifierHook> CORRECT_TOOL = ModifierHooks.register(EtSTLib.getResourceLocation("correct_tool"), CorrectDropModifierHook.class, CorrectDropModifierHook.AllMerger::new,(tool, entry, state, drop)->drop);
-    public static final ModuleHook<EffectApplicableModifierHook> EFFECT_APPLICABLE = ModifierHooks.register(EtSTLib.getResourceLocation("effect_applicable"), EffectApplicableModifierHook.class, EffectApplicableModifierHook.AllMerger::new,(tool, entry, equipmentSlot,instance, applicable)->applicable);
-    public static final ModuleHook<CriticalAttackModifierHook> CRITICAL_ATTACK = ModifierHooks.register(EtSTLib.getResourceLocation("critical_attack"), CriticalAttackModifierHook.class, CriticalAttackModifierHook.AllMerger::new,(tool,entry,attacker,hand,target,sourceSlot,isFullyCharged,isExtraAttack,isCritical)->isCritical);
-    public static final ModuleHook<ModifyDamageSourceModifierHook> MODIFY_DAMAGE_SOURCE = ModifierHooks.register(EtSTLib.getResourceLocation("modify_damage_source"), ModifyDamageSourceModifierHook.class, ModifyDamageSourceModifierHook.AllMerger::new, new ModifyDamageSourceModifierHook() {
-        @Override
-        public DamageSource modifyDamageSource(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical,DamageSource source) {
-            return source;
-        }
-    });
-
+    public static final ModuleHook<CorrectDropModifierHook> CORRECT_TOOL = ModifierHooks.register(EtSTLib.getResourceLocation("correct_tool"), CorrectDropModifierHook.class, CorrectDropModifierHook.FirstMerger::new,(tool, entry, state, drop)->drop);
+    public static final ModuleHook<EffectApplicableModifierHook> EFFECT_APPLICABLE = ModifierHooks.register(EtSTLib.getResourceLocation("effect_applicable"), EffectApplicableModifierHook.class, EffectApplicableModifierHook.FirstMerger::new,(tool, entry, equipmentSlot, instance, applicable)->applicable);
+    public static final ModuleHook<CriticalAttackModifierHook> CRITICAL_ATTACK = ModifierHooks.register(EtSTLib.getResourceLocation("critical_attack"), CriticalAttackModifierHook.class, CriticalAttackModifierHook.FirstMerger::new,(tool, entry, attacker, hand, target, sourceSlot, isFullyCharged, isExtraAttack, isCritical)->isCritical);
+    public static final ModuleHook<ModifyDamageSourceModifierHook> MODIFY_DAMAGE_SOURCE = ModifierHooks.register(EtSTLib.getResourceLocation("modify_damage_source"), ModifyDamageSourceModifierHook.class, ModifyDamageSourceModifierHook.AllMerger::new, new ModifyDamageSourceModifierHook() {});
     public static final ModuleHook<LeftClickModifierHook> LEFT_CLICK = ModifierHooks.register(EtSTLib.getResourceLocation("left_click"), LeftClickModifierHook.class, LeftClickModifierHook.AllMerger::new, new LeftClickModifierHook() {});
+    public static final ModuleHook<CustomBarDisplayModifierHook> CUSTOM_BAR = ModifierHooks.register(EtSTLib.getResourceLocation("custom_bar"), CustomBarDisplayModifierHook.class, CustomBarDisplayModifierHook.FirstMerger::new,new CustomBarDisplayModifierHook(){
+        @Override
+        public String barId(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
+            return null;
+        }
+
+        @Override
+        public boolean showBar(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
+            return false;
+        }
+
+        @Override
+        public Vec2 getBarXYSize(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
+            return null;
+        }
+
+        @Override
+        public Vec2 getBarXYPos(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
+            return null;
+        }
+
+        @Override
+        public int getBarRGB(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
+            return 0;
+        }
+    } );
 }
