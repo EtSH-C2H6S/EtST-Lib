@@ -73,5 +73,9 @@
 
   "modifier.etstlib.reality_breaker": "Reality Breaker",
   "modifier.etstlib.reality_breaker.flavor": "Break the reality that 'Target is invulnerable'",
-  "modifier.etstlib.reality_breaker.description":"Make your attack bypasses invulnerable."
+  "modifier.etstlib.reality_breaker.description":"Make your attack bypasses invulnerable.",
+
+  "modifier.etstlib.photosynthesis_guide": "Photosynthesis Homing",
+  "modifier.etstlib.photosynthesis_guide.flavor": "Chasing the photons.",
+  "modifier.etstlib.photosynthesis_guide.description":"Your arrows will slightly homing."
 }

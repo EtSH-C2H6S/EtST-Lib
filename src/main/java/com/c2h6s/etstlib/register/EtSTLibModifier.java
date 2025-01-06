@@ -1,17 +1,14 @@
 package com.c2h6s.etstlib.register;
 
 import com.c2h6s.etstlib.EtSTLib;
-import com.c2h6s.etstlib.tool.modifiers.Combat.ArmorPiercing;
-import com.c2h6s.etstlib.tool.modifiers.Combat.Critical;
-import com.c2h6s.etstlib.tool.modifiers.Combat.MagicStrike;
-import com.c2h6s.etstlib.tool.modifiers.Combat.RealityBreaker;
+import com.c2h6s.etstlib.tool.modifiers.Combat.Ranged.*;
+import com.c2h6s.etstlib.tool.modifiers.Combat.*;
 import com.c2h6s.etstlib.tool.modifiers.Integration.AEIntegration.*;
-import com.c2h6s.etstlib.tool.modifiers.Integration.BOTIntegration.ManaRepair;
-import com.c2h6s.etstlib.tool.modifiers.Integration.BOTIntegration.TerraBeam;
+import com.c2h6s.etstlib.tool.modifiers.Integration.BOTIntegration.*;
 import com.c2h6s.etstlib.tool.modifiers.Integration.PnCIntegration.*;
 import com.c2h6s.etstlib.tool.modifiers.Integration.MekIntegration.*;
 import com.c2h6s.etstlib.tool.modifiers.Common.*;
-import com.c2h6s.etstlib.tool.modifiers.Defense.*;
+import com.c2h6s.etstlib.tool.modifiers.Combat.Defense.*;
 import com.c2h6s.etstlib.tool.modifiers.Harvest.*;
 import slimeknights.tconstruct.library.modifiers.util.ModifierDeferredRegister;
 import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
@@ -34,6 +31,7 @@ public class EtSTLibModifier {
     public static final StaticModifier<Critical> critical =MODIFIERS.register("critical",Critical::new);
     public static final StaticModifier<ArmorPiercing> armor_piercing =MODIFIERS.register("armor_piercing",ArmorPiercing::new);
     public static final StaticModifier<RealityBreaker> reality_breaker =MODIFIERS.register("reality_breaker",RealityBreaker::new);
+    public static final StaticModifier<PhotosynthesisGuide> photosynthesis_guide =MODIFIERS.register("photosynthesis_guide",PhotosynthesisGuide::new);
 
 
     //PnC集成词条

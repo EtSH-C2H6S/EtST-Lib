@@ -3,11 +3,14 @@ package com.c2h6s.etstlib.mixin;
 import com.c2h6s.etstlib.MixinTemp;
 import com.c2h6s.etstlib.entity.specialDamageSources.LegacyDamageSource;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -18,8 +21,16 @@ import slimeknights.tconstruct.library.tools.capability.PersistentDataCapability
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 import slimeknights.tconstruct.library.tools.nbt.NamespacedNBT;
 
+import java.util.List;
+
+import static com.c2h6s.etstlib.MixinTemp.*;
+
 @Mixin(AbstractArrow.class)
 public class AbstractArrowMixin {
+    @Shadow
+    private IntOpenHashSet piercingIgnoreEntityIds;
+    @Shadow
+    protected boolean inGround;
     @Inject(method = "onHitEntity",at = @At(value = "HEAD"))
     private void getEntity(EntityHitResult hitResult, CallbackInfo ci){
         MixinTemp.arrowHit = hitResult.getEntity();
@@ -38,5 +49,18 @@ public class AbstractArrowMixin {
             return damageSource;
         }
         return source0;
+    }
+    @Inject(method = "tick",at = @At(value = "HEAD"))
+    private void tick(CallbackInfo ci){
+        AbstractArrow arrow = (AbstractArrow) (Object)this;
+        ModifierNBT nbt =null;
+        EntityModifierCapability.EntityModifiers cap= arrow.getCapability(EntityModifierCapability.CAPABILITY).orElse(null);
+        NamespacedNBT projectileData = PersistentDataCapability.getOrWarn(arrow);
+        if (cap!=null&&!cap.getModifiers().isEmpty()){
+            nbt = cap.getModifiers();
+            for (ModifierEntry entry:nbt.getModifiers()){
+                entry.getHook(EtSTLibHooks.PROJECTILE_TICK).onArrowTick(nbt,entry, arrow.level(), arrow, projectileData,hasBeenShot,leftOwner,inGround,piercingIgnoreEntityIds);
+            }
+        }
     }
 }

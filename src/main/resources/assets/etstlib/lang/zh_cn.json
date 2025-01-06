@@ -73,5 +73,9 @@
 
   "modifier.etstlib.reality_breaker": "现实毁灭者",
   "modifier.etstlib.reality_breaker.flavor": "毁灭“目标无敌”的现实",
-  "modifier.etstlib.reality_breaker.description":"你的攻击能无视无敌。"
+  "modifier.etstlib.reality_breaker.description":"你的攻击能无视无敌。",
+
+  "modifier.etstlib.photosynthesis_guide": "光合制导",
+  "modifier.etstlib.photosynthesis_guide.flavor": "在光的作用下，植物中的生长激素定向迁移，导致植物向光生长...",
+  "modifier.etstlib.photosynthesis_guide.description":"你射出的箭矢会略微追踪。"
 }

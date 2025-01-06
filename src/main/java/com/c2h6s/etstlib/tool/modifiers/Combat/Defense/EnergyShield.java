@@ -1,11 +1,9 @@
-package com.c2h6s.etstlib.tool.modifiers.Defense;
+package com.c2h6s.etstlib.tool.modifiers.Combat.Defense;
 
 import com.c2h6s.etstlib.tool.modifiers.base.BasicFEModifier;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.FEStorageProvider;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.armor.DamageBlockModifierHook;

@@ -11,6 +11,9 @@ public class MixinTemp {
     public static boolean isProcessingDamageSource;
     public static float damageBeforeArmorAbs;
     public static Entity arrowHit ;
+    public static boolean hasBeenShot;
+    public static boolean leftOwner;
+    public static boolean onGround;
     public static class attackUtilTemp{
         public static IToolStackView tool;
         public static LivingEntity attacker;

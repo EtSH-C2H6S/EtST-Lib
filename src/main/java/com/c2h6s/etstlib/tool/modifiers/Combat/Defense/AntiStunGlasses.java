@@ -1,4 +1,4 @@
-package com.c2h6s.etstlib.tool.modifiers.Defense;
+package com.c2h6s.etstlib.tool.modifiers.Combat.Defense;
 
 import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;
 import com.c2h6s.etstlib.util.EquipmentUtil;

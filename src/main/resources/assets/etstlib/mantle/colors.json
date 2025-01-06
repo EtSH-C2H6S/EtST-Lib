@@ -13,7 +13,8 @@
     "critical": "#FF6D6F",
     "armor_piercing": "#878787",
     "mana_repair": "#5794FF",
-    "terra_beam": "#78FF77"
+    "terra_beam": "#78FF77",
+    "photosynthesis_guide": "#2BE060"
   },
   "material.etstlib": {
 
