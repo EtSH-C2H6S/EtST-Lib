@@ -3,7 +3,6 @@ package com.c2h6s.etstlib.tool.modifiers.base;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import com.c2h6s.etstlib.register.EtSTLibToolStat;
 import com.c2h6s.etstlib.tool.hooks.CustomBarDisplayModifierHook;
-import com.c2h6s.etstlib.tool.hooks.EnergyStorage.CustomEnergyBarModifierHook;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.FEStorageProvider;
 import com.c2h6s.etstlib.util.MathUtil;
 import net.minecraft.network.chat.Component;

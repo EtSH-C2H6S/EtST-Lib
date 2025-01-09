@@ -2,7 +2,6 @@ package com.c2h6s.etstlib.tool.modifiers.base;
 
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import com.c2h6s.etstlib.register.EtSTLibToolStat;
-import com.c2h6s.etstlib.tool.hooks.AirStorage.CustomPressureBarModifierHook;
 import com.c2h6s.etstlib.tool.hooks.CustomBarDisplayModifierHook;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.PnCIntegration.AirStorageProvider;
 import net.minecraft.network.chat.Component;
