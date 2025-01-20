@@ -32,6 +32,7 @@ public class EtSTLibModifier {
     public static final StaticModifier<ArmorPiercing> armor_piercing =MODIFIERS.register("armor_piercing",ArmorPiercing::new);
     public static final StaticModifier<RealityBreaker> reality_breaker =MODIFIERS.register("reality_breaker",RealityBreaker::new);
     public static final StaticModifier<PhotosynthesisGuide> photosynthesis_guide =MODIFIERS.register("photosynthesis_guide",PhotosynthesisGuide::new);
+    public static final StaticModifier<WarpAttack> warp_attack =MODIFIERS.register("warp_attack",WarpAttack::new);
 
 
     //PnC集成词条

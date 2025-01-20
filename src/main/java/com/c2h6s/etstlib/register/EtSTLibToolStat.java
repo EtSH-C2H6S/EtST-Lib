@@ -1,6 +1,7 @@
 package com.c2h6s.etstlib.register;
 
 import com.c2h6s.etstlib.EtSTLib;
+import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.library.tools.stat.FloatToolStat;
 import slimeknights.tconstruct.library.tools.stat.ToolStatId;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;

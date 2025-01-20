@@ -7,6 +7,19 @@
   "tooltip.etstlib.pressure_bonus": "Aerial Bonus",
   "tooltip.etstlib.radiation_shielding": "Radiation Protection",
 
+
+  "tool_stat.etstlib.max_energy": "Max Energy: ",
+  "tool_stat.etstlib.max_energy.description": "Forge Energy capacity of your tool.",
+  "tool_stat.etstlib.max_transfer": "Max Energy Transfer: ",
+  "tool_stat.etstlib.max_transfer.description": "Limits the speed for tool to charge or discharge.",
+  "tool_stat.etstlib.basic_air_capacity": "Basic Air Capacity: ",
+  "tool_stat.etstlib.basic_air_capacity.description": "Basic air capacity for air from Pneumatic Craft.",
+  "tool_stat.etstlib.max_pressure": "Max Pressure: ",
+  "tool_stat.etstlib.max_pressure.description": "The max pressure your tool can take.\nWon't make your tool explode.",
+  "tool_stat.etstlib.radiation_protect": "Radiation Protection: ",
+  "tool_stat.etstlib.radiation_protect.description": "Shielding capability against radiation from Mekanism.",
+
+
   "modifier.etstlib.anti_stun_glasses": "Anti Stun Glasses",
   "modifier.etstlib.anti_stun_glasses.flavor": "Prevent you from stunning",
   "modifier.etstlib.anti_stun_glasses.description":"Cancel hurt shaking and field of view effect.Immune to nausea effect.",
@@ -77,5 +90,9 @@
 
   "modifier.etstlib.photosynthesis_guide": "Photosynthesis Homing",
   "modifier.etstlib.photosynthesis_guide.flavor": "Chasing the photons.",
-  "modifier.etstlib.photosynthesis_guide.description":"Your arrows will slightly homing."
+  "modifier.etstlib.photosynthesis_guide.description":"Your arrows will slightly homing.",
+
+  "modifier.etstlib.warp_attack": "Warp Attack",
+  "modifier.etstlib.warp_attack.flavor": "Auto-aim.",
+  "modifier.etstlib.warp_attack.description":"You will attack nearby targets when you missed."
 }

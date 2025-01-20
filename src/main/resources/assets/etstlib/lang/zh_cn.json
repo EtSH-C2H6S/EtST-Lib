@@ -7,6 +7,19 @@
   "tooltip.etstlib.pressure_bonus": "压缩空气属性增幅",
   "tooltip.etstlib.radiation_shielding": "辐射防护",
 
+
+  "tool_stat.etstlib.max_energy": "能量上限：",
+  "tool_stat.etstlib.max_energy.description": "你工具能存储的最大FE。",
+  "tool_stat.etstlib.max_transfer": "传输上限：",
+  "tool_stat.etstlib.max_transfer.description": "决定了工具充放电的最大速度。",
+  "tool_stat.etstlib.basic_air_capacity": "基础空气容量：",
+  "tool_stat.etstlib.basic_air_capacity.description": "压缩空气存储（PnC）的最大容量",
+  "tool_stat.etstlib.max_pressure": "最大压力：",
+  "tool_stat.etstlib.max_pressure.description": "你工具存储压缩空气的最大压力。\n过压不会使你工具爆炸。",
+  "tool_stat.etstlib.radiation_protect": "辐射抗性：",
+  "tool_stat.etstlib.radiation_protect.description": "对Mek辐射的防护能力。",
+
+
   "modifier.etstlib.anti_stun_glasses": "防眩目镜",
   "modifier.etstlib.anti_stun_glasses.flavor": "指的是防止屏幕前的你晕眩",
   "modifier.etstlib.anti_stun_glasses.description":"取消受伤时的屏幕抖动和视角场效果，免疫反胃。",
@@ -77,5 +90,9 @@
 
   "modifier.etstlib.photosynthesis_guide": "光合制导",
   "modifier.etstlib.photosynthesis_guide.flavor": "在光的作用下，植物中的生长激素定向迁移，导致植物向光生长...",
-  "modifier.etstlib.photosynthesis_guide.description":"你射出的箭矢会略微追踪。"
+  "modifier.etstlib.photosynthesis_guide.description":"你射出的箭矢会略微追踪。",
+
+  "modifier.etstlib.warp_attack": "折跃攻击",
+  "modifier.etstlib.warp_attack.flavor": "呱，是自瞄挂！",
+  "modifier.etstlib.warp_attack.description":"当你未命中敌人时你会命中敌人。"
 }

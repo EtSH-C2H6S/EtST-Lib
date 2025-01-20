@@ -11,8 +11,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,8 +30,7 @@ public abstract class ProjectileMixin extends Entity implements TraceableEntity 
         super(p_19870_, p_19871_);
     }
 
-    @Invoker("onHit")
-    protected abstract void onHit(HitResult hitResult);
+
 
     @Inject(method = "tick",at = @At(value = "HEAD"))
     private void tick(CallbackInfo ci){
@@ -43,7 +40,7 @@ public abstract class ProjectileMixin extends Entity implements TraceableEntity 
             MixinTemp.hasBeenShot = hasBeenShot;
             return;
         }
-        ModifierNBT nbt =null;
+        ModifierNBT nbt;
         EntityModifierCapability.EntityModifiers cap= projectile.getCapability(EntityModifierCapability.CAPABILITY).orElse(null);
         NamespacedNBT projectileData = PersistentDataCapability.getOrWarn(projectile);
         if (cap!=null&&!cap.getModifiers().isEmpty()){
