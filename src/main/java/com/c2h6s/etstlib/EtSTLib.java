@@ -13,7 +13,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -57,16 +56,16 @@ public class EtSTLib {
         EtSTLibPacketHandler.init();
 
         if (ModListConstants.MekLoaded){
-            EtSTLibModifier.Mek_MODIFIERS.register(modEventBus);
+            EtSTLibModifier.EtSTLibModifierMek.Mek_MODIFIERS.register(modEventBus);
         }
         if (ModListConstants.PnCLoaded){
-            EtSTLibModifier.PnC_MODIFIERS.register(modEventBus);
+            EtSTLibModifier.EtSTLibModifierPnC.PnC_MODIFIERS.register(modEventBus);
         }
         if (ModListConstants.AE2Loaded){
-            EtSTLibModifier.AE_MODIFIERS.register(modEventBus);
+            EtSTLibModifier.EtSTLibModifierAE.AE_MODIFIERS.register(modEventBus);
         }
         if (ModListConstants.BOTLoaded){
-            EtSTLibModifier.BOT_MODIFIERS.register(modEventBus);
+            EtSTLibModifier.EtSTLibModifierBOT.BOT_MODIFIERS.register(modEventBus);
         }
 
     }

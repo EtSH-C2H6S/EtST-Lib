@@ -28,7 +28,7 @@ public class ChargerBlockEntityMixin {
             ItemStack held = player.getInventory().getSelected();
             if (held.getItem() instanceof IModifiable) {
                 ToolStack tool = ToolStack.from(held);
-                if (tool.getDamage()>0&&tool.getModifierLevel(EtSTLibModifier.applied_fixing.get())>0) {
+                if (tool.getDamage()>0&&tool.getModifierLevel(EtSTLibModifier.EtSTLibModifierAE.applied_fixing.get())>0) {
                     held = player.getInventory().removeItem(player.getInventory().selected, 1);
                     this.inv.setItemDirect(0, held);
                 }
@@ -41,9 +41,9 @@ public class ChargerBlockEntityMixin {
         ChargerBlockEntity entity = (ChargerBlockEntity) (Object) this;
         ItemStack stack = inv.getStackInSlot(0);
         if (!stack.isEmpty()){
-            if (stack.getItem() instanceof IModifiable&& ToolStack.from(stack).getModifierLevel(EtSTLibModifier.applied_fixing.get())>0){
+            if (stack.getItem() instanceof IModifiable&& ToolStack.from(stack).getModifierLevel(EtSTLibModifier.EtSTLibModifierAE.applied_fixing.get())>0){
                 ToolStack tool = ToolStack.from(stack);
-                int modifierLevel = tool.getModifierLevel(EtSTLibModifier.applied_fixing.get());
+                int modifierLevel = tool.getModifierLevel(EtSTLibModifier.EtSTLibModifierAE.applied_fixing.get());
                 int maxRepair = (int) Math.min(entity.getAEMaxPower()/100,tool.getDamage());
                 maxRepair = Math.min(maxRepair,modifierLevel*4);
                 int require = maxRepair*100;

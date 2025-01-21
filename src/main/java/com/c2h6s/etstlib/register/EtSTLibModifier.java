@@ -15,10 +15,7 @@ import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 
 public class EtSTLibModifier {
     public static ModifierDeferredRegister MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
-    public static ModifierDeferredRegister PnC_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
-    public static ModifierDeferredRegister Mek_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
-    public static ModifierDeferredRegister AE_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
-    public static ModifierDeferredRegister BOT_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
+
 
     //无集成词条
     public static final StaticModifier<AntiStunGlasses> anti_stun_glasses =MODIFIERS.register("anti_stun_glasses",AntiStunGlasses::new);
@@ -36,20 +33,32 @@ public class EtSTLibModifier {
 
 
     //PnC集成词条
-    public static final StaticModifier<AerialReinforced> aerial_reinforced =PnC_MODIFIERS.register("aerial_reinforced",AerialReinforced::new);
+    public static class EtSTLibModifierPnC{
+        public static ModifierDeferredRegister PnC_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
+        public static final StaticModifier<AerialReinforced> aerial_reinforced =PnC_MODIFIERS.register("aerial_reinforced",AerialReinforced::new);
+    }
+
 
 
     //mek集成词条
-    public static final StaticModifier<RadiationShielding> radiation_shielding = Mek_MODIFIERS.register("radiation_shielding",RadiationShielding::new);
-    public static final StaticModifier<RadiationInflict> radiation_inflict = Mek_MODIFIERS.register("radiation_inflict",RadiationInflict::new);
-
+    public static class EtSTLibModifierMek {
+        public static ModifierDeferredRegister Mek_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
+        public static final StaticModifier<RadiationShielding> radiation_shielding = Mek_MODIFIERS.register("radiation_shielding", RadiationShielding::new);
+        public static final StaticModifier<RadiationInflict> radiation_inflict = Mek_MODIFIERS.register("radiation_inflict", RadiationInflict::new);
+    }
 
     //AE集成词条
-    public static final StaticModifier<AppliedFixing> applied_fixing = Mek_MODIFIERS.register("applied_fixing",AppliedFixing::new);
-    public static final StaticModifier<EnergeticAttack> energetic_attack = Mek_MODIFIERS.register("energetic_attack",EnergeticAttack::new);
-
+    public static class EtSTLibModifierAE {
+        public static ModifierDeferredRegister AE_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
+        public static final StaticModifier<AppliedFixing> applied_fixing = AE_MODIFIERS.register("applied_fixing", AppliedFixing::new);
+        public static final StaticModifier<EnergeticAttack> energetic_attack = AE_MODIFIERS.register("energetic_attack", EnergeticAttack::new);
+    }
 
     //植魔集成词条
-    public static final StaticModifier<ManaRepair> mana_repair = BOT_MODIFIERS.register("mana_repair",ManaRepair::new);
-    public static final StaticModifier<TerraBeam> terra_beam = BOT_MODIFIERS.register("terra_beam",TerraBeam::new);
+    public static class EtSTLibModifierBOT {
+
+        public static ModifierDeferredRegister BOT_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
+        public static final StaticModifier<ManaRepair> mana_repair = BOT_MODIFIERS.register("mana_repair", ManaRepair::new);
+        public static final StaticModifier<TerraBeam> terra_beam = BOT_MODIFIERS.register("terra_beam", TerraBeam::new);
+    }
 }

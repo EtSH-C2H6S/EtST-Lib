@@ -12,19 +12,22 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
-import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
+import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
-import slimeknights.tconstruct.library.tools.nbt.NamespacedNBT;
+
+import javax.annotation.Nullable;
+
+import static com.c2h6s.etstlib.util.ModListConstants.AE2Loaded;
 
 public class EnergeticAttack extends EtSTBaseModifier {
     @Override
     public void afterMeleeHit (IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
         Entity entity = context.getTarget();
         Level level  = context.getLevel();
-        if (!level.isClientSide&&context.isFullyCharged()) {
+        if (!level.isClientSide&&context.isFullyCharged()&&AE2Loaded) {
             entity.hurt(LegacyDamageSource.indirectMagic(context.getAttacker()).setBypassInvulnerableTime(), 3 + modifier.getLevel());
             final AABB entityBoundingBox = entity.getBoundingBox();
             final float dx = (float) (entity.level().getRandom().nextFloat() * entity.getBbWidth() + entityBoundingBox.minX);
@@ -36,10 +39,10 @@ public class EnergeticAttack extends EtSTBaseModifier {
     }
 
     @Override
-    public boolean onProjectileHitEntity(ModifierNBT modifiers, NamespacedNBT persistentData, ModifierEntry modifier, Projectile projectile, EntityHitResult hit, @Nullable LivingEntity attacker, @Nullable LivingEntity target) {
+    public boolean onProjectileHitEntity(ModifierNBT modifiers, ModDataNBT persistentData, ModifierEntry modifier, Projectile projectile, EntityHitResult hit, @javax.annotation.Nullable LivingEntity attacker, @Nullable LivingEntity target) {
         if (target!=null&&projectile instanceof AbstractArrow arrow&&arrow.isCritArrow()){
             Level level  = target.level();
-            if (!level.isClientSide) {
+            if (!level.isClientSide&&AE2Loaded) {
                 target.invulnerableTime = 0;
                 target.hurt(new DamageSource(level.damageSources().magic().typeHolder(), attacker), 3 + modifier.getLevel());
                 target.invulnerableTime = 0;

@@ -27,7 +27,7 @@ import slimeknights.tconstruct.library.modifiers.hook.ranged.ProjectileLaunchMod
 import slimeknights.tconstruct.library.module.ModuleHookMap;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
-import slimeknights.tconstruct.library.tools.nbt.NamespacedNBT;
+import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
 import java.util.List;
 import java.util.Optional;
@@ -96,9 +96,9 @@ public class AerialReinforced extends BasicPressurizableModifier implements Brea
     }
 
     @Override
-    public void onProjectileLaunch(IToolStackView tool, ModifierEntry modifier, LivingEntity livingEntity, Projectile projectile, @Nullable AbstractArrow abstractArrow, NamespacedNBT namespacedNBT, boolean b) {
+    public void onProjectileLaunch(IToolStackView tool, ModifierEntry modifier, LivingEntity shooter, Projectile projectile, @javax.annotation.Nullable AbstractArrow arrow, ModDataNBT persistentData, boolean primary) {
         float multiplier =1+getBonus(tool,modifier);
-        if (AirStorageProvider.getAir(tool)>100&&projectile instanceof AbstractArrow arrow){
+        if (AirStorageProvider.getAir(tool)>100&&arrow!=null){
             AirStorageProvider.addAir(tool,-(int) (100*multiplier));
             arrow.setBaseDamage(arrow.getBaseDamage()*multiplier);
         }

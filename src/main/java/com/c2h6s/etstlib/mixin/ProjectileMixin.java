@@ -18,8 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.capability.EntityModifierCapability;
 import slimeknights.tconstruct.library.tools.capability.PersistentDataCapability;
+import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
-import slimeknights.tconstruct.library.tools.nbt.NamespacedNBT;
 
 @Mixin(Projectile.class)
 public abstract class ProjectileMixin extends Entity implements TraceableEntity {
@@ -42,7 +42,7 @@ public abstract class ProjectileMixin extends Entity implements TraceableEntity 
         }
         ModifierNBT nbt;
         EntityModifierCapability.EntityModifiers cap= projectile.getCapability(EntityModifierCapability.CAPABILITY).orElse(null);
-        NamespacedNBT projectileData = PersistentDataCapability.getOrWarn(projectile);
+        ModDataNBT projectileData = PersistentDataCapability.getOrWarn(projectile);
         if (cap!=null&&!cap.getModifiers().isEmpty()){
             nbt = cap.getModifiers();
             for (ModifierEntry entry:nbt.getModifiers()){

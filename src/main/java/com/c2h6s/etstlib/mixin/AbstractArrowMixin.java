@@ -18,8 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.capability.EntityModifierCapability;
 import slimeknights.tconstruct.library.tools.capability.PersistentDataCapability;
+import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
-import slimeknights.tconstruct.library.tools.nbt.NamespacedNBT;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class AbstractArrowMixin {
         AbstractArrow arrow = (AbstractArrow) (Object) this;
         ModifierNBT modifiers = EntityModifierCapability.getOrEmpty(arrow);
         if (!modifiers.isEmpty()&&MixinTemp.arrowHit instanceof LivingEntity target) {
-            NamespacedNBT nbt = PersistentDataCapability.getOrWarn(arrow);
+            ModDataNBT nbt = PersistentDataCapability.getOrWarn(arrow);
             LivingEntity attacker = arrow.getOwner() instanceof LivingEntity living?living:null;
             LegacyDamageSource damageSource = new LegacyDamageSource(source0);
             for (ModifierEntry entry:modifiers.getModifiers()){
@@ -55,7 +55,7 @@ public class AbstractArrowMixin {
         AbstractArrow arrow = (AbstractArrow) (Object)this;
         ModifierNBT nbt =null;
         EntityModifierCapability.EntityModifiers cap= arrow.getCapability(EntityModifierCapability.CAPABILITY).orElse(null);
-        NamespacedNBT projectileData = PersistentDataCapability.getOrWarn(arrow);
+        ModDataNBT projectileData = PersistentDataCapability.getOrWarn(arrow);
         if (cap!=null&&!cap.getModifiers().isEmpty()){
             nbt = cap.getModifiers();
             for (ModifierEntry entry:nbt.getModifiers()){

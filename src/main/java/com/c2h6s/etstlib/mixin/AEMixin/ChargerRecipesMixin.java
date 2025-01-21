@@ -17,7 +17,7 @@ public class ChargerRecipesMixin {
     private static void allowToolInsert(Level level, ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         if (stack.getItem() instanceof IModifiable) {
             ToolStack tool = ToolStack.from(stack);
-            if (tool.getModifierLevel(EtSTLibModifier.applied_fixing.get()) > 0 && tool.getDamage() > 0) {
+            if (tool.getModifierLevel(EtSTLibModifier.EtSTLibModifierAE.applied_fixing.get()) > 0 && tool.getDamage() > 0) {
                 cir.setReturnValue(true);
             }
         }

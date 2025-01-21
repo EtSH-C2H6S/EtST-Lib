@@ -14,8 +14,8 @@ import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.module.ModuleHook;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
+import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
-import slimeknights.tconstruct.library.tools.nbt.NamespacedNBT;
 
 import java.util.List;
 
@@ -53,12 +53,12 @@ public class EtSTLibHooks {
     } );
     public static final ModuleHook<ProjectileTickModifierHook> PROJECTILE_TICK = ModifierHooks.register(EtSTLib.getResourceLocation("projectile_tick"), ProjectileTickModifierHook.class, ProjectileTickModifierHook.AllMerger::new, new ProjectileTickModifierHook() {
         @Override
-        public void onProjectileTick(ModifierNBT modifiers,ModifierEntry entry, Level level, @NotNull Projectile projectile, NamespacedNBT persistentData, boolean hasBeenShot, boolean leftOwner) {
+        public void onProjectileTick(ModifierNBT modifiers, ModifierEntry entry, Level level, @NotNull Projectile projectile, ModDataNBT persistentData, boolean hasBeenShot, boolean leftOwner) {
 
         }
 
         @Override
-        public void onArrowTick(ModifierNBT modifiers, ModifierEntry entry, Level level, @NotNull AbstractArrow arrow, NamespacedNBT persistentData, boolean hasBeenShot, boolean leftOwner,boolean inGround, @Nullable IntOpenHashSet piercingIgnoreEntityIds) {
+        public void onArrowTick(ModifierNBT modifiers, ModifierEntry entry, Level level, @NotNull AbstractArrow arrow, ModDataNBT persistentData, boolean hasBeenShot, boolean leftOwner,boolean inGround, @Nullable IntOpenHashSet piercingIgnoreEntityIds) {
 
         }
     });
