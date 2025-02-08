@@ -10,6 +10,7 @@ import com.c2h6s.etstlib.tool.modifiers.Integration.MekIntegration.*;
 import com.c2h6s.etstlib.tool.modifiers.Common.*;
 import com.c2h6s.etstlib.tool.modifiers.Combat.Defense.*;
 import com.c2h6s.etstlib.tool.modifiers.Harvest.*;
+import com.c2h6s.etstlib.tool.modifiers.Test;
 import slimeknights.tconstruct.library.modifiers.util.ModifierDeferredRegister;
 import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 
@@ -61,4 +62,6 @@ public class EtSTLibModifier {
         public static final StaticModifier<ManaRepair> mana_repair = BOT_MODIFIERS.register("mana_repair", ManaRepair::new);
         public static final StaticModifier<TerraBeam> terra_beam = BOT_MODIFIERS.register("terra_beam", TerraBeam::new);
     }
+
+    public static final StaticModifier<Test> test = MODIFIERS.register("test", Test::new);
 }
