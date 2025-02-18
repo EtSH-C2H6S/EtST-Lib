@@ -31,7 +31,6 @@ import java.util.List;
 import static com.c2h6s.etstlib.util.EntityInRangeUtil.*;
 
 public class PhotosynthesisGuide extends EtSTBaseModifier implements ProjectileTickModifierHook {
-    public static final ResourceLocation HOMING_TICK =EtSTLib.getResourceLocation("homing_tick");
 
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {

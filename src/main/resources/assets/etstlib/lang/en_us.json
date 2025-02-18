@@ -86,7 +86,7 @@
 
   "modifier.etstlib.reality_breaker": "Reality Breaker",
   "modifier.etstlib.reality_breaker.flavor": "Break the reality that 'Target is invulnerable'",
-  "modifier.etstlib.reality_breaker.description":"Make your attack bypasses invulnerable.",
+  "modifier.etstlib.reality_breaker.description":"Make your attack bypasses most of vanilla defense.",
 
   "modifier.etstlib.photosynthesis_guide": "Photosynthesis Homing",
   "modifier.etstlib.photosynthesis_guide.flavor": "Chasing the photons.",
@@ -94,5 +94,13 @@
 
   "modifier.etstlib.warp_attack": "Warp Attack",
   "modifier.etstlib.warp_attack.flavor": "Auto-aim.",
-  "modifier.etstlib.warp_attack.description":"You will attack nearby targets when you missed."
+  "modifier.etstlib.warp_attack.description":"You will attack nearby targets when you missed.",
+
+  "modifier.etstlib.anisotropy": "Anisotropy",
+  "modifier.etstlib.anisotropy.flavor": "Basic feature of mono-crystals.",
+  "modifier.etstlib.anisotropy.description": "Increase damage on full charge attack.Decrease damage otherwise.\nAffects damage greater on tools less damaged.With a maximum 20% effect each level.",
+
+  "modifier.etstlib.crystal_armor": "Crystal Armor",
+  "modifier.etstlib.crystal_armor.flavor": "Basic feature of mono-crystals.",
+  "modifier.etstlib.crystal_armor.description": "When hurt, reduces 20% of the damage if the damage is no more than 10, otherwise increase the damage by 10%."
 }

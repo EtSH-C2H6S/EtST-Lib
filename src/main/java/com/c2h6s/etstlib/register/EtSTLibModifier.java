@@ -17,25 +17,29 @@ import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 public class EtSTLibModifier {
     public static ModifierDeferredRegister MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
 
+    //示例词条
+    public static final StaticModifier<MagicStrike> magic_strike =MODIFIERS.register("magic_strike",MagicStrike::new);
+    public static final StaticModifier<Critical> critical =MODIFIERS.register("critical",Critical::new);
+    public static final StaticModifier<ArmorPiercing> armor_piercing =MODIFIERS.register("armor_piercing",ArmorPiercing::new);
+    public static final StaticModifier<PhotosynthesisGuide> photosynthesis_guide =MODIFIERS.register("photosynthesis_guide",PhotosynthesisGuide::new);
+    public static final StaticModifier<EnergyLoaded> energy_loaded =MODIFIERS.register("energy_loaded",EnergyLoaded::new);
+    public static final StaticModifier<AtomicDecompose> atomic_decompose =MODIFIERS.register("atomic_decompose",AtomicDecompose::new);
 
     //无集成词条
     public static final StaticModifier<AntiStunGlasses> anti_stun_glasses =MODIFIERS.register("anti_stun_glasses",AntiStunGlasses::new);
     public static final StaticModifier<EnergyShield> energy_shield =MODIFIERS.register("energy_shield",EnergyShield::new);
-    public static final StaticModifier<EnergyLoaded> energy_loaded =MODIFIERS.register("energy_loaded",EnergyLoaded::new);
-    public static final StaticModifier<AtomicDecompose> atomic_decompose =MODIFIERS.register("atomic_decompose",AtomicDecompose::new);
     public static final StaticModifier<Clearing> clearing =MODIFIERS.register("clearing",Clearing::new);
     public static final StaticModifier<MomentumAccelerate> momentum_accelerate =MODIFIERS.register("momentum_accelerate",MomentumAccelerate::new);
-    public static final StaticModifier<MagicStrike> magic_strike =MODIFIERS.register("magic_strike",MagicStrike::new);
-    public static final StaticModifier<Critical> critical =MODIFIERS.register("critical",Critical::new);
-    public static final StaticModifier<ArmorPiercing> armor_piercing =MODIFIERS.register("armor_piercing",ArmorPiercing::new);
-    public static final StaticModifier<RealityBreaker> reality_breaker =MODIFIERS.register("reality_breaker",RealityBreaker::new);
-    public static final StaticModifier<PhotosynthesisGuide> photosynthesis_guide =MODIFIERS.register("photosynthesis_guide",PhotosynthesisGuide::new);
     public static final StaticModifier<WarpAttack> warp_attack =MODIFIERS.register("warp_attack",WarpAttack::new);
+    public static final StaticModifier<Anisotropy> ANISOTROPY = MODIFIERS.register("anisotropy", Anisotropy::new);
+    public static final StaticModifier<CrystalArmor> CRYSTAL_ARMOR = MODIFIERS.register("crystal_armor", CrystalArmor::new);
+    public static final StaticModifier<RealityBreaker> reality_breaker =MODIFIERS.register("reality_breaker",RealityBreaker::new);
 
 
     //PnC集成词条
     public static class EtSTLibModifierPnC{
         public static ModifierDeferredRegister PnC_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
+        //示例词条
         public static final StaticModifier<AerialReinforced> aerial_reinforced =PnC_MODIFIERS.register("aerial_reinforced",AerialReinforced::new);
     }
 

@@ -79,14 +79,8 @@ public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, 
     public void modifierOnInventoryTick(IToolStackView tool, ModifierEntry modifier, Level world, LivingEntity holder, int itemSlot, boolean isSelected, boolean isCorrectSlot, ItemStack stack){
 
     }
-    public boolean onEffectApplicable(IToolStackView tool, ModifierEntry entry, EquipmentSlot slot, MobEffectInstance instance, boolean notApplicable) {
-        return notApplicable;
-    }
     public Component onModifierRemoved(IToolStackView tool, Modifier modifier) {
         return null;
-    }
-    public boolean modifierSetCritical(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical) {
-        return isCritical;
     }
 
 

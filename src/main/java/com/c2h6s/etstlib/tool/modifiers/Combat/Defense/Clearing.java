@@ -1,5 +1,7 @@
 package com.c2h6s.etstlib.tool.modifiers.Combat.Defense;
 
+import com.c2h6s.etstlib.register.EtSTLibHooks;
+import com.c2h6s.etstlib.tool.hooks.EffectApplicableModifierHook;
 import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;
 import com.c2h6s.etstlib.util.EquipmentUtil;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -9,12 +11,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
+import slimeknights.tconstruct.library.modifiers.modules.armor.EffectImmunityModule;
+import slimeknights.tconstruct.library.module.ModuleHookMap;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
 public class Clearing extends EtSTBaseModifier {
     @Override
-    public boolean onEffectApplicable(IToolStackView tool, ModifierEntry entry, EquipmentSlot slot, MobEffectInstance instance, boolean notApplicable) {
-        return EquipmentUtil.ARMOR.contains(slot) && (instance.getEffect() == MobEffects.POISON||instance.getEffect() == MobEffects.WITHER);
+    protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
+        super.registerHooks(hookBuilder);
+        hookBuilder.addModule(new EffectImmunityModule(MobEffects.POISON));
+        hookBuilder.addModule(new EffectImmunityModule(MobEffects.WITHER));
     }
 
     @Override

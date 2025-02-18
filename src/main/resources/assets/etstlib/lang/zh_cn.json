@@ -84,9 +84,9 @@
   "modifier.etstlib.terra_beam.flavor": "并非泰拉",
   "modifier.etstlib.terra_beam.description":"挥舞武器时，消耗魔力释放泰拉射线。",
 
-  "modifier.etstlib.reality_breaker": "现实毁灭者",
-  "modifier.etstlib.reality_breaker.flavor": "毁灭“目标无敌”的现实",
-  "modifier.etstlib.reality_breaker.description":"你的攻击能无视无敌。",
+  "modifier.etstlib.reality_breaker": "现实破坏者",
+  "modifier.etstlib.reality_breaker.flavor": "破坏“目标无敌”的现实",
+  "modifier.etstlib.reality_breaker.description":"使你的攻击穿透大部分原版防御手段。",
 
   "modifier.etstlib.photosynthesis_guide": "光合制导",
   "modifier.etstlib.photosynthesis_guide.flavor": "在光的作用下，植物中的生长激素定向迁移，导致植物向光生长...",
@@ -94,5 +94,13 @@
 
   "modifier.etstlib.warp_attack": "折跃攻击",
   "modifier.etstlib.warp_attack.flavor": "呱，是自瞄挂！",
-  "modifier.etstlib.warp_attack.description":"当你未命中敌人时你会命中敌人。"
+  "modifier.etstlib.warp_attack.description":"当你未命中敌人时你会命中敌人。",
+
+  "modifier.etstlib.anisotropy": "各向异性",
+  "modifier.etstlib.anisotropy.flavor": "单晶的基本特性",
+  "modifier.etstlib.anisotropy.description": "增加工具全力打击时的伤害，减少不全力打击时的伤害，工具耐久越满这个效果越明显。\n每级最大增加/减少20%伤害，远程仅生效一半。",
+
+  "modifier.etstlib.crystal_armor": "晶质护甲",
+  "modifier.etstlib.crystal_armor.flavor": "单晶的基本特性",
+  "modifier.etstlib.crystal_armor.description": "受到伤害时，若不超过10点则减伤20%，否则增伤10%，不计算护甲。"
 }
