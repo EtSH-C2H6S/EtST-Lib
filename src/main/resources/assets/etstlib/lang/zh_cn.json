@@ -102,5 +102,9 @@
 
   "modifier.etstlib.crystal_armor": "晶质护甲",
   "modifier.etstlib.crystal_armor.flavor": "单晶的基本特性",
-  "modifier.etstlib.crystal_armor.description": "受到伤害时，若不超过10点则减伤20%，否则增伤10%，不计算护甲。"
+  "modifier.etstlib.crystal_armor.description": "受到伤害时，若不超过10点则减伤20%，否则增伤10%，不计算护甲。",
+
+  "modifier.etstlib.glowing": "外发光",
+  "modifier.etstlib.glowing.flavor": "荧光物质",
+  "modifier.etstlib.glowing.description": "装备时获得夜视效果，被攻击时高亮攻击者。"
 }

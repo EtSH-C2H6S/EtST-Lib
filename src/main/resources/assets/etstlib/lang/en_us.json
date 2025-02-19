@@ -102,5 +102,9 @@
 
   "modifier.etstlib.crystal_armor": "Crystal Armor",
   "modifier.etstlib.crystal_armor.flavor": "Basic feature of mono-crystals.",
-  "modifier.etstlib.crystal_armor.description": "When hurt, reduces 20% of the damage if the damage is no more than 10, otherwise increase the damage by 10%."
+  "modifier.etstlib.crystal_armor.description": "When hurt, reduces 20% of the damage if the damage is no more than 10, otherwise increase the damage by 10%.",
+
+  "modifier.etstlib.glowing": "Glowing",
+  "modifier.etstlib.glowing.flavor": "Glowing materials.",
+  "modifier.etstlib.glowing.description": "Gain night vision effect on wearing.Inflict attacker with glowing effect."
 }
