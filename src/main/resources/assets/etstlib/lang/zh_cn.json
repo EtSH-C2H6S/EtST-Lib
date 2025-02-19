@@ -106,5 +106,5 @@
 
   "modifier.etstlib.glowing": "外发光",
   "modifier.etstlib.glowing.flavor": "荧光物质",
-  "modifier.etstlib.glowing.description": "装备时获得夜视效果，被攻击时高亮攻击者。"
+  "modifier.etstlib.glowing.description": "装备时获得夜视效果，攻击/被攻击时高亮对方。"
 }

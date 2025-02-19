@@ -19,9 +19,11 @@ import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.behavior.AttributesModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.build.ToolStatsModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.mining.BlockBreakModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.mining.BreakSpeedModifierHook;
 import slimeknights.tconstruct.library.module.ModuleHookMap;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
+import slimeknights.tconstruct.library.tools.context.ToolHarvestContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.stat.ModifierStatsBuilder;
@@ -30,7 +32,7 @@ import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
-public class MomentumAccelerate extends EtSTBaseModifier implements ToolStatsModifierHook , AttributesModifierHook, BreakSpeedModifierHook {
+public class MomentumAccelerate extends EtSTBaseModifier implements ToolStatsModifierHook , AttributesModifierHook, BreakSpeedModifierHook , BlockBreakModifierHook {
     public static final ResourceLocation LOCATION_ACCEL = EtSTLib.getResourceLocation("momentum_accelerate");
 
     @Override
@@ -43,7 +45,7 @@ public class MomentumAccelerate extends EtSTBaseModifier implements ToolStatsMod
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
         super.registerHooks(hookBuilder);
-        hookBuilder.addHook(this, ModifierHooks.TOOL_STATS,ModifierHooks.ATTRIBUTES,ModifierHooks.BREAK_SPEED);
+        hookBuilder.addHook(this, ModifierHooks.TOOL_STATS,ModifierHooks.ATTRIBUTES,ModifierHooks.BREAK_SPEED,ModifierHooks.BLOCK_BREAK);
     }
 
     @Override
@@ -76,6 +78,13 @@ public class MomentumAccelerate extends EtSTBaseModifier implements ToolStatsMod
     public void onBreakSpeed(IToolStackView tool, ModifierEntry modifierEntry, PlayerEvent.BreakSpeed event, Direction direction, boolean b, float v) {
         if (tool.getPersistentData().getFloat(LOCATION_ACCEL)>0) {
             event.setNewSpeed(event.getNewSpeed()*(1+tool.getPersistentData().getFloat(LOCATION_ACCEL)));
+        }
+    }
+
+    @Override
+    public void afterBlockBreak(IToolStackView tool, ModifierEntry modifier, ToolHarvestContext toolHarvestContext) {
+        if (tool.getPersistentData().getFloat(LOCATION_ACCEL)<modifier.getLevel()){
+            tool.getPersistentData().putFloat(LOCATION_ACCEL,tool.getPersistentData().getFloat(LOCATION_ACCEL)+0.05f*modifier.getLevel());
         }
     }
 }
