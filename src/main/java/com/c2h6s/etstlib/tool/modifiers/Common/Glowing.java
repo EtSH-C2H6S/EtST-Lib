@@ -31,7 +31,7 @@ public class Glowing extends EtSTBaseModifier implements OnAttackedModifierHook 
     @Override
     public void modifierOnInventoryTick(IToolStackView tool, ModifierEntry modifier, Level world, LivingEntity holder, int itemSlot, boolean isSelected, boolean isCorrectSlot, ItemStack stack) {
         if (isCorrectSlot){
-            holder.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION,320));
+            holder.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION,320,0,false,false));
         }
     }
 
