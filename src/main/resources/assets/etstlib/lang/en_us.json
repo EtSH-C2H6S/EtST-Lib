@@ -46,7 +46,7 @@
 
   "modifier.etstlib.aerial_reinforced": "Arial Dynamic",
   "modifier.etstlib.aerial_reinforced.flavor": "Pressure reinforced!",
-  "modifier.etstlib.aerial_reinforced.description":"Boosts attack speed,attack damage,arrow speed,armor,armor toughness and knockback resistance.Consume air instead of durability on use.",
+  "modifier.etstlib.aerial_reinforced.description":"Boosts many stats when compressed air is loaded.Consume air instead of durability on use.",
 
   "modifier.etstlib.clearing": "Clearing",
   "modifier.etstlib.clearing.flavor": "Cleaning dirty.",
@@ -98,13 +98,13 @@
 
   "modifier.etstlib.anisotropy": "Anisotropy",
   "modifier.etstlib.anisotropy.flavor": "Basic feature of mono-crystals.",
-  "modifier.etstlib.anisotropy.description": "Increase damage on full charge attack.Decrease damage otherwise.\nAffects damage greater on tools less damaged.With a maximum 20% effect each level.",
+  "modifier.etstlib.anisotropy.description": "Increase damage on full charge attack.Decrease damage otherwise.",
 
   "modifier.etstlib.crystal_armor": "Crystal Armor",
   "modifier.etstlib.crystal_armor.flavor": "Basic feature of mono-crystals.",
-  "modifier.etstlib.crystal_armor.description": "When hurt, reduces 20% of the damage if the damage is no more than 10, otherwise increase the damage by 10%.",
+  "modifier.etstlib.crystal_armor.description": "When hurt, reduces the damage if the damage is no more than 5, otherwise increase the damage.",
 
   "modifier.etstlib.glowing": "Glowing",
   "modifier.etstlib.glowing.flavor": "Glowing materials.",
-  "modifier.etstlib.glowing.description": "Gain night vision effect on wearing.Inflict attacker with glowing effect."
+  "modifier.etstlib.glowing.description": "Gain night vision effect on wearing.Inflict your enemy with glowing effect."
 }

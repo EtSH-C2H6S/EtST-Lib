@@ -12,7 +12,7 @@ import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 
 public class Anisotropy extends EtSTBaseModifier {
     public float getBonus(IToolStackView tool,int lvl){
-        return tool.getCurrentDurability()*lvl/(tool.getCurrentDurability()+tool.getDamage()*5f);
+        return tool.getCurrentDurability()*lvl/((tool.getCurrentDurability()+tool.getDamage())*5f);
     }
     @Override
     public float onGetMeleeDamage(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float baseDamage, float damage) {

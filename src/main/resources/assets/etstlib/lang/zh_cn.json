@@ -46,7 +46,7 @@
 
   "modifier.etstlib.aerial_reinforced": "空气动力学",
   "modifier.etstlib.aerial_reinforced.flavor": "压缩空气强化！",
-  "modifier.etstlib.aerial_reinforced.description":"根据气压提升攻击速度、攻击力、箭矢速度、护甲、护甲韧性和击退抗性。使用时优先消耗压缩空气而非耐久。",
+  "modifier.etstlib.aerial_reinforced.description":"根据气压提升玩家的部分属性。使用时优先消耗压缩空气而非耐久。",
 
   "modifier.etstlib.clearing": "洁净",
   "modifier.etstlib.clearing.flavor": "清除污浊",
@@ -98,11 +98,11 @@
 
   "modifier.etstlib.anisotropy": "各向异性",
   "modifier.etstlib.anisotropy.flavor": "单晶的基本特性",
-  "modifier.etstlib.anisotropy.description": "增加工具全力打击时的伤害，减少不全力打击时的伤害，工具耐久越满这个效果越明显。\n每级最大增加/减少20%伤害，远程仅生效一半。",
+  "modifier.etstlib.anisotropy.description": "增加工具全力打击时的伤害，减少不全力打击时的伤害，工具耐久越满这个效果越明显。",
 
   "modifier.etstlib.crystal_armor": "晶质护甲",
   "modifier.etstlib.crystal_armor.flavor": "单晶的基本特性",
-  "modifier.etstlib.crystal_armor.description": "受到伤害时，若不超过10点则减伤20%，否则增伤10%，不计算护甲。",
+  "modifier.etstlib.crystal_armor.description": "受伤时减少小于5点的伤害，增加大于5点的伤害。",
 
   "modifier.etstlib.glowing": "外发光",
   "modifier.etstlib.glowing.flavor": "荧光物质",
