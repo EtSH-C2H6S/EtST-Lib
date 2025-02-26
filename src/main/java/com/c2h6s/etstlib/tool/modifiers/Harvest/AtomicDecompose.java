@@ -15,6 +15,11 @@ import slimeknights.tconstruct.library.tools.stat.ToolStats;
 
 public class AtomicDecompose extends EtSTBaseModifier implements BreakSpeedModifierHook , CorrectDropModifierHook {
     @Override
+    public boolean isNoLevels() {
+        return true;
+    }
+
+    @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
         super.registerHooks(hookBuilder);
         hookBuilder.addHook(this, ModifierHooks.BREAK_SPEED, EtSTLibHooks.CORRECT_TOOL);

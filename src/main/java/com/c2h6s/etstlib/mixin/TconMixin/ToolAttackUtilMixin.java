@@ -71,7 +71,7 @@ public class ToolAttackUtilMixin {
         attackUtilTemp.isCritical=false;
     }
 
-    @ModifyArg(method = "dealDefaultDamage",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;m_6469_(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
+    @ModifyArg(method = "dealDefaultDamage",at = @At(value = "INVOKE", target ="Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
     private static DamageSource modifyDamageSource(DamageSource par1){
         if (MixinTemp.isProcessingDamageSource) {
             IToolStackView tool = attackUtilTemp.tool;

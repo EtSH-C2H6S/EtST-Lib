@@ -135,6 +135,9 @@ repositories {
     flatDir {
         dir 'libs'
     }
+    maven {
+        url "https://cursemaven.com"
+    }
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
 
@@ -150,6 +153,16 @@ dependencies {
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    implementation fg.deobf("curse.maven:tinkers-construct-74072:6111032")
+    implementation fg.deobf("curse.maven:mantle-74924:6105891")
+    implementation fg.deobf("curse.maven:mekanism-268560:6123077")
+    implementation fg.deobf("curse.maven:jei-238222:6075247")
+    implementation fg.deobf("curse.maven:applied-energistics-2-223794:6091401")
+    implementation fg.deobf("curse.maven:botania-225643:6172172")
+    implementation fg.deobf("curse.maven:curios-309927:6216710")
+    implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:6142963")
+    implementation fg.deobf("curse.maven:patchouli-306770:6164575")
 
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime

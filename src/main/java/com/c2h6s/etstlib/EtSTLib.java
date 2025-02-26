@@ -40,7 +40,8 @@ public class EtSTLib {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    public EtSTLib(FMLJavaModLoadingContext context) {
+    public EtSTLib() {
+        FMLJavaModLoadingContext context = FMLJavaModLoadingContext.get();
         IEventBus modEventBus = context.getModEventBus();
         modEventBus.addListener(this::commonSetup);
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
