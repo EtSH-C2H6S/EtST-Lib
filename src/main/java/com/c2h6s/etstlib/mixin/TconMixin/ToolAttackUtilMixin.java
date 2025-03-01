@@ -8,6 +8,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -71,18 +72,21 @@ public class ToolAttackUtilMixin {
         attackUtilTemp.isCritical=false;
     }
 
-    @ModifyArg(method = "dealDefaultDamage",at = @At(value = "INVOKE", target ="Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
-    private static DamageSource modifyDamageSource(DamageSource par1){
+    @Inject(at = @At(value = "HEAD"),method = "dealDefaultDamage",cancellable = true)
+    private static void swapDamageSource(LivingEntity attacker, Entity target, float damage, CallbackInfoReturnable<Boolean> cir){
         if (MixinTemp.isProcessingDamageSource) {
             IToolStackView tool = attackUtilTemp.tool;
-            LegacyDamageSource damageSource = new LegacyDamageSource(par1);
+            LegacyDamageSource damageSource;
+            if (attacker instanceof Player player){
+                damageSource = LegacyDamageSource.playerAttack(player);
+            }
+            else damageSource = LegacyDamageSource.mobAttack(attacker);
             for (ModifierEntry entry : tool.getModifierList()) {
                 damageSource = entry.getHook(EtSTLibHooks.MODIFY_DAMAGE_SOURCE).modifyDamageSource(tool, entry, attackUtilTemp.attacker, attackUtilTemp.hand, attackUtilTemp.target, attackUtilTemp.sourceSlot, attackUtilTemp.isFullyCharged, attackUtilTemp.isExtraAttack, false,damageSource);
             }
             MixinTemp.isProcessingDamageSource=false;
-            return damageSource;
+            cir.setReturnValue(target.hurt(damageSource,damage));
         }
-        return par1;
     }
 
 }
