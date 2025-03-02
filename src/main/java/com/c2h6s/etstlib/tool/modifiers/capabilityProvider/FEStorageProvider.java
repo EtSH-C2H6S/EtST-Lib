@@ -92,6 +92,11 @@ public class FEStorageProvider implements ToolCapabilityProvider.IToolCapability
         return amount;
     }
 
+    public static void setEnergy(IToolStackView tool,int amount){
+        ModDataNBT nbt = tool.getPersistentData();
+        nbt.putInt(LOCATION_ENERGY_STORAGE,amount);
+    }
+
     @Override
     public <T> LazyOptional<T> getCapability(IToolStackView tool, Capability<T> capability) {
         return tool.getStats().getInt(MAX_ENERGY)>0?ForgeCapabilities.ENERGY.orEmpty(capability, this.capOptional):LazyOptional.empty();

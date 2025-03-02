@@ -130,6 +130,9 @@ public class AirStorageProvider implements ToolCapabilityProvider.IToolCapabilit
             tool.getPersistentData().putInt(LOCATION_AIR_STORAGE, amount);
         }
     }
+    public static void setAir(IToolStackView tool,int amount) {
+        tool.getPersistentData().putInt(LOCATION_AIR_STORAGE, amount);
+    }
 
     public static int getBaseVolume(IToolStackView tool){
         return tool.getStats().getInt(BASIC_AIR_CAPACITY);
@@ -137,5 +140,9 @@ public class AirStorageProvider implements ToolCapabilityProvider.IToolCapabilit
 
     public static float getMaxPressure(IToolStackView tool){
         return tool.getStats().getInt(MAX_PRESSURE);
+    }
+
+    public static int getMaxVolume(IToolStackView tool){
+        return (int) (getBaseVolume(tool)*getMaxPressure(tool));
     }
 }

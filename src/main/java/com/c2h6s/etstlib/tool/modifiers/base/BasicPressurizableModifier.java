@@ -16,16 +16,19 @@ import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.build.ModifierRemovalHook;
 import slimeknights.tconstruct.library.modifiers.hook.build.ToolStatsModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.build.ValidateModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.TooltipModifierHook;
 import slimeknights.tconstruct.library.module.ModuleHookMap;
 import slimeknights.tconstruct.library.tools.nbt.IToolContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.stat.ModifierStatsBuilder;
 
+import static com.c2h6s.etstlib.tool.modifiers.capabilityProvider.PnCIntegration.AirStorageProvider.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BasicPressurizableModifier extends EtSTBaseModifier implements ModifierRemovalHook, TooltipModifierHook , ToolStatsModifierHook, CustomBarDisplayModifierHook {
+public abstract class BasicPressurizableModifier extends EtSTBaseModifier implements ModifierRemovalHook, TooltipModifierHook , ToolStatsModifierHook, CustomBarDisplayModifierHook, ValidateModifierHook {
     @Override
     public int getPriority() {
         return 20;
@@ -34,7 +37,7 @@ public abstract class BasicPressurizableModifier extends EtSTBaseModifier implem
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
         super.registerHooks(hookBuilder);
-        hookBuilder.addHook(this,ModifierHooks.REMOVE, ModifierHooks.TOOLTIP,ModifierHooks.TOOL_STATS,EtSTLibHooks.CUSTOM_BAR);
+        hookBuilder.addHook(this,ModifierHooks.REMOVE, ModifierHooks.TOOLTIP,ModifierHooks.TOOL_STATS,EtSTLibHooks.CUSTOM_BAR,ModifierHooks.VALIDATE);
     }
 
     @Nullable
@@ -46,9 +49,14 @@ public abstract class BasicPressurizableModifier extends EtSTBaseModifier implem
         return null;
     }
 
-
-
-
+    @Nullable
+    @Override
+    public Component validate(IToolStackView tool, ModifierEntry modifierEntry) {
+        if (getPressure(tool)>AirStorageProvider.getMaxPressure(tool)){
+            AirStorageProvider.setAir(tool,getMaxVolume(tool));
+        }
+        return null;
+    }
     @Override
     public void addTooltip(IToolStackView tool, ModifierEntry modifierEntry, @Nullable Player player, List<Component> list, TooltipKey tooltipKey, TooltipFlag tooltipFlag) {
         List<Component> ls = new ArrayList<>(List.of());

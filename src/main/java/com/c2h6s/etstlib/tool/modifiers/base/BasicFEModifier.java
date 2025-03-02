@@ -17,16 +17,19 @@ import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.build.ModifierRemovalHook;
 import slimeknights.tconstruct.library.modifiers.hook.build.ToolStatsModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.build.ValidateModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.TooltipModifierHook;
 import slimeknights.tconstruct.library.module.ModuleHookMap;
 import slimeknights.tconstruct.library.tools.nbt.IToolContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.stat.ModifierStatsBuilder;
 
+import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.FEStorageProvider;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BasicFEModifier extends EtSTBaseModifier implements ModifierRemovalHook, TooltipModifierHook,ToolStatsModifierHook, CustomBarDisplayModifierHook {
+public abstract class BasicFEModifier extends EtSTBaseModifier implements ModifierRemovalHook, TooltipModifierHook,ToolStatsModifierHook, CustomBarDisplayModifierHook, ValidateModifierHook {
 
     @Override
     public int getPriority() {
@@ -37,6 +40,15 @@ public abstract class BasicFEModifier extends EtSTBaseModifier implements Modifi
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
         super.registerHooks(hookBuilder);
         hookBuilder.addHook(this,ModifierHooks.REMOVE, ModifierHooks.TOOLTIP,ModifierHooks.TOOL_STATS,EtSTLibHooks.CUSTOM_BAR);
+    }
+
+    @Nullable
+    @Override
+    public Component validate(IToolStackView tool, ModifierEntry modifierEntry) {
+        if (FEStorageProvider.getEnergy(tool)>FEStorageProvider.getMaxEnergy(tool)){
+            FEStorageProvider.setEnergy(tool,FEStorageProvider.getMaxEnergy(tool));
+        }
+        return null;
     }
 
     @Nullable
