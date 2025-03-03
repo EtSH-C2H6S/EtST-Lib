@@ -1,9 +1,7 @@
 package com.c2h6s.etstlib.tool.modifiers.base;
 
 import com.c2h6s.etstlib.register.EtSTLibHooks;
-import com.c2h6s.etstlib.register.EtSTLibToolStat;
 import com.c2h6s.etstlib.tool.hooks.CustomBarDisplayModifierHook;
-import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.FEStorageProvider;
 import com.c2h6s.etstlib.util.MathUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -20,14 +18,14 @@ import slimeknights.tconstruct.library.modifiers.hook.build.ToolStatsModifierHoo
 import slimeknights.tconstruct.library.modifiers.hook.build.ValidateModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.TooltipModifierHook;
 import slimeknights.tconstruct.library.module.ModuleHookMap;
+import slimeknights.tconstruct.library.tools.capability.ToolEnergyCapability;
 import slimeknights.tconstruct.library.tools.nbt.IToolContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.stat.ModifierStatsBuilder;
 
-import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.FEStorageProvider;
-
-import java.util.ArrayList;
 import java.util.List;
+
+import static slimeknights.tconstruct.library.tools.capability.ToolEnergyCapability.*;
 
 public abstract class BasicFEModifier extends EtSTBaseModifier implements ModifierRemovalHook, TooltipModifierHook,ToolStatsModifierHook, CustomBarDisplayModifierHook, ValidateModifierHook {
 
@@ -45,46 +43,35 @@ public abstract class BasicFEModifier extends EtSTBaseModifier implements Modifi
     @Nullable
     @Override
     public Component validate(IToolStackView tool, ModifierEntry modifierEntry) {
-        if (FEStorageProvider.getEnergy(tool)>FEStorageProvider.getMaxEnergy(tool)){
-            FEStorageProvider.setEnergy(tool,FEStorageProvider.getMaxEnergy(tool));
-        }
+        checkEnergy(tool);
         return null;
     }
 
     @Nullable
     @Override
     public Component onRemoved(IToolStackView tool, Modifier modifier) {
-        if (FEStorageProvider.getMaxEnergy(tool) <= 0) {
-            tool.getPersistentData().remove(FEStorageProvider.LOCATION_ENERGY_STORAGE);
+        if (getMaxEnergy(tool) <= 0) {
+            tool.getPersistentData().remove(ENERGY_KEY);
         }
         return null;
     }
 
     @Override
     public void addTooltip(IToolStackView tool, ModifierEntry modifierEntry, @Nullable Player player, List<Component> list, TooltipKey tooltipKey, TooltipFlag tooltipFlag) {
-        List<Component> ls = new ArrayList<>(List.of());
-        ls.add(Component.translatable("tooltip.etstlib.energy_storage").append(":").append(" "+ MathUtil.getEnergyString(FEStorageProvider.getEnergy(tool))+"/"+MathUtil.getEnergyString(FEStorageProvider.getMaxEnergy(tool))).withStyle(Style.EMPTY.withColor(0xFF3000)));
-        ls.add(Component.translatable("tooltip.etstlib.max_transfer").append(":").append(" "+MathUtil.getEnergyString(FEStorageProvider.getMaxTransfer(tool))).withStyle(Style.EMPTY.withColor(0xFF3000)));
-        for (Component component:ls){
-            if (!list.contains(component)&&player!=null){
-                list.add(component);
-            }
-        }
+        Component component = Component.translatable("tooltip.etstlib.energy_storage").append(":").append(" "+ MathUtil.getEnergyString(getEnergy(tool))+"/"+MathUtil.getEnergyString(getMaxEnergy(tool))).withStyle(Style.EMPTY.withColor(0xFF3000));
+        list.add(component);
     }
 
     @Override
     public void addToolStats(IToolContext iToolContext, ModifierEntry modifierEntry, ModifierStatsBuilder modifierStatsBuilder) {
-        EtSTLibToolStat.MAX_TRANSFER.add(modifierStatsBuilder,this.getMaxTransfer(modifierEntry));
-        EtSTLibToolStat.MAX_ENERGY.add(modifierStatsBuilder,this.getCapacity(modifierEntry));
+        ToolEnergyCapability.MAX_STAT.add(modifierStatsBuilder,getCapacity(modifierEntry));
     }
 
     public abstract int getCapacity(ModifierEntry modifier);
 
-    public abstract int getMaxTransfer(ModifierEntry modifier);
-
     @Override
     public boolean showBar(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
-        return FEStorageProvider.getEnergy(tool)>0;
+        return getEnergy(tool)>0;
     }
 
     @Override
@@ -94,8 +81,8 @@ public abstract class BasicFEModifier extends EtSTBaseModifier implements Modifi
 
     @Override
     public Vec2 getBarXYSize(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
-        int FE = FEStorageProvider.getEnergy(tool);
-        int maxStorage = FEStorageProvider.getMaxEnergy(tool);
+        int FE = getEnergy(tool);
+        int maxStorage = getMaxEnergy(tool);
         if (maxStorage>0) {
             return new Vec2(Math.min(13, 13 * FE / maxStorage), 1);
         }

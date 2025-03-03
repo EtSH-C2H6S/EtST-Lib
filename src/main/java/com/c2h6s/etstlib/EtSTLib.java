@@ -3,7 +3,6 @@ package com.c2h6s.etstlib;
 import com.c2h6s.etstlib.event.eventHandler.PlayerEvents;
 import com.c2h6s.etstlib.network.EtSTLibPacketHandler;
 import com.c2h6s.etstlib.register.EtSTLibModifier;
-import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.FEStorageProvider;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.MekIntegration.RadiationShieldProvider;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.PnCIntegration.AirStorageProvider;
 import com.c2h6s.etstlib.util.ModListConstants;
@@ -72,7 +71,6 @@ public class EtSTLib {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        ToolCapabilityProvider.register(FEStorageProvider::new);
         if (ModListConstants.MekLoaded){
             ToolCapabilityProvider.register(RadiationShieldProvider::new);
         }
