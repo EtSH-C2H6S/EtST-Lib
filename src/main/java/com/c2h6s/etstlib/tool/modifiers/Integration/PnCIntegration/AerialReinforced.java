@@ -1,5 +1,6 @@
 package com.c2h6s.etstlib.tool.modifiers.Integration.PnCIntegration;
 
+import com.c2h6s.etstlib.EtSTLib;
 import com.c2h6s.etstlib.tool.modifiers.base.BasicPressurizableModifier;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.PnCIntegration.AirStorageProvider;
 import com.c2h6s.etstlib.util.EquipmentUtil;
@@ -7,6 +8,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -17,6 +20,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -35,6 +39,7 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 
 public class AerialReinforced extends BasicPressurizableModifier implements BreakSpeedModifierHook, ProjectileLaunchModifierHook, AttributesModifierHook {
+    public static final ResourceLocation KEY_DAMAGE = EtSTLib.getResourceLocation("arrow_multiplier_aerial");
     @Override
     protected void registerHooks(ModuleHookMap.Builder builder) {
         super.registerHooks(builder);
@@ -97,11 +102,17 @@ public class AerialReinforced extends BasicPressurizableModifier implements Brea
 
     @Override
     public void onProjectileLaunch(IToolStackView tool, ModifierEntry modifier, LivingEntity shooter, Projectile projectile, @javax.annotation.Nullable AbstractArrow arrow, ModDataNBT persistentData, boolean primary) {
-        float multiplier =1+getBonus(tool,modifier);
+        float multiplier =getBonus(tool,modifier);
         if (AirStorageProvider.getAir(tool)>100&&arrow!=null){
             AirStorageProvider.addAir(tool,-(int) (100*multiplier));
-            arrow.setBaseDamage(arrow.getBaseDamage()*multiplier);
+            persistentData.putFloat(KEY_DAMAGE,multiplier);
         }
+    }
+
+    @Override
+    public float onGetArrowDamage(ModDataNBT persistentData, ModifierEntry entry, AbstractArrow arrow, @Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage) {
+        damage+= baseDamage*persistentData.getFloat(KEY_DAMAGE);
+        return super.onGetArrowDamage(persistentData, entry, arrow, attacker, target, baseDamage, damage);
     }
 
     @Override

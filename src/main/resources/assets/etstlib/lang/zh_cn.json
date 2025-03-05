@@ -106,5 +106,9 @@
 
   "modifier.etstlib.glowing": "外发光",
   "modifier.etstlib.glowing.flavor": "荧光物质",
-  "modifier.etstlib.glowing.description": "装备时获得夜视效果，攻击/被攻击时高亮对方。"
+  "modifier.etstlib.glowing.description": "装备时获得夜视效果，攻击/被攻击时高亮对方。",
+
+  "modifier.etstlib.short_circuit": "短路",
+  "modifier.etstlib.short_circuit.flavor": "扰乱生物电",
+  "modifier.etstlib.short_circuit.description": "攻击时移除敌人无敌帧。"
 }

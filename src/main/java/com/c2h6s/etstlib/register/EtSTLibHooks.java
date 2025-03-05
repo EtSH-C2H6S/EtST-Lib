@@ -3,6 +3,8 @@ package com.c2h6s.etstlib.register;
 import com.c2h6s.etstlib.EtSTLib;
 import com.c2h6s.etstlib.tool.hooks.*;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
@@ -58,6 +60,12 @@ public class EtSTLibHooks {
         @Override
         public void onArrowTick(ModifierNBT modifiers, ModifierEntry entry, Level level, @NotNull AbstractArrow arrow, ModDataNBT persistentData, boolean hasBeenShot, boolean leftOwner,boolean inGround, @Nullable IntOpenHashSet piercingIgnoreEntityIds) {
 
+        }
+    });
+    public static final ModuleHook<ArrowDamageModifierHook> ARROW_DAMAGE = ModifierHooks.register(EtSTLib.getResourceLocation("arrow_damage"), ArrowDamageModifierHook.class, ArrowDamageModifierHook.AllMerger::new, (modDataNBT,modifierEntry,modifierEntries,arrow,living,entity,baseDamage,damage) -> damage);
+    public static final ModuleHook<ArrowHitModifierHook> ARROW_HIT = ModifierHooks.register(EtSTLib.getResourceLocation("arrow_hit"), ArrowHitModifierHook.class, ArrowHitModifierHook.AllMerger::new, new ArrowHitModifierHook() {
+        @Override
+        public void afterArrowHit(ModDataNBT persistentData, ModifierEntry entry, ModifierNBT modifiers, AbstractArrow arrow, @Nullable LivingEntity attacker, @NotNull LivingEntity target, float damageDealt) {
         }
     });
 }

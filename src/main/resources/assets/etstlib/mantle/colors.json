@@ -18,7 +18,8 @@
     "warp_attack": "#23FF23",
     "anisotropy": "#ABD9EA",
     "crystal_armor": "#ABD9EA",
-    "glowing": "#FFE96F"
+    "glowing": "#FFE96F",
+    "short_circuit": "#BF5555"
   },
   "material.etstlib": {
 

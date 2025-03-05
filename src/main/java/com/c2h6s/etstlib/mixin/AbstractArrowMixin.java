@@ -21,8 +21,6 @@ import slimeknights.tconstruct.library.tools.capability.PersistentDataCapability
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 
-import java.util.List;
-
 import static com.c2h6s.etstlib.MixinTemp.*;
 
 @Mixin(AbstractArrow.class)
@@ -35,11 +33,12 @@ public class AbstractArrowMixin {
     private void getEntity(EntityHitResult hitResult, CallbackInfo ci){
         MixinTemp.arrowHit = hitResult.getEntity();
     }
-    @ModifyArg(method = "onHitEntity",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
+    @ModifyArg(method = "onHitEntity",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"),index =0)
     private DamageSource modifyDamageSource(DamageSource source0){
         AbstractArrow arrow = (AbstractArrow) (Object) this;
         ModifierNBT modifiers = EntityModifierCapability.getOrEmpty(arrow);
-        if (!modifiers.isEmpty()&&MixinTemp.arrowHit instanceof LivingEntity target) {
+        Entity target = arrowHit;
+        if (!modifiers.isEmpty()&&target !=null) {
             ModDataNBT nbt = PersistentDataCapability.getOrWarn(arrow);
             LivingEntity attacker = arrow.getOwner() instanceof LivingEntity living?living:null;
             LegacyDamageSource damageSource = new LegacyDamageSource(source0);
@@ -49,6 +48,36 @@ public class AbstractArrowMixin {
             return damageSource;
         }
         return source0;
+    }
+    @ModifyArg(method = "onHitEntity",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"),index =1)
+    private float modifyDamage(float pAmount){
+        AbstractArrow arrow = (AbstractArrow) (Object) this;
+        ModifierNBT modifiers = EntityModifierCapability.getOrEmpty(arrow);
+        Entity target = arrowHit;
+        float damage = pAmount;
+        if (!modifiers.isEmpty()&&target !=null) {
+            ModDataNBT nbt = PersistentDataCapability.getOrWarn(arrow);
+            LivingEntity attacker = arrow.getOwner() instanceof LivingEntity living?living:null;
+            for (ModifierEntry entry:modifiers.getModifiers()){
+                damage = entry.getHook(EtSTLibHooks.ARROW_DAMAGE).getArrowDamage(nbt,entry,modifiers,arrow,attacker,target,pAmount,damage);
+            }
+            return damage;
+        }
+        return damage;
+    }
+    @Inject(method = "onHitEntity",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;doPostHurtEffects(Lnet/minecraft/world/entity/LivingEntity;)V"))
+    private void doAfterArrowHit(EntityHitResult pResult, CallbackInfo ci){
+        AbstractArrow arrow = (AbstractArrow) (Object) this;
+        ModifierNBT modifiers = EntityModifierCapability.getOrEmpty(arrow);
+        Entity target = arrowHit;
+        if (!modifiers.isEmpty()&&target instanceof LivingEntity living) {
+            float damageDealt = living.getHealth()- entityHealth;
+            ModDataNBT nbt = PersistentDataCapability.getOrWarn(arrow);
+            LivingEntity attacker = arrow.getOwner() instanceof LivingEntity entity?entity:null;
+            for (ModifierEntry entry:modifiers.getModifiers()){
+                entry.getHook(EtSTLibHooks.ARROW_HIT).afterArrowHit(nbt,entry,modifiers,arrow,attacker,living,damageDealt);
+            }
+        }
     }
     @Inject(method = "tick",at = @At(value = "HEAD"))
     private void tick(CallbackInfo ci){

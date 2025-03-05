@@ -106,5 +106,9 @@
 
   "modifier.etstlib.glowing": "Glowing",
   "modifier.etstlib.glowing.flavor": "Glowing materials.",
-  "modifier.etstlib.glowing.description": "Gain night vision effect on wearing.Inflict your enemy with glowing effect."
+  "modifier.etstlib.glowing.description": "Gain night vision effect on wearing.Inflict your enemy with glowing effect.",
+
+  "modifier.etstlib.short_circuit": "Short Circuit",
+  "modifier.etstlib.short_circuit.flavor": "Mess up with bio-electricity.",
+  "modifier.etstlib.short_circuit.description": "Removes target's invulnerable time on hit."
 }

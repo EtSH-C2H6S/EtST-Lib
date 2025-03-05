@@ -24,6 +24,7 @@ public class EtSTLibModifier {
     public static final StaticModifier<PhotosynthesisGuide> photosynthesis_guide =MODIFIERS.register("photosynthesis_guide",PhotosynthesisGuide::new);
     public static final StaticModifier<EnergyLoaded> energy_loaded =MODIFIERS.register("energy_loaded",EnergyLoaded::new);
     public static final StaticModifier<AtomicDecompose> atomic_decompose =MODIFIERS.register("atomic_decompose",AtomicDecompose::new);
+    public static final StaticModifier<ShotCircuit> SHORT_CIRCUIT =MODIFIERS.register("short_circuit",ShotCircuit::new);
 
     //无集成属性
     public static final StaticModifier<AntiStunGlasses> anti_stun_glasses =MODIFIERS.register("anti_stun_glasses",AntiStunGlasses::new);
@@ -35,6 +36,7 @@ public class EtSTLibModifier {
     public static final StaticModifier<CrystalArmor> CRYSTAL_ARMOR = MODIFIERS.register("crystal_armor", CrystalArmor::new);
     public static final StaticModifier<RealityBreaker> reality_breaker =MODIFIERS.register("reality_breaker",RealityBreaker::new);
     public static final StaticModifier<Glowing> glowing =MODIFIERS.register("glowing",Glowing::new);
+
 
 
     //PnC集成属性

@@ -1,6 +1,8 @@
 package com.c2h6s.etstlib.tool.modifiers.base;
 
 import com.c2h6s.etstlib.register.EtSTLibHooks;
+import com.c2h6s.etstlib.tool.hooks.ArrowDamageModifierHook;
+import com.c2h6s.etstlib.tool.hooks.ArrowHitModifierHook;
 import com.c2h6s.etstlib.tool.hooks.LeftClickModifierHook;
 import com.c2h6s.etstlib.tool.hooks.ModifyDamageSourceModifierHook;
 import net.minecraft.network.chat.Component;
@@ -28,10 +30,11 @@ import slimeknights.tconstruct.library.module.ModuleHookMap;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
+import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 
 import javax.annotation.Nullable;
 
-public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, MeleeDamageModifierHook, ProjectileHitModifierHook, ProjectileLaunchModifierHook, ToolDamageModifierHook, InventoryTickModifierHook , ModifierRemovalHook , ModifyDamageSourceModifierHook , LeftClickModifierHook {
+public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, MeleeDamageModifierHook, ProjectileHitModifierHook, ProjectileLaunchModifierHook, ToolDamageModifierHook, InventoryTickModifierHook , ModifierRemovalHook , ModifyDamageSourceModifierHook , LeftClickModifierHook, ArrowHitModifierHook, ArrowDamageModifierHook {
     public boolean isNoLevels(){
         return false;
     }
@@ -42,7 +45,7 @@ public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, 
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
         super.registerHooks(hookBuilder);
-        hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE,ModifierHooks.MELEE_HIT,ModifierHooks.PROJECTILE_LAUNCH,ModifierHooks.PROJECTILE_HIT,ModifierHooks.TOOL_DAMAGE,ModifierHooks.INVENTORY_TICK,EtSTLibHooks.MODIFY_DAMAGE_SOURCE,EtSTLibHooks.LEFT_CLICK);
+        hookBuilder.addHook(this, ModifierHooks.MELEE_DAMAGE,ModifierHooks.MELEE_HIT,ModifierHooks.PROJECTILE_LAUNCH,ModifierHooks.PROJECTILE_HIT,ModifierHooks.TOOL_DAMAGE,ModifierHooks.INVENTORY_TICK,EtSTLibHooks.MODIFY_DAMAGE_SOURCE,EtSTLibHooks.LEFT_CLICK,EtSTLibHooks.ARROW_DAMAGE,EtSTLibHooks.ARROW_HIT);
     }
 
     @Override
@@ -66,6 +69,10 @@ public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, 
     public Component onRemoved(IToolStackView tool, Modifier modifier) {
         return this.onModifierRemoved(tool,modifier);
     }
+    @Override
+    public float getArrowDamage(ModDataNBT persistentData, ModifierEntry entry, ModifierNBT modifiers, AbstractArrow arrow, @org.jetbrains.annotations.Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage) {
+        return this.onGetArrowDamage(persistentData,entry,arrow,attacker,target,baseDamage,damage);
+    }
 
     public float onGetMeleeDamage(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float baseDamage, float damage) {
         return damage;
@@ -81,6 +88,9 @@ public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, 
     }
     public Component onModifierRemoved(IToolStackView tool, Modifier modifier) {
         return null;
+    }
+    public float onGetArrowDamage(ModDataNBT persistentData, ModifierEntry entry, AbstractArrow arrow, @org.jetbrains.annotations.Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage) {
+        return damage;
     }
 
 
