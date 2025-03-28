@@ -1,0 +1,15 @@
+{
+  "level_display": "tconstruct:single_level",
+  "modules": [
+    {
+      "type": "etstlib:set_critical",
+      "entity": {
+        "type": "etstlib:with_health",
+        "include": true,
+        "min": 25.0
+      },
+      "full_charge_only": false
+    }
+  ],
+  "tooltip_display": "always"
+}

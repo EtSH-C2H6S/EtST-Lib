@@ -1,9 +1,14 @@
 package com.c2h6s.etstlib;
 
+import com.c2h6s.etstlib.data.predicate.LivingEntityWithHealth;
 import com.c2h6s.etstlib.event.eventHandler.PlayerEvents;
 import com.c2h6s.etstlib.network.EtSTLibPacketHandler;
 import com.c2h6s.etstlib.register.EtSTLibModifier;
 import com.c2h6s.etstlib.tool.fluid.fluidEffect.*;
+import com.c2h6s.etstlib.tool.hooks.modifierModules.AddDamageTypeTagArrowModule;
+import com.c2h6s.etstlib.tool.hooks.modifierModules.AddDamageTypeTagMeleeModule;
+import com.c2h6s.etstlib.tool.hooks.modifierModules.ForceDropModule;
+import com.c2h6s.etstlib.tool.hooks.modifierModules.SetCriticalModule;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.MekIntegration.RadiationShieldProvider;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.PnCIntegration.AirStorageProvider;
 import com.c2h6s.etstlib.util.ModListConstants;
@@ -25,7 +30,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
+import slimeknights.mantle.data.predicate.entity.LivingEntityPredicate;
 import slimeknights.tconstruct.library.modifiers.fluid.FluidEffect;
+import slimeknights.tconstruct.library.modifiers.modules.ModifierModule;
 import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 
 import java.util.Random;
@@ -85,6 +92,13 @@ public class EtSTLib {
 
     void registerSerializers(RegisterEvent event) {
         if (event.getRegistryKey() == Registries.RECIPE_SERIALIZER) {
+            ModifierModule.LOADER.register(getResourceLocation("set_critical"), SetCriticalModule.LOADER);
+            ModifierModule.LOADER.register(getResourceLocation("force_drop"), ForceDropModule.LOADER);
+            ModifierModule.LOADER.register(getResourceLocation("add_melee_damage_type"), AddDamageTypeTagMeleeModule.LOADER);
+            ModifierModule.LOADER.register(getResourceLocation("add_arrow_damage_type"), AddDamageTypeTagArrowModule.LOADER);
+
+            LivingEntityPredicate.LOADER.register(getResourceLocation("with_health"), LivingEntityWithHealth.LOADER);
+
             if (ModListConstants.MekLoaded){
                 FluidEffect.ENTITY_EFFECTS.register(getResourceLocation("radiate_entity"), RadiateEntityFluidEffect.LOADER);
                 FluidEffect.BLOCK_EFFECTS.register(getResourceLocation("radiate_block"), RadiateBlockFluidEffect.LOADER);

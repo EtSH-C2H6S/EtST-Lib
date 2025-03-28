@@ -19,7 +19,9 @@
     "anisotropy": "#ABD9EA",
     "crystal_armor": "#ABD9EA",
     "glowing": "#FFE96F",
-    "short_circuit": "#BF5555"
+    "short_circuit": "#BF5555",
+    "rude": "#D8FFF0",
+    "executioner": "#FF766C"
   },
   "material.etstlib": {
 
