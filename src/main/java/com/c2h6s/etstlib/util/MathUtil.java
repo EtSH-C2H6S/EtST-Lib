@@ -5,9 +5,6 @@ public class MathUtil {
         int a = (int) Math.log10(amount);
         int b =a/3;
         switch (b){
-            default-> {
-                return amount + " ";
-            }
             case 1->{
                 return String.format("%.2f",(float)amount/1E+3)+" k";
             }
@@ -16,6 +13,9 @@ public class MathUtil {
             }
             case 3->{
                 return String.format("%.2f",(float)amount/1E+9)+" G";
+            }
+            default-> {
+                return amount + " ";
             }
         }
     }
@@ -35,7 +35,6 @@ public class MathUtil {
         }
         else {
             unit = switch (bits){
-                default ->" f";
                 case -4 ->" p";
                 case -3 ->" n";
                 case -2 ->" μ";
@@ -46,6 +45,7 @@ public class MathUtil {
                 case 3 ->" G";
                 case 4 ->" T";
                 case 5 ->" P";
+                default ->" f";
             };
             amount*= (float) Math.pow(1000,-bits);
         }

@@ -13,6 +13,18 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public interface ArrowDamageModifierHook {
+    /**
+     *
+     * @param persistentData
+     * @param entry
+     * @param modifiers 词条实例
+     * @param arrow 箭矢实体
+     * @param attacker 攻击者
+     * @param target 被攻击者
+     * @param baseDamage 基础伤害
+     * @param damage 总伤害
+     * @return 箭矢的伤害
+     */
     float getArrowDamage(ModDataNBT persistentData, ModifierEntry entry, ModifierNBT modifiers, AbstractArrow arrow, @Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage);
 
     record AllMerger(Collection<ArrowDamageModifierHook> modules) implements ArrowDamageModifierHook {
