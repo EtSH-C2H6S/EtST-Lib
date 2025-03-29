@@ -1,5 +1,5 @@
 package com.c2h6s.etstlib.tool.modifiers.capabilityProvider.MekIntegration;
-
+/*
 import mekanism.common.content.gear.IModuleContainerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
@@ -23,3 +23,5 @@ public class ModuleContainerProvider implements ToolCapabilityProvider.IToolCapa
         return null;
     }
 }
+
+ */
