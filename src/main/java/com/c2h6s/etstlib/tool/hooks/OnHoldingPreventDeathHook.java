@@ -71,7 +71,9 @@ public interface OnHoldingPreventDeathHook {
      *
      * @return 是否无视 boolean
      */
-    boolean canIgnorePassInvul();
+    default boolean canIgnorePassInvul() {
+        return false;
+    }
 
     /**
      * The type First merger.
