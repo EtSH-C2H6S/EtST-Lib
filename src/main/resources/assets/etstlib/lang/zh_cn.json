@@ -112,6 +112,16 @@
   "modifier.etstlib.short_circuit.flavor": "扰乱生物电",
   "modifier.etstlib.short_circuit.description": "攻击时移除敌人无敌帧。",
 
+  "modifier.etstlib.rude": "粗鲁",
+  "modifier.etstlib.rude.flavor": "不是很有礼貌",
+  "modifier.etstlib.rude.description": "对血量高于25的生物必定暴击。",
+
+  "modifier.etstlib.executioner": "刽子手",
+  "modifier.etstlib.executioner.flavor": "干净利落，没有仁慈",
+  "modifier.etstlib.executioner.description": "你的攻击无视敌人的无敌帧。",
+
+
+
   "fluid_effect.etstlib.radiate_entity": "施加 %s 实体辐射",
   "fluid_effect.etstlib.radiate_block": "施加 %s 环境辐射",
   "fluid_effect.etstlib.clear_radiation": "消除 %s 区块内的辐射源"

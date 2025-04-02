@@ -23,7 +23,7 @@ public class EtSTLibModifier {
     public static final StaticModifier<ArmorPiercing> armor_piercing =MODIFIERS.register("armor_piercing",ArmorPiercing::new);
     public static final StaticModifier<PhotosynthesisGuide> photosynthesis_guide =MODIFIERS.register("photosynthesis_guide",PhotosynthesisGuide::new);
     public static final StaticModifier<EnergyLoaded> energy_loaded =MODIFIERS.register("energy_loaded",EnergyLoaded::new);
-    public static final StaticModifier<AtomicDecompose> atomic_decompose =MODIFIERS.register("atomic_decompose",AtomicDecompose::new);
+    //public static final StaticModifier<AtomicDecompose> atomic_decompose =MODIFIERS.register("atomic_decompose",AtomicDecompose::new);
     public static final StaticModifier<ShotCircuit> SHORT_CIRCUIT =MODIFIERS.register("short_circuit",ShotCircuit::new);
 
     //无集成属性

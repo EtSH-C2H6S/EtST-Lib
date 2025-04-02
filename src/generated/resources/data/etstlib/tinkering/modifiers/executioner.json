@@ -1,0 +1,16 @@
+{
+  "level_display": "tconstruct:single_level",
+  "modules": [
+    {
+      "type": "etstlib:add_melee_damage_type",
+      "damage_type_tag": "minecraft:bypasses_cooldown",
+      "full_charge_only": false
+    },
+    {
+      "type": "etstlib:add_arrow_damage_type",
+      "damage_type_tag": "minecraft:bypasses_cooldown",
+      "full_charge_only": false
+    }
+  ],
+  "tooltip_display": "always"
+}

@@ -112,6 +112,16 @@
   "modifier.etstlib.short_circuit.flavor": "Mess up with bio-electricity.",
   "modifier.etstlib.short_circuit.description": "Removes target's invulnerable time on hit.",
 
+  "modifier.etstlib.rude": "Rude",
+  "modifier.etstlib.rude.flavor": "No elegance.",
+  "modifier.etstlib.rude.description": "Deals critical attack to targets with >25 health.",
+
+  "modifier.etstlib.executioner": "Executioner",
+  "modifier.etstlib.executioner.flavor": "Fast and neat, no mercy.",
+  "modifier.etstlib.executioner.description": "Make your attack ignores target's hit cooldown.",
+
+
+
   "fluid_effect.etstlib.radiate_entity": "Radiate %s To Entity",
   "fluid_effect.etstlib.radiate_block": "Radiate %s To World",
   "fluid_effect.etstlib.clear_radiation": "Clear Radiation Sources In %s Chunk"

@@ -1,0 +1,10 @@
+{
+  "level_display": "tconstruct:single_level",
+  "modules": [
+    {
+      "type": "etstlib:force_drop",
+      "fix_break_speed": true
+    }
+  ],
+  "tooltip_display": "always"
+}

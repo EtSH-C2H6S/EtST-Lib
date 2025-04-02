@@ -6,5 +6,5 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
 
 public class EtSTLibCapabilities {
-    public static final Capability<IModuleContainerItem> MODULE_CONTAINER = CapabilityManager.get(new CapabilityToken<>() {});
+    //public static final Capability<IModuleContainerItem> MODULE_CONTAINER = CapabilityManager.get(new CapabilityToken<>() {});
 }
