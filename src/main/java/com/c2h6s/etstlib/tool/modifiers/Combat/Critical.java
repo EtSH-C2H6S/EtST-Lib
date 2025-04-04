@@ -19,7 +19,7 @@ public class Critical extends EtSTBaseModifier implements CriticalAttackModifier
     }
 
     @Override
-    public Boolean setCritical(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, Boolean isCritical) {
+    public boolean setCritical(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical) {
         return isFullyCharged;
     }
 }

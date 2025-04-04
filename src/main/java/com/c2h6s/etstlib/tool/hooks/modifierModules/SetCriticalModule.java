@@ -29,7 +29,7 @@ public record SetCriticalModule(IJsonPredicate<LivingEntity> entity, ModifierCon
     );
 
     @Override
-    public Boolean setCritical(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, Boolean isCritical) {
+    public boolean setCritical(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical) {
         return target instanceof LivingEntity living&&entity.matches(living)&&(!requireFullCharge||isFullyCharged);
     }
 

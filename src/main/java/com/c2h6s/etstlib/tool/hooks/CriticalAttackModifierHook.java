@@ -10,14 +10,14 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import java.util.Collection;
 
 public interface CriticalAttackModifierHook {
-    Boolean setCritical(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, Boolean isCritical);
+    boolean setCritical(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical);
 
     record FirstMerger(Collection<CriticalAttackModifierHook> modules) implements CriticalAttackModifierHook {
         @Override
-        public Boolean setCritical(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack,Boolean isCritical) {
+        public boolean setCritical(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack,boolean isCritical) {
             for (CriticalAttackModifierHook module:this.modules){
-                Boolean IsCritical =module.setCritical(tool,entry,attacker,hand,target,sourceSlot,isFullyCharged,isExtraAttack,isCritical);
-                if (IsCritical!=null) return IsCritical;
+                isCritical =module.setCritical(tool,entry,attacker,hand,target,sourceSlot,isFullyCharged,isExtraAttack,isCritical);
+                if (isCritical) return isCritical;
             }
             return isCritical;
         }

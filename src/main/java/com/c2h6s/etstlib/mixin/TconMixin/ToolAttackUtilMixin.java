@@ -40,12 +40,11 @@ public class ToolAttackUtilMixin {
         if (!attackUtilTemp.isExtraAttack) {
             IToolStackView tool = attackUtilTemp.tool;
             for (ModifierEntry entry : tool.getModifierList()) {
-                Boolean IsCritical = entry.getHook(EtSTLibHooks.CRITICAL_ATTACK).setCritical(tool,entry,attackUtilTemp.attacker,attackUtilTemp.hand,attackUtilTemp.target,attackUtilTemp.sourceSlot,attackUtilTemp.isFullyCharged,attackUtilTemp.isExtraAttack,isCritical);
-                if (IsCritical!=null){
-                    attackUtilTemp.isCritical = IsCritical;
-                    return IsCritical;
+                isCritical = entry.getHook(EtSTLibHooks.CRITICAL_ATTACK).setCritical(tool,entry,attackUtilTemp.attacker,attackUtilTemp.hand,attackUtilTemp.target,attackUtilTemp.sourceSlot,attackUtilTemp.isFullyCharged,attackUtilTemp.isExtraAttack,isCritical);
+                attackUtilTemp.isCritical = isCritical;
+                if (isCritical){
+                    return isCritical;
                 }
-                else attackUtilTemp.isCritical=isCritical;
             }
         }
         return isCritical;
