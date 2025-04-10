@@ -55,7 +55,7 @@ public class MomentumAccelerate extends EtSTBaseModifier implements ToolStatsMod
     }
 
     @Override
-    public void afterMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
+    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
         if (tool.getPersistentData().getFloat(LOCATION_ACCEL)<modifier.getLevel()*0.5f){
             tool.getPersistentData().putFloat(LOCATION_ACCEL,tool.getPersistentData().getFloat(LOCATION_ACCEL)+0.05f*modifier.getLevel());
         }

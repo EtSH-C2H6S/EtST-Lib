@@ -227,7 +227,7 @@ public class AttackUtil {
 
         if (attackerPlayer != null) {
             if (targetLiving != null) {
-                if (!level.isClientSide && !isExtraAttack) {
+                if (!isExtraAttack) {
                     ItemStack held = attackerLiving.getItemBySlot(sourceSlot);
                     if (!held.isEmpty()) {
                         held.hurtEnemy(targetLiving, attackerPlayer);

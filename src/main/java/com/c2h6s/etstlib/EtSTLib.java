@@ -37,6 +37,8 @@ import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 
 import java.util.Random;
 
+import static com.c2h6s.etstlib.register.EtSTLibEffects.EFFECTS;
+
 @Mod(EtSTLib.MODID)
 public class EtSTLib {
     public static final Random random = new Random();
@@ -58,6 +60,7 @@ public class EtSTLib {
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
+        EFFECTS.register(modEventBus);
         EtSTLibModifier.MODIFIERS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);

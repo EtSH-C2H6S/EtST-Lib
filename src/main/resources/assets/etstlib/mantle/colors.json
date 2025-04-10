@@ -21,7 +21,16 @@
     "glowing": "#FFE96F",
     "short_circuit": "#BF5555",
     "rude": "#D8FFF0",
-    "executioner": "#FF766C"
+    "executioner": "#FF766C",
+    "global_traveler": "#00FF8E",
+    "void_insight": "#363636",
+    "hardened": "#8187A3",
+    "fatal": "#DEBBCE",
+    "terrafirma": "#A1FFA5",
+    "inert_metal": "#A3CFD4",
+    "hyper_density": "#522375",
+    "secondary_armor": "#D9FFD8",
+    "extra_dense" : "#AFC3FF"
   },
   "material.etstlib": {
 

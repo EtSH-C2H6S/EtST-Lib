@@ -5,11 +5,9 @@ import com.c2h6s.etstlib.tool.hooks.ArrowDamageModifierHook;
 import com.c2h6s.etstlib.tool.hooks.ArrowHitModifierHook;
 import com.c2h6s.etstlib.tool.hooks.LeftClickModifierHook;
 import com.c2h6s.etstlib.tool.hooks.ModifyDamageSourceModifierHook;
+import com.c2h6s.etstlib.util.CommonConstants;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -54,6 +52,7 @@ public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, 
     }
     @Override
     public void onProjectileLaunch(IToolStackView tool, ModifierEntry modifier, LivingEntity shooter, Projectile projectile, @Nullable AbstractArrow arrow, ModDataNBT persistentData, boolean primary) {
+        if (arrow!=null&&arrow.isCritArrow()) arrow.addTag(CommonConstants.KEY_CRITARROW);
         this.modifierProjectileLaunch(tool,modifier,shooter,projectile,arrow,persistentData,primary);
     }
     @Override
@@ -91,6 +90,20 @@ public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, 
     }
     public float onGetArrowDamage(ModDataNBT persistentData, ModifierEntry entry, AbstractArrow arrow, @org.jetbrains.annotations.Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage) {
         return damage;
+    }
+
+    @Override
+    public void failedMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageAttempted) {
+        this.postMeleeHit(tool,modifier,context,damageAttempted);
+    }
+
+    @Override
+    public void afterMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
+        this.postMeleeHit(tool,modifier,context,damageDealt);
+    }
+
+    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damage){
+
     }
 
 

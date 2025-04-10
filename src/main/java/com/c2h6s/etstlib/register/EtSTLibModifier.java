@@ -10,7 +10,6 @@ import com.c2h6s.etstlib.tool.modifiers.Integration.MekIntegration.*;
 import com.c2h6s.etstlib.tool.modifiers.Common.*;
 import com.c2h6s.etstlib.tool.modifiers.Combat.Defense.*;
 import com.c2h6s.etstlib.tool.modifiers.Harvest.*;
-import com.c2h6s.etstlib.tool.modifiers.Test;
 import slimeknights.tconstruct.library.modifiers.util.ModifierDeferredRegister;
 import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 
@@ -23,7 +22,6 @@ public class EtSTLibModifier {
     public static final StaticModifier<ArmorPiercing> armor_piercing =MODIFIERS.register("armor_piercing",ArmorPiercing::new);
     public static final StaticModifier<PhotosynthesisGuide> photosynthesis_guide =MODIFIERS.register("photosynthesis_guide",PhotosynthesisGuide::new);
     public static final StaticModifier<EnergyLoaded> energy_loaded =MODIFIERS.register("energy_loaded",EnergyLoaded::new);
-    //public static final StaticModifier<AtomicDecompose> atomic_decompose =MODIFIERS.register("atomic_decompose",AtomicDecompose::new);
     public static final StaticModifier<ShotCircuit> SHORT_CIRCUIT =MODIFIERS.register("short_circuit",ShotCircuit::new);
 
     //无集成属性
@@ -36,6 +34,15 @@ public class EtSTLibModifier {
     public static final StaticModifier<CrystalArmor> CRYSTAL_ARMOR = MODIFIERS.register("crystal_armor", CrystalArmor::new);
     public static final StaticModifier<RealityBreaker> reality_breaker =MODIFIERS.register("reality_breaker",RealityBreaker::new);
     public static final StaticModifier<Glowing> glowing =MODIFIERS.register("glowing",Glowing::new);
+    public static final StaticModifier<VoidInsight> VOID_INSIGHT =MODIFIERS.register("void_insight",VoidInsight::new);
+    public static final StaticModifier<GlobalTraveler> GLOBAL_TRAVELER =MODIFIERS.register("global_traveler",GlobalTraveler::new);
+    public static final StaticModifier<Hardened> HARDENED =MODIFIERS.register("hardened",Hardened::new);
+    public static final StaticModifier<Terrafirma> TERRAFIRMA =MODIFIERS.register("terrafirma",Terrafirma::new);
+    public static final StaticModifier<Fatal> FATAL =MODIFIERS.register("fatal",Fatal::new);
+    public static final StaticModifier<ExtraDense> EXTRA_DENSE =MODIFIERS.register("extra_dense",ExtraDense::new);
+    public static final StaticModifier<InertMetal> INERT_METAL =MODIFIERS.register("inert_metal",InertMetal::new);
+    public static final StaticModifier<HyperDensity> HYPER_DENSITY =MODIFIERS.register("hyper_density",HyperDensity::new);
+    public static final StaticModifier<SecondaryArmor> SECONDARY_ARMOR =MODIFIERS.register("secondary_armor",SecondaryArmor::new);
 
 
 

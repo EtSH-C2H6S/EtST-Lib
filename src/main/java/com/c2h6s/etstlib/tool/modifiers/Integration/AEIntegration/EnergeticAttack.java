@@ -4,6 +4,7 @@ import appeng.core.AppEng;
 import appeng.core.sync.packets.LightningPacket;
 import com.c2h6s.etstlib.entity.specialDamageSources.LegacyDamageSource;
 import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;
+import com.c2h6s.etstlib.util.CommonConstants;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
@@ -24,7 +26,7 @@ import static com.c2h6s.etstlib.util.ModListConstants.AE2Loaded;
 
 public class EnergeticAttack extends EtSTBaseModifier {
     @Override
-    public void afterMeleeHit (IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
+    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
         Entity entity = context.getTarget();
         Level level  = context.getLevel();
         if (!level.isClientSide&&context.isFullyCharged()&&AE2Loaded) {
@@ -39,12 +41,12 @@ public class EnergeticAttack extends EtSTBaseModifier {
     }
 
     @Override
-    public boolean onProjectileHitEntity(ModifierNBT modifiers, ModDataNBT persistentData, ModifierEntry modifier, Projectile projectile, EntityHitResult hit, @javax.annotation.Nullable LivingEntity attacker, @Nullable LivingEntity target) {
-        if (target!=null&&projectile instanceof AbstractArrow arrow&&arrow.isCritArrow()){
+    public void afterArrowHit(ModDataNBT persistentData, ModifierEntry entry, ModifierNBT modifiers, AbstractArrow arrow, @org.jetbrains.annotations.Nullable LivingEntity attacker, @NotNull LivingEntity target, float damageDealt) {
+        if (arrow!=null&&arrow.getTags().contains(CommonConstants.KEY_CRITARROW)){
             Level level  = target.level();
             if (!level.isClientSide&&AE2Loaded) {
                 target.invulnerableTime = 0;
-                target.hurt(new DamageSource(level.damageSources().magic().typeHolder(), attacker), 3 + modifier.getLevel());
+                target.hurt(new DamageSource(level.damageSources().magic().typeHolder(), attacker), 3 + entry.getLevel());
                 target.invulnerableTime = 0;
                 final AABB entityBoundingBox = target.getBoundingBox();
                 final float dx = (float) (target.level().getRandom().nextFloat() * target.getBbWidth() + entityBoundingBox.minX);
@@ -53,6 +55,5 @@ public class EnergeticAttack extends EtSTBaseModifier {
                 AppEng.instance().sendToAllNearExcept(null, dx, dy, dz, 32.0, target.level(), new LightningPacket(dx, dy, dz));
             }
         }
-        return false;
     }
 }

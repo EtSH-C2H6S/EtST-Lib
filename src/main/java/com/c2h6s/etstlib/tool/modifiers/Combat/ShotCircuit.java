@@ -13,7 +13,7 @@ import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 
 public class ShotCircuit extends EtSTBaseModifier {
     @Override
-    public void afterMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
+    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
         context.getTarget().invulnerableTime=0;
     }
 
