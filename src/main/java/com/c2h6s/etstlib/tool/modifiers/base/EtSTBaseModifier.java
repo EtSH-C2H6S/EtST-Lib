@@ -70,7 +70,7 @@ public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, 
     }
     @Override
     public float getArrowDamage(ModDataNBT persistentData, ModifierEntry entry, ModifierNBT modifiers, AbstractArrow arrow, @org.jetbrains.annotations.Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage) {
-        return this.onGetArrowDamage(persistentData,entry,arrow,attacker,target,baseDamage,damage);
+        return this.onGetArrowDamage(persistentData,entry,modifiers,arrow,attacker,target,baseDamage,damage);
     }
 
     public float onGetMeleeDamage(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float baseDamage, float damage) {
@@ -88,7 +88,7 @@ public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, 
     public Component onModifierRemoved(IToolStackView tool, Modifier modifier) {
         return null;
     }
-    public float onGetArrowDamage(ModDataNBT persistentData, ModifierEntry entry, AbstractArrow arrow, @org.jetbrains.annotations.Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage) {
+    public float onGetArrowDamage(ModDataNBT persistentData, ModifierEntry entry ,ModifierNBT modifiers, AbstractArrow arrow, @org.jetbrains.annotations.Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage) {
         return damage;
     }
 
