@@ -4,6 +4,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
 public class MixinTemp {
@@ -26,4 +27,6 @@ public class MixinTemp {
         public static boolean isExtraAttack;
         public static boolean isCritical;
     }
+
+    public static MaterialStatsId statType;
 }

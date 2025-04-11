@@ -11,6 +11,7 @@ import com.c2h6s.etstlib.tool.hooks.modifierModules.ForceDropModule;
 import com.c2h6s.etstlib.tool.hooks.modifierModules.SetCriticalModule;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.MekIntegration.RadiationShieldProvider;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.PnCIntegration.AirStorageProvider;
+import com.c2h6s.etstlib.util.CommonConstants;
 import com.c2h6s.etstlib.util.ModListConstants;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;

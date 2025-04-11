@@ -28,7 +28,7 @@ public class ExtraDense extends Modifier implements ToolStatsModifierHook, Repai
 
     @Override
     public void addToolStats(IToolContext context, ModifierEntry entry, ModifierStatsBuilder builder) {
-        ToolStats.MINING_SPEED.multiply(builder,0.2*entry.getLevel());
+        ToolStats.MINING_SPEED.percent(builder,0.2*entry.getLevel());
         ToolStats.ATTACK_DAMAGE.percent(builder,0.2*entry.getLevel());
         ToolStats.ARMOR.percent(builder,0.2*entry.getLevel());
         ToolStats.DURABILITY.percent(builder,0.2*entry.getLevel());

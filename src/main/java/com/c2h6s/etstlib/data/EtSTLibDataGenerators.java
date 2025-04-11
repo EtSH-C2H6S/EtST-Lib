@@ -1,6 +1,7 @@
 package com.c2h6s.etstlib.data;
 
 import com.c2h6s.etstlib.EtSTLib;
+//import com.c2h6s.etstlib.data.providers.EtSTLibMaterialTagProvider;
 import com.c2h6s.etstlib.data.providers.EtSTLibModifierProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -22,5 +23,6 @@ public class EtSTLibDataGenerators {
         ExistingFileHelper helper=event.getExistingFileHelper();
 
         generator.addProvider(event.includeServer(),new EtSTLibModifierProvider(output));
+        //generator.addProvider(event.includeClient(),new EtSTLibMaterialTagProvider(output,helper));
     }
 }

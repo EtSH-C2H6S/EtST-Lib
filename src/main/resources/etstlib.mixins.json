@@ -13,6 +13,7 @@
     "ProjectileMixin",
     "AEMixin.ChargerBlockEntityMixin",
     "AEMixin.ChargerRecipesMixin",
+    "TconMixin.RandomMaterial$RandomizedMixin",
     "TconMixin.ToolAttackUtilMixin"
   ],
   "client": [
