@@ -14,6 +14,7 @@ import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
+import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 
 public class Anisotropy extends EtSTBaseModifier {
     public static final ResourceLocation KEY_CURRENT = EtSTLib.getResourceLocation("current_durability");
@@ -38,7 +39,7 @@ public class Anisotropy extends EtSTBaseModifier {
     }
 
     @Override
-    public float onGetArrowDamage(ModDataNBT persistentData, ModifierEntry entry, AbstractArrow arrow, @Nullable LivingEntity attackerk, @NotNull Entity target, float baseDamage, float damage) {
+    public float onGetArrowDamage(ModDataNBT persistentData, ModifierEntry entry, ModifierNBT modifiers, AbstractArrow arrow, @Nullable LivingEntity attackerk, @NotNull Entity target, float baseDamage, float damage) {
         damage += baseDamage*getBonus(persistentData.getInt(KEY_CURRENT),persistentData.getInt(KEY_DAMAGE),entry.getLevel())*(arrow.isCritArrow()?1:-1);
         return damage;
     }

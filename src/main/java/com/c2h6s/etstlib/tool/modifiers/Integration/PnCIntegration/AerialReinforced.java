@@ -32,6 +32,7 @@ import slimeknights.tconstruct.library.module.ModuleHookMap;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
+import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 
 import java.util.List;
 import java.util.Optional;
@@ -110,9 +111,9 @@ public class AerialReinforced extends BasicPressurizableModifier implements Brea
     }
 
     @Override
-    public float onGetArrowDamage(ModDataNBT persistentData, ModifierEntry entry, AbstractArrow arrow, @Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage) {
+    public float onGetArrowDamage(ModDataNBT persistentData, ModifierEntry entry, ModifierNBT modifiers, AbstractArrow arrow, @Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage) {
         damage+= baseDamage*persistentData.getFloat(KEY_DAMAGE);
-        return super.onGetArrowDamage(persistentData, entry, arrow, attacker, target, baseDamage, damage);
+        return damage;
     }
 
     @Override
