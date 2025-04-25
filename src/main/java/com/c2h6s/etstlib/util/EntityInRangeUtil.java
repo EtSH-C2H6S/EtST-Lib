@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 
 
@@ -15,31 +16,31 @@ public class EntityInRangeUtil {
     public static ToDoubleFunction<? super Entity> toManhattanDistance(Entity entity){
         return value -> Math.abs( value.getX()-entity.getX()+value.getY()-entity.getY());
     }
-    public static Entity getNearestEntity(@NotNull Entity centerEntity, float range,@NotNull IntOpenHashSet ignoreEntityIds,@NotNull List<Class<? extends Entity>> classBlacklist){
+    public static Entity getNearestEntity(@NotNull Entity centerEntity, float range,@NotNull IntOpenHashSet ignoreEntityIds, @NotNull Predicate<Entity> predicate){
         List<Entity> list = centerEntity.level().getEntitiesOfClass(Entity.class,new AABB(centerEntity.blockPosition()).inflate(range));
         list.sort(Comparator.comparingDouble(toManhattanDistance(centerEntity)));
         for (Entity entity:list){
-            if (!ignoreEntityIds.contains(entity.getId())&&!classBlacklist.contains(entity.getClass())&&entity!=centerEntity){
+            if (!ignoreEntityIds.contains(entity.getId())&&predicate.test(entity)&&entity!=centerEntity){
                 return entity;
             }
         }
         return null;
     }
-    public static LivingEntity getNearestLivingEntity(@NotNull Entity centerEntity, float range,@NotNull IntOpenHashSet ignoreEntityIds,@NotNull List<Class<? extends Entity>> classBlacklist){
+    public static LivingEntity getNearestLivingEntity(@NotNull Entity centerEntity, float range,@NotNull IntOpenHashSet ignoreEntityIds, @NotNull Predicate<Entity> predicate){
         List<LivingEntity> list = centerEntity.level().getEntitiesOfClass(LivingEntity.class,new AABB(centerEntity.blockPosition()).inflate(range));
         list.sort(Comparator.comparingDouble(toManhattanDistance(centerEntity)));
         for (LivingEntity entity:list){
-            if (!ignoreEntityIds.contains(entity.getId())&&!classBlacklist.contains(entity.getClass())&&entity!=centerEntity){
+            if (!ignoreEntityIds.contains(entity.getId())&&predicate.test(entity)&&entity!=centerEntity){
                 return entity;
             }
         }
         return null;
     }
-    public static LivingEntity getNearestNotFriendlyLivingEntity(@NotNull Entity centerEntity, float range,@NotNull IntOpenHashSet ignoreEntityIds,@NotNull List<Class<? extends Entity>> classBlacklist){
+    public static LivingEntity getNearestNotFriendlyLivingEntity(@NotNull Entity centerEntity, float range, @NotNull IntOpenHashSet ignoreEntityIds, @NotNull Predicate<Entity> predicate){
         List<LivingEntity> list = centerEntity.level().getEntitiesOfClass(LivingEntity.class,new AABB(centerEntity.blockPosition()).inflate(range));
         list.sort(Comparator.comparingDouble(toManhattanDistance(centerEntity)));
         for (LivingEntity entity:list){
-            if (!ignoreEntityIds.contains(entity.getId())&&!classBlacklist.contains(entity.getClass())&&!entity.getType().getCategory().isFriendly()&&entity!=centerEntity){
+            if (!ignoreEntityIds.contains(entity.getId())&&predicate.test(entity)&&!entity.getType().getCategory().isFriendly()&&entity!=centerEntity){
                 return entity;
             }
         }
