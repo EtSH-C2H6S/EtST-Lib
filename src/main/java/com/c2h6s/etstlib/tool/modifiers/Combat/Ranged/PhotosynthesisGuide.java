@@ -52,7 +52,7 @@ public class PhotosynthesisGuide extends EtSTBaseModifier implements ProjectileT
             IntOpenHashSet ignored = new IntOpenHashSet();
             if (arrow.getOwner()!=null) ignored.add(arrow.getOwner().getId());
             if (piercingIgnoreEntityIds!=null) ignored.addAll(piercingIgnoreEntityIds);
-            LivingEntity target = getNearestLivingEntity(arrow,2.5f+entry.getLevel()*0.5f,ignored,List.of(Player.class, ServerPlayer.class, FakePlayer.class));
+            LivingEntity target = getNearestLivingEntity(arrow,2.5f+entry.getLevel()*0.5f,ignored,(entity -> !(entity instanceof Player)));
             if (target!=null) {
                 ParticleChainUtil.summonParticleChain(arrow.position(),arrow.position().subtract(arrow.getDeltaMovement()), ParticleTypes.GLOW,0.1,128,serverLevel,1,0.01,0.01,0.01,0);
                 ProjectileUtil.homingToward(arrow,target,entry.getLevel()*0.5f,2.5f+entry.getLevel()*0.5f);

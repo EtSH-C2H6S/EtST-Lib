@@ -39,7 +39,7 @@ public class WarpAttack extends EtSTBaseModifier implements ProjectileTickModifi
     @Override
     public void onLeftClickBlock(IToolStackView tool, ModifierEntry entry, Player player, Level level, EquipmentSlot equipmentSlot, BlockState state, BlockPos pos) {
         if (player!=null&&!level.isClientSide) {
-            LivingEntity living = EntityInRangeUtil.getNearestLivingEntity(player, entry.getLevel() + 4, new IntOpenHashSet(), List.of());
+            LivingEntity living = EntityInRangeUtil.getNearestLivingEntity(player, entry.getLevel() + 4, new IntOpenHashSet(), (entity -> !(entity instanceof Player)));
             if (living!=null) ToolAttackUtil.attackEntity(tool,player,living);
         }
     }
@@ -47,7 +47,7 @@ public class WarpAttack extends EtSTBaseModifier implements ProjectileTickModifi
     @Override
     public void onLeftClickEmpty(IToolStackView tool, ModifierEntry entry, Player player, Level level, EquipmentSlot equipmentSlot) {
         if (player!=null&&!level.isClientSide) {
-            LivingEntity living = EntityInRangeUtil.getNearestLivingEntity(player, entry.getLevel() + 4, new IntOpenHashSet(), List.of());
+            LivingEntity living = EntityInRangeUtil.getNearestLivingEntity(player, entry.getLevel() + 4, new IntOpenHashSet(), (entity -> !(entity instanceof Player)));
             if (living!=null) ToolAttackUtil.attackEntity(tool,player,living);
         }
     }
@@ -69,7 +69,7 @@ public class WarpAttack extends EtSTBaseModifier implements ProjectileTickModifi
         if (arrow.getOwner()!=null){
             piercingIgnoreEntityIds.add(arrow.getOwner().getId());
         }
-        LivingEntity living = EntityInRangeUtil.getNearestLivingEntity(arrow, entry.getLevel() + 2.5F,piercingIgnoreEntityIds, List.of(Player.class, ServerPlayer.class, FakePlayer.class));
+        LivingEntity living = EntityInRangeUtil.getNearestLivingEntity(arrow, entry.getLevel() + 2.5F,piercingIgnoreEntityIds, (entity -> !(entity instanceof Player)));
         if (living!=null){
             EntityHitResult hitResult = new EntityHitResult(living);
             ((ProjectileInvoker)arrow).onHit(hitResult);
