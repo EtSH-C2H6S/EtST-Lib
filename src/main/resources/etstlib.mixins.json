@@ -6,6 +6,7 @@
   "refmap": "etstlib.refmap.json",
   "mixins": [
     "AbstractArrowMixin",
+    "EntityMixin",
     "ItemStackMixin",
     "LivingEntityAccessor",
     "LivingEntityMixin",

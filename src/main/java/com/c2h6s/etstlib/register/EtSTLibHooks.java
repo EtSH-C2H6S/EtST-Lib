@@ -1,12 +1,15 @@
 package com.c2h6s.etstlib.register;
 
 import com.c2h6s.etstlib.EtSTLib;
+import com.c2h6s.etstlib.content.misc.vibration.VibrationContext;
 import com.c2h6s.etstlib.tool.hooks.*;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
@@ -21,6 +24,8 @@ import slimeknights.tconstruct.library.tools.context.EquipmentContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
+
+import java.util.UUID;
 
 public class EtSTLibHooks {
     public static final ModuleHook<CorrectDropModifierHook> CORRECT_TOOL = ModifierHooks.register(EtSTLib.getResourceLocation("correct_tool"), CorrectDropModifierHook.class, CorrectDropModifierHook.AllMerger::new, (tool, entry, state, drop) -> false);
@@ -81,6 +86,27 @@ public class EtSTLibHooks {
     public static final ModuleHook<ArrowHitModifierHook> ARROW_HIT = ModifierHooks.register(EtSTLib.getResourceLocation("arrow_hit"), ArrowHitModifierHook.class, ArrowHitModifierHook.AllMerger::new, new ArrowHitModifierHook() {
         @Override
         public void afterArrowHit(ModDataNBT persistentData, ModifierEntry entry, ModifierNBT modifiers, AbstractArrow arrow, @Nullable LivingEntity attacker, @NotNull LivingEntity target, float damageDealt) {
+        }
+    });
+    public static final ModuleHook<VibrationListeningModifierHook> VIBRATION_LISTENING = ModifierHooks.register(EtSTLib.getResourceLocation("vibration_listening"), VibrationListeningModifierHook.class, VibrationListeningModifierHook.AllMerger::new, new VibrationListeningModifierHook() {
+        @Override
+        public UUID getAcceptorUUID(IToolStackView tool, ModifierEntry modifier, Player player, Level level, EquipmentSlot slot) {
+            return null;
+        }
+
+        @Override
+        public int listenRange(IToolStackView tool, ModifierEntry modifier, Player player, Level level, EquipmentSlot slot, int range) {
+            return 0;
+        }
+
+        @Override
+        public boolean canReceiveVibration(IToolStackView tool, ModifierEntry modifier, Player player, ServerLevel level, EquipmentSlot slot, VibrationContext context) {
+            return false;
+        }
+
+        @Override
+        public void onReceivingVibration(IToolStackView tool, ModifierEntry modifier, Player player, ServerLevel level, EquipmentSlot slot, VibrationContext context) {
+
         }
     });
 }

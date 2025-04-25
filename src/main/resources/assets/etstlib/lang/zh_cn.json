@@ -156,6 +156,10 @@
   "modifier.etstlib.extra_dense.flavor": "质量高，“质量”更高！",
   "modifier.etstlib.extra_dense.description": "工具具有更高的属性，但是变得更难修复。",
 
+  "modifier.etstlib.resonating": "稳态谐振",
+  "modifier.etstlib.resonating.flavor": "本关考验你听声辩位功夫",
+  "modifier.etstlib.resonating.description": "每隔一段时间，你会接收环境的声音，并根据声音的频率获得增益效果。",
+
 
 
   "fluid_effect.etstlib.radiate_entity": "施加 %s 实体辐射",

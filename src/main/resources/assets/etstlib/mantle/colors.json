@@ -30,7 +30,8 @@
     "inert_metal": "#A3CFD4",
     "hyper_density": "#522375",
     "secondary_armor": "#D9FFD8",
-    "extra_dense" : "#AFC3FF"
+    "extra_dense" : "#AFC3FF",
+    "resonating" : "#00D6B4"
   },
   "material.etstlib": {
 

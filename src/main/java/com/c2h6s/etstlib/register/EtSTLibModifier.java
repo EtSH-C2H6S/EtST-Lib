@@ -43,6 +43,7 @@ public class EtSTLibModifier {
     public static final StaticModifier<InertMetal> INERT_METAL =MODIFIERS.register("inert_metal",InertMetal::new);
     public static final StaticModifier<HyperDensity> HYPER_DENSITY =MODIFIERS.register("hyper_density",HyperDensity::new);
     public static final StaticModifier<SecondaryArmor> SECONDARY_ARMOR =MODIFIERS.register("secondary_armor",SecondaryArmor::new);
+    public static final StaticModifier<Resonating> RESONATING =MODIFIERS.register("resonating",Resonating::new);
 
 
 

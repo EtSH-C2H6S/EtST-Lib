@@ -44,6 +44,11 @@ public class GlobalTraveler extends EtSTBaseModifier implements ProcessLootModif
     }
 
     @Override
+    public boolean isNoLevels() {
+        return true;
+    }
+
+    @Override
     public int getPriority() {
         return Integer.MIN_VALUE;
     }

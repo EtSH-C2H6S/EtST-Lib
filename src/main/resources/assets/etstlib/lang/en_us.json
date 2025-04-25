@@ -156,6 +156,10 @@
   "modifier.etstlib.extra_dense.flavor": "Great mass come from high density.",
   "modifier.etstlib.extra_dense.description": "Boost some of stats but decrease repair factor.",
 
+  "modifier.etstlib.resonating": "Resonating",
+  "modifier.etstlib.resonating.flavor": "Do you know how to measure distance using sound ?",
+  "modifier.etstlib.resonating.description": "You will hear sound from the environment and gain buffs.",
+
 
 
   "fluid_effect.etstlib.radiate_entity": "Radiate %s To Entity",
