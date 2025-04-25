@@ -6,6 +6,7 @@ import com.c2h6s.etstlib.register.EtSTLibHooks;
 import com.c2h6s.etstlib.tool.hooks.VibrationListeningModifierHook;
 import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -14,6 +15,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.module.ModuleHookMap;
@@ -37,6 +39,11 @@ public class Resonating extends EtSTBaseModifier implements VibrationListeningMo
     );
 
     @Override
+    public @NotNull Component getDisplayName(int level) {
+        return super.getDisplayName(level);
+    }
+
+    @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
         super.registerHooks(hookBuilder);
         hookBuilder.addHook(this, EtSTLibHooks.VIBRATION_LISTENING, ModifierHooks.EQUIPMENT_CHANGE);
@@ -48,7 +55,7 @@ public class Resonating extends EtSTBaseModifier implements VibrationListeningMo
             tool.getPersistentData().putInt(KEY, tool.getPersistentData().getInt(KEY) - 1);
         }
         if (level.getGameTime() % 40 == 0 && player.getPersistentData().getInt(KEY_FREQ) > 0) {
-            int bonus = player.getPersistentData().getInt(KEY_FREQ) / 9;
+            int bonus = player.getPersistentData().getInt(KEY_FREQ) / 10;
             player.getPersistentData().putInt(KEY_FREQ, 0);
             bonus = Math.min(bonus, 6);
             for (int i = 0; i < bonus; i++) {

@@ -2,6 +2,7 @@ package com.c2h6s.etstlib.tool.modifiers.base;
 
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import com.c2h6s.etstlib.tool.hooks.CustomBarDisplayModifierHook;
+import com.c2h6s.etstlib.util.DynamicComponentUtil;
 import com.c2h6s.etstlib.util.MathUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -59,7 +60,7 @@ public abstract class BasicFEModifier extends EtSTBaseModifier implements Modifi
 
     @Override
     public void addTooltip(IToolStackView tool, ModifierEntry modifierEntry, @Nullable Player player, List<Component> list, TooltipKey tooltipKey, TooltipFlag tooltipFlag) {
-        Component component = Component.translatable("tooltip.etstlib.energy_storage").append(":").append(" "+ MathUtil.getEnergyString(getEnergy(tool))+"/"+MathUtil.getEnergyString(getMaxEnergy(tool))).withStyle(Style.EMPTY.withColor(0xFF3000));
+        Component component = DynamicComponentUtil.ScrollColorfulText.getColorfulText("tooltip.etstlib.energy_storage",":"+" "+ MathUtil.getEnergyString(getEnergy(tool))+"/"+MathUtil.getEnergyString(getMaxEnergy(tool)),new int[]{0xFF0000,0xFF5A00},40,100,true);
         list.add(component);
     }
 
