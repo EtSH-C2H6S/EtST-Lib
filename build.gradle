@@ -13,10 +13,12 @@ buildscript {
 
 plugins {
     id 'eclipse'
+    id 'java-library'
     id 'idea'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'io.freefair.lombok' version '8.6'
 }
 
 apply plugin: 'org.spongepowered.mixin'
@@ -220,6 +222,20 @@ tasks.named('jar', Jar).configure {
     finalizedBy 'reobfJar'
 }
 
+java {
+    withSourcesJar()
+}
+sourcesJar {
+    exclude 'assets/**'
+    exclude 'data/**'
+    exclude 'pack.png'
+    exclude 'pack.mcmeta'
+    exclude 'META-INF/mods.toml'
+}
+
+artifacts {
+    archives sourcesJar
+}
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing:
 // tasks.named('publish').configure {
 //     dependsOn 'reobfJar'
@@ -230,14 +246,33 @@ publishing {
     publications {
         register('mavenJava', MavenPublication) {
             artifact jar
+            artifact sourcesJar
+            pom{
+                name= 'EtST-Lib'
+                description = 'a lib for tcon'
+                url='https://github.com/lovelyFirefly/EtST-Lib'
+            }
         }
+
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/mcmodsrepo"
+            name="EtST-Lib"
+            url =uri("https://maven.pkg.github.com/lovelyFirefly/EtST-Lib")
+            credentials{
+                username = project.findProperty("githubUsername")?:""
+                password = project.findProperty("githubPassword")?:""
+            }
+        }
+    }
+    repositories {
+        mavenLocal()
+        maven{
+
         }
     }
 }
+
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation

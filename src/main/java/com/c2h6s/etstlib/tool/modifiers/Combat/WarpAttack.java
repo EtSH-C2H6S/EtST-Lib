@@ -31,7 +31,7 @@ import java.util.List;
 public class WarpAttack extends EtSTBaseModifier implements ProjectileTickModifierHook {
 
     @Override
-    protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
+    protected void registerHooks(ModuleHookMap.@NotNull Builder hookBuilder) {
         super.registerHooks(hookBuilder);
         hookBuilder.addHook(this, EtSTLibHooks.PROJECTILE_TICK);
     }

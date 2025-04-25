@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.phys.Vec2;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.library.modifiers.Modifier;
@@ -35,7 +36,7 @@ public abstract class BasicFEModifier extends EtSTBaseModifier implements Modifi
     }
 
     @Override
-    protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
+    protected void registerHooks(ModuleHookMap.@NotNull Builder hookBuilder) {
         super.registerHooks(hookBuilder);
         hookBuilder.addHook(this,ModifierHooks.REMOVE, ModifierHooks.TOOLTIP,ModifierHooks.TOOL_STATS,EtSTLibHooks.CUSTOM_BAR);
     }
@@ -49,7 +50,7 @@ public abstract class BasicFEModifier extends EtSTBaseModifier implements Modifi
 
     @Nullable
     @Override
-    public Component onRemoved(IToolStackView tool, Modifier modifier) {
+    public Component onRemoved(@NotNull IToolStackView tool, @NotNull Modifier modifier) {
         if (getMaxEnergy(tool) <= 0) {
             tool.getPersistentData().remove(ENERGY_KEY);
         }

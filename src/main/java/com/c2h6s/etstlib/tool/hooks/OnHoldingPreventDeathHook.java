@@ -11,7 +11,7 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import java.util.Collection;
 
 /**
- * <h3>一个用于处理"持有时候工具将要死亡时候,取消死亡"相关的钩子</h3>
+ * <h3>一个用于处理"实体持有时候工具将要死亡时候,取消死亡"的钩子</h3>
  * <h5>对应的Hook标识符为{@link com.c2h6s.etstlib.register.EtSTLibHooks#PREVENT_DEATH}</h5>
  * <em>如果单纯想要在实体真正死亡时候操作请使用</em> {@link OnDeathModifierHook}
  * <br>
@@ -64,7 +64,7 @@ public interface OnHoldingPreventDeathHook {
     float onHoldingPreventDeath(LivingEntity livingEntity,IToolStackView tool, ModifierEntry modifier, EquipmentContext context, EquipmentSlot slotType, DamageSource source);
 
     /**
-     * 设置此次伤害是否无视"BYPASSES_INVULNERABILITY"标签的伤害类型
+     * 设置此此免死是否无视"BYPASSES_INVULNERABILITY"标签的伤害类型
      * <br>
      * <br><strong>默认不会无视,因为Kill伤害无法正常击杀实体是很严重的事情,如果更改了导致的一系列问题要做好善后</strong>
      * </ul>

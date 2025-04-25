@@ -42,7 +42,7 @@ import java.util.function.BiConsumer;
 public class AerialReinforced extends BasicPressurizableModifier implements BreakSpeedModifierHook, ProjectileLaunchModifierHook, AttributesModifierHook {
     public static final ResourceLocation KEY_DAMAGE = EtSTLib.getResourceLocation("arrow_multiplier_aerial");
     @Override
-    protected void registerHooks(ModuleHookMap.Builder builder) {
+    protected void registerHooks(ModuleHookMap.@NotNull Builder builder) {
         super.registerHooks(builder);
         builder.addHook(this, ModifierHooks.TOOL_DAMAGE,ModifierHooks.BREAK_SPEED,ModifierHooks.MELEE_DAMAGE,ModifierHooks.PROJECTILE_LAUNCH,ModifierHooks.ATTRIBUTES);
     }
@@ -58,7 +58,7 @@ public class AerialReinforced extends BasicPressurizableModifier implements Brea
     }
 
     @Override
-    public int onDamageTool(IToolStackView tool, ModifierEntry modifier, int amount, @Nullable LivingEntity livingEntity) {
+    public int onDamageTool(@NotNull IToolStackView tool, @NotNull ModifierEntry modifier, int amount, @Nullable LivingEntity livingEntity) {
         if (100*amount< AirStorageProvider.getAir(tool)){
             AirStorageProvider.addAir(tool,-100*amount);
             return 0;
@@ -86,7 +86,7 @@ public class AerialReinforced extends BasicPressurizableModifier implements Brea
 
 
     @Override
-    public float getMeleeDamage(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float baseDamage, float damage) {
+    public float getMeleeDamage(@NotNull IToolStackView tool, @NotNull ModifierEntry modifier, @NotNull ToolAttackContext context, float baseDamage, float damage) {
         float multiplier =1+getBonus(tool,modifier);
         if (AirStorageProvider.getAir(tool)>100){
             AirStorageProvider.addAir(tool,-(int) (100*multiplier));
@@ -102,7 +102,7 @@ public class AerialReinforced extends BasicPressurizableModifier implements Brea
     }
 
     @Override
-    public void onProjectileLaunch(IToolStackView tool, ModifierEntry modifier, LivingEntity shooter, Projectile projectile, @javax.annotation.Nullable AbstractArrow arrow, ModDataNBT persistentData, boolean primary) {
+    public void onProjectileLaunch(@NotNull IToolStackView tool, @NotNull ModifierEntry modifier, @NotNull LivingEntity shooter, @NotNull Projectile projectile, @javax.annotation.Nullable AbstractArrow arrow, @NotNull ModDataNBT persistentData, boolean primary) {
         float multiplier =getBonus(tool,modifier);
         if (AirStorageProvider.getAir(tool)>100&&arrow!=null){
             AirStorageProvider.addAir(tool,-(int) (100*multiplier));

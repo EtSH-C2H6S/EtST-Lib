@@ -33,7 +33,7 @@ import static com.c2h6s.etstlib.util.EntityInRangeUtil.*;
 public class PhotosynthesisGuide extends EtSTBaseModifier implements ProjectileTickModifierHook {
 
     @Override
-    protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
+    protected void registerHooks(ModuleHookMap.@NotNull Builder hookBuilder) {
         super.registerHooks(hookBuilder);
         hookBuilder.addHook(this, EtSTLibHooks.PROJECTILE_TICK);
     }

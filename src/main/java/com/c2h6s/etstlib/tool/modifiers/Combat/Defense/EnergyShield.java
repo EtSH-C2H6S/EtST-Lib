@@ -3,6 +3,7 @@ package com.c2h6s.etstlib.tool.modifiers.Combat.Defense;
 import com.c2h6s.etstlib.tool.modifiers.base.BasicFEModifier;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.armor.DamageBlockModifierHook;
@@ -22,7 +23,7 @@ public class EnergyShield extends BasicFEModifier implements DamageBlockModifier
 
 
     @Override
-    protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
+    protected void registerHooks(ModuleHookMap.@NotNull Builder hookBuilder) {
         super.registerHooks(hookBuilder);
         hookBuilder.addHook(this, ModifierHooks.DAMAGE_BLOCK,ModifierHooks.MODIFY_DAMAGE);
     }

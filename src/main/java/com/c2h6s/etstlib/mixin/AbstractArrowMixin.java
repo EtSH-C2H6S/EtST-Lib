@@ -82,7 +82,7 @@ public class AbstractArrowMixin {
     @Inject(method = "tick",at = @At(value = "HEAD"))
     private void tick(CallbackInfo ci){
         AbstractArrow arrow = (AbstractArrow) (Object)this;
-        ModifierNBT nbt =null;
+        ModifierNBT nbt;
         EntityModifierCapability.EntityModifiers cap= arrow.getCapability(EntityModifierCapability.CAPABILITY).orElse(null);
         ModDataNBT projectileData = PersistentDataCapability.getOrWarn(arrow);
         if (cap!=null&&!cap.getModifiers().isEmpty()){

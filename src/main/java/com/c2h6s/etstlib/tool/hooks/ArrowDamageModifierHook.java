@@ -12,18 +12,28 @@ import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 import java.util.Collection;
 import java.util.Iterator;
 
+/**<h3>一个用于修改"箭矢造成的伤害"的钩子</h3>
+ * <h5>对应的Hook标识符为
+ * <br>"EtSTLibHooks.ARROW_DAMAGE"</h5>
+ * 处理逻辑通过Mixin实现,在{@link com.c2h6s.etstlib.mixin.AbstractArrowMixin}
+ * <br>
+ * <em>如果你想要在击中目标之后触发效果,可以使用<h5>ArrowHitModifierHook</h5></em>
+ * @see ArrowHitModifierHook
+ */
 public interface ArrowDamageModifierHook {
     /**
+     * <h6>在箭矢伤害目标的时候调用</h6>
      *
-     * @param persistentData
-     * @param entry
-     * @param modifiers 词条实例
+     *
+     * @param persistentData 传入箭矢的NBT信息
+     * @param entry ModifierEntry实例
+     * @param modifiers 传入箭矢的工具词条NBT,因为箭矢无法定位工具,所有需要这样来确保箭矢有效果
      * @param arrow 箭矢实体
      * @param attacker 攻击者
      * @param target 被攻击者
      * @param baseDamage 基础伤害
      * @param damage 总伤害
-     * @return 箭矢的伤害
+     * @return 箭矢的伤害,这个伤害类似于hurt,不会被箭矢本身所影响,修改这个返回值会直接修改箭矢调用hurt方法造成的伤害,而非箭矢的baseDamage常量
      */
     float getArrowDamage(ModDataNBT persistentData, ModifierEntry entry, ModifierNBT modifiers, AbstractArrow arrow, @Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage);
 

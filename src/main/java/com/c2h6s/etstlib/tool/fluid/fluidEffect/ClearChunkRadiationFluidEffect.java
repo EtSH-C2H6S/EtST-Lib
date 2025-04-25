@@ -1,6 +1,5 @@
 package com.c2h6s.etstlib.tool.fluid.fluidEffect;
 
-import com.c2h6s.etstlib.util.MathUtil;
 import com.c2h6s.etstlib.util.ModListConstants;
 import mekanism.api.Chunk3D;
 import mekanism.common.lib.radiation.RadiationManager;

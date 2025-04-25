@@ -10,9 +10,27 @@ import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 
 import java.util.Collection;
 
+/**
+ * <h3>一个用于修改"箭矢造成伤害后"的钩子</h3>
+ *<h5>对应的Hook标识符为
+ * <br>"EtSTLibHooks.ARROW_HIT"</h5>
+ * 处理逻辑通过Mixin实现,在{@link com.c2h6s.etstlib.mixin.AbstractArrowMixin}
+ * <br>
+ * <em>如果你想要在击中目标时触发效果,可以使用<h5>ArrowDamageModifierHook</h5></em>
+ * @see ArrowDamageModifierHook
+ */
 public interface ArrowHitModifierHook {
+    /**
+     *
+     * @param persistentData 传入箭矢的NBT信息
+     * @param entry ModifierEntry实例
+     * @param modifiers 传入箭矢的工具词条NBT,因为箭矢无法定位工具,所有需要这样来确保箭矢有效果
+     * @param arrow 箭矢实体
+     * @param attacker 攻击者
+     * @param target 被攻击者
+     * @param damageDealt 原箭矢实际造成的伤害结果
+     */
     default void afterArrowHit(ModDataNBT persistentData, ModifierEntry entry, ModifierNBT modifiers, AbstractArrow arrow, @Nullable LivingEntity attacker, @NotNull LivingEntity target, float damageDealt) {
-
     }
 
     record AllMerger(Collection<ArrowHitModifierHook> modules) implements ArrowHitModifierHook {
