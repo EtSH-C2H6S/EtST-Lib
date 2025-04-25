@@ -59,7 +59,7 @@ public class MathUtil {
      * <br>如-2.3直接得到-0.3
      * <br>2.1直接得到0.1
      */
-    public double getDecimal(double number) {
+    public static double getDecimal(double number) {
         return number - (int)number;
     }
 
@@ -69,11 +69,27 @@ public class MathUtil {
      * @param limit 保留的位数
      * @return 限位后的数
      * <br>如MathUtil.limitsNumber(3.14159,3),则返回3.141
+     * <br>不要输入<strong>太过大或者太过小的数值</strong>,会丢精度
      */
-    public double limitsNumber(float number,float limit){
-        return Math.round(number * 10 * limit) /(10 * limit);
+    public static double limitsNumber(double number,int limit){
+        if(limit<0){
+            limit=0;
+        }
+        double scale=Math.pow(10,limit);
+        return Math.round(number * scale)/ scale;
     }
     public static String getEnergyString(int amount){
         return getUnitInt(amount)+"FE";
+    }
+    /**
+     *
+     * @param number 输入的数字
+     * @param limit 保留百分号后的位数
+     * @return 得到的带%符号的字符串
+     * <br>如MathUtil.toPercentage(0.78645,1),则返回78.6%
+     * <br>不要输入<strong>太过大或者太过小的数值</strong>,会丢精度
+     */
+    public static String toPercentage(double number,int limit){
+        return limitsNumber(number,limit+2) * 100+"%";
     }
 }
