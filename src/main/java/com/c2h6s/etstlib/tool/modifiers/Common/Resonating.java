@@ -59,7 +59,8 @@ public class Resonating extends EtSTBaseModifier implements VibrationListeningMo
             player.getPersistentData().putInt(KEY_FREQ, 0);
             bonus = Math.min(bonus, 6);
             for (int i = 0; i < bonus; i++) {
-                int effectLevel = acceptorLevel-1;
+                int effectLevel =( acceptorLevel-1)/2;
+                effectLevel = Math.min(5,effectLevel);
                 MobEffect effect = effectList.get(i);
                 if (effect==MobEffects.DAMAGE_RESISTANCE||effect==MobEffects.HEAL) effectLevel = Math.min(2,effectLevel);
                 player.addEffect(new MobEffectInstance(effect,60,effectLevel,false,false));
@@ -79,6 +80,7 @@ public class Resonating extends EtSTBaseModifier implements VibrationListeningMo
 
     @Override
     public boolean canReceiveVibration(IToolStackView tool, ModifierEntry modifier, Player player, ServerLevel level, EquipmentSlot slot, VibrationContext context) {
+        if (context.directEntity==player) return false;
         return tool.getPersistentData().getInt(KEY)<=0;
     }
 

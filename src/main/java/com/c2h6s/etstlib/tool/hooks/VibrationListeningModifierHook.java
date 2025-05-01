@@ -1,6 +1,7 @@
 package com.c2h6s.etstlib.tool.hooks;
 
 import com.c2h6s.etstlib.content.misc.vibration.ToolVibrationAcceptor;
+import com.c2h6s.etstlib.content.misc.vibration.ToolVibrationListener;
 import com.c2h6s.etstlib.content.misc.vibration.VibrationContext;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import net.minecraft.core.BlockPos;
@@ -10,6 +11,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.DynamicGameEventListener;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.vibrations.VibrationInfo;
 import net.minecraft.world.phys.Vec3;
@@ -69,8 +71,15 @@ public interface VibrationListeningModifierHook extends EquipmentChangeModifierH
             UUID acceptorUUID = modifier.getHook(EtSTLibHooks.VIBRATION_LISTENING).getAcceptorUUID(tool, modifier, player,serverLevel,context.getChangedSlot());
             if (acceptorUUID!=null){
                 int range = modifier.getHook(EtSTLibHooks.VIBRATION_LISTENING).listenRange(tool,modifier,player,serverLevel,context.getChangedSlot(),16);
-                ToolVibrationAcceptor acceptor = new ToolVibrationAcceptor(player,range,acceptorUUID,modifier.getLevel());
-                acceptor.putOrMerge();
+                ToolVibrationListener listener = ToolVibrationListener.listenerMap.get(player);
+                boolean noListener = listener==null;
+                if (noListener){
+                    listener=new ToolVibrationListener(player);
+                }
+                ToolVibrationAcceptor acceptor = new ToolVibrationAcceptor(range,acceptorUUID,modifier.getLevel());
+                listener.addAcceptor(acceptor);
+                ToolVibrationListener.listenerMap.put(player,listener);
+                if (noListener) player.updateDynamicGameEventListener(DynamicGameEventListener::add);
             }
         }
     }
@@ -80,7 +89,7 @@ public interface VibrationListeningModifierHook extends EquipmentChangeModifierH
         if (context.getEntity() instanceof Player player&&context.getLevel() instanceof ServerLevel serverLevel) {
             UUID acceptorUUID = modifier.getHook(EtSTLibHooks.VIBRATION_LISTENING).getAcceptorUUID(tool, modifier, player, serverLevel, context.getChangedSlot());
             if (acceptorUUID != null) {
-                ToolVibrationAcceptor.decreaseLevel(player,acceptorUUID,modifier.getLevel());
+                ToolVibrationListener.decreaseLevel(player,acceptorUUID,modifier.getLevel());
             }
         }
     }
