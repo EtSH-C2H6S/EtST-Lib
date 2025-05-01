@@ -61,7 +61,7 @@ public abstract class BasicFEModifier extends EtSTBaseModifier implements Modifi
     @Override
     public void addTooltip(IToolStackView tool, ModifierEntry modifierEntry, @Nullable Player player, List<Component> list, TooltipKey tooltipKey, TooltipFlag tooltipFlag) {
         Component component = DynamicComponentUtil.ScrollColorfulText.getColorfulText("tooltip.etstlib.energy_storage",":"+" "+ MathUtil.getEnergyString(getEnergy(tool))+"/"+MathUtil.getEnergyString(getMaxEnergy(tool)),new int[]{0xFF0000,0xFF5A00},40,100,true);
-        list.add(component);
+        if (!list.contains(component)) list.add(component);
     }
 
     @Override

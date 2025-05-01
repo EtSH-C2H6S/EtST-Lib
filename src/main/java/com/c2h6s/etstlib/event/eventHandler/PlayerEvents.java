@@ -2,6 +2,7 @@ package com.c2h6s.etstlib.event.eventHandler;
 
 import com.c2h6s.etstlib.EtSTLib;
 import com.c2h6s.etstlib.content.misc.vibration.ToolVibrationAcceptor;
+import com.c2h6s.etstlib.content.misc.vibration.ToolVibrationListener;
 import com.c2h6s.etstlib.tool.hooks.LeftClickModifierHook;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -10,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -42,6 +44,13 @@ public class PlayerEvents {
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event){
-        if (event.player instanceof ServerPlayer serverPlayer) ToolVibrationAcceptor.tickIfPresent(serverPlayer);
+        if (event.player instanceof ServerPlayer serverPlayer) ToolVibrationListener.tickIfPresent(serverPlayer);
     }
+
+    @SubscribeEvent
+    public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event){
+        if (event.getEntity() instanceof ServerPlayer serverPlayer) ToolVibrationListener.removeAllAcceptor(serverPlayer);
+    }
+
+
 }
