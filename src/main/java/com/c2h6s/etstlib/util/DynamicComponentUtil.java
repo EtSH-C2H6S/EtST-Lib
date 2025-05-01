@@ -10,6 +10,7 @@ import net.minecraft.util.Mth;
 import net.minecraftforge.fml.DistExecutor;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -49,40 +50,55 @@ public class DynamicComponentUtil {
                     () -> () -> Component.translatable(translatableText)
             );
         }
+
         private static MutableComponent buildGradientText(String textKey, @Nullable String append, int[] colors, int step, int durationMs, boolean isTranslatable) {
-            // 基础参数预处理
             String safeAppend = append != null ? append : "";
-            String localizedText = isTranslatable
-                    ? Language.getInstance().getOrDefault(textKey)
-                    : textKey;
+            String localizedText = isTranslatable ? Language.getInstance().getOrDefault(textKey) : textKey;
             String fullText = localizedText + safeAppend;
-            // 生成渐变颜色数组
+            int effectiveDuration = Math.max(1, durationMs); // 确保 durationMs >=1
             int[] gradientColors = generateLinearGradient(colors, step);
+            // 校验渐变数组长度（至少需要2个颜色）
+            if (gradientColors.length < 2) {
+                gradientColors = new int[]{0xFFFFFF, 0x000000};
+            }
             int cycleLength = 2 * (gradientColors.length - 1);
             long timestamp = System.currentTimeMillis();
-            // 统一字符处理逻辑
             MutableComponent result = Component.empty();
             for (int i = 0; i < fullText.length(); i++) {
-                int progress = (i + (int) (timestamp / durationMs)) % cycleLength;
+                long timeStep = timestamp / effectiveDuration;
+                long rawProgress = i + timeStep;
+                int progress = Math.floorMod(rawProgress, cycleLength);
                 int colorIndex = (gradientColors.length - 1) - Math.abs(progress - (gradientColors.length - 1));
-                result.append(Component.literal(String.valueOf(fullText.charAt(i))).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(gradientColors[colorIndex])))
+                if (colorIndex < 0 || colorIndex >= gradientColors.length) {
+                    colorIndex = Math.max(0, Math.min(colorIndex, gradientColors.length - 1)); // 强制索引合法
+                }
+                result.append(
+                        Component.literal(String.valueOf(fullText.charAt(i)))
+                                .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(gradientColors[colorIndex])))
                 );
             }
             return result;
         }
 
         private static int[] generateLinearGradient(int[] colors, int totalSteps) {
+            if (colors == null || colors.length == 0) {
+                throw new IllegalArgumentException("Colors array must not be null or empty");
+            }
+            if (totalSteps <= 0) {
+                return new int[0];
+            }
+            if (colors.length == 1) {
+                int[] gradient = new int[totalSteps];
+                Arrays.fill(gradient, colors[0]);
+                return gradient;
+            }
             int[] gradient = new int[totalSteps];
             int segments = colors.length - 1;
             int stepsPerSegment = totalSteps / segments;
             int remainder = totalSteps % segments;
             int startIndex = 0;
             for (int i = 0; i < segments; i++) {
-                int currentSteps = stepsPerSegment;
-                if (i == segments - 1) {
-                    // 将余数分配给最后一段,防止数组不能被整除从而突然几把的黑一下
-                    currentSteps += remainder;
-                }
+                int currentSteps = stepsPerSegment + (i == segments - 1 ? remainder : 0);
                 int startColor = colors[i];
                 int endColor = colors[i + 1];
                 float r1 = (startColor >> 16) & 0xFF;
@@ -92,7 +108,7 @@ public class DynamicComponentUtil {
                 float g2 = (endColor >> 8) & 0xFF;
                 float b2 = endColor & 0xFF;
                 for (int j = 0; j < currentSteps; j++) {
-                    float t = j / (float) (currentSteps - 1);
+                    float t = (currentSteps == 1) ? 0.0f : j / (float) (currentSteps - 1);
                     int r = (int) (r1 + (r2 - r1) * t);
                     int g = (int) (g1 + (g2 - g1) * t);
                     int b = (int) (b1 + (b2 - b1) * t);
@@ -101,7 +117,6 @@ public class DynamicComponentUtil {
                         gradient[index] = (r << 16) | (g << 8) | b;
                     }
                 }
-                // 更新下一段起始的实际位置
                 startIndex += currentSteps;
             }
             return gradient;

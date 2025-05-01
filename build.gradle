@@ -243,32 +243,32 @@ artifacts {
 
 // Example configuration to allow publishing using the maven-publish plugin
 publishing {
-    publications {
-        register('mavenJava', MavenPublication) {
-            artifact jar
-            artifact sourcesJar
-            pom{
-                name= 'EtST-Lib'
-                description = 'a lib for tcon'
-                url='https://github.com/lovelyFirefly/EtST-Lib'
-            }
-        }
-
-    }
-    repositories {
-        maven {
-            name="EtST-Lib"
-            url =uri("https://maven.pkg.github.com/lovelyFirefly/EtST-Lib")
-            credentials{
-                username = project.findProperty("githubUsername")?:""
-                password = project.findProperty("githubPassword")?:""
-            }
-        }
-    }
+    //发布maven暂时没研究成功,先搁置
+//    publications {
+//        register('mavenJava', MavenPublication) {
+//            artifact jar
+//            artifact sourcesJar
+//            pom{
+//                name= 'EtST-Lib'
+//                description = 'a lib for tcon'
+//                url='https://github.com/lovelyFirefly/EtST-Lib'
+//            }
+//        }
+//
+//    }
+//    repositories {
+//        maven {
+//            name="EtST-Lib"
+//            url =uri("https://maven.pkg.github.com/lovelyFirefly/EtST-Lib")
+//            credentials{
+//                username = project.findProperty("githubUsername")?:""
+//                password = project.findProperty("githubPassword")?:""
+//            }
+//        }
+//    }
     repositories {
         mavenLocal()
         maven{
-
         }
     }
 }
