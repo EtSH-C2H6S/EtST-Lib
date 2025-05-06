@@ -9,12 +9,12 @@ import java.util.Collection;
 
 public interface EffectApplicableModifierHook {
     Boolean isApplicable(IToolStackView tool, ModifierEntry entry, EquipmentSlot slot, MobEffectInstance instance, Boolean notApplicable);
-    record FirstMerger(Collection<EffectApplicableModifierHook> modules) implements EffectApplicableModifierHook {
+    record AllMerger(Collection<EffectApplicableModifierHook> modules) implements EffectApplicableModifierHook {
         @Override
         public Boolean isApplicable(IToolStackView tool, ModifierEntry entry, EquipmentSlot slot, MobEffectInstance instance, Boolean notApplicable) {
             for (EffectApplicableModifierHook module:this.modules){
                 Boolean NotApplicable =module.isApplicable(tool,entry,slot,instance,notApplicable);
-                if (NotApplicable!=null) return NotApplicable;
+                if (NotApplicable) return true;
             }
             return notApplicable;
         }

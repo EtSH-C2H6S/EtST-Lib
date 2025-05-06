@@ -32,11 +32,8 @@ public class ToolEvents {
                     Boolean notApplicable = event.getResult()== Event.Result.DENY;
                     for (ModifierEntry entry:tool.getModifierList()){
                         notApplicable = entry.getHook(EtSTLibHooks.EFFECT_APPLICABLE).isApplicable(tool,entry,slot,event.getEffectInstance(),notApplicable);
-                        if (notApplicable!=null){
-                            if (notApplicable) {
-                                event.setResult(Event.Result.DENY);
-                            }
-                            else event.setResult(Event.Result.ALLOW);
+                        if (notApplicable){
+                            event.setResult(Event.Result.DENY);
                             break;
                         }
                     }
