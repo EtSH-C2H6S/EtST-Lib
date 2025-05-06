@@ -15,6 +15,7 @@
     "AEMixin.ChargerBlockEntityMixin",
     "AEMixin.ChargerRecipesMixin",
     "TconMixin.RandomMaterial$RandomizedMixin",
+    "TconMixin.SlurpingModifierMixin",
     "TconMixin.ToolAttackUtilMixin"
   ],
   "client": [
