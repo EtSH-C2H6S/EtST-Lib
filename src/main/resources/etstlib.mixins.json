@@ -15,7 +15,8 @@
     "AEMixin.ChargerBlockEntityMixin",
     "AEMixin.ChargerRecipesMixin",
     "TconMixin.RandomMaterial$RandomizedMixin",
-    "TconMixin.ToolAttackUtilMixin"
+    "TconMixin.ToolAttackUtilMixin",
+    "TconMixin.ToolStackMixin"
   ],
   "client": [
     "AbstractClientPlayerMixin",

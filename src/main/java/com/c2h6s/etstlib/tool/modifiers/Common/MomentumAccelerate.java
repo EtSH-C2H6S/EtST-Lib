@@ -11,6 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -57,7 +58,7 @@ public class MomentumAccelerate extends EtSTBaseModifier implements ToolStatsMod
 
     @Override
     public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
-        if (tool.getPersistentData().getFloat(LOCATION_ACCEL)<modifier.getLevel()*0.5f){
+        if (tool.getPersistentData().getFloat(LOCATION_ACCEL)<modifier.getLevel()*0.5f&&context.getAttacker() instanceof Player player&&player.getAttackStrengthScale(0)>=0.25){
             tool.getPersistentData().putFloat(LOCATION_ACCEL,tool.getPersistentData().getFloat(LOCATION_ACCEL)+0.05f*modifier.getLevel());
         }
     }
