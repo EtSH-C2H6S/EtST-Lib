@@ -4,6 +4,7 @@ import com.c2h6s.etstlib.EtSTLib;
 import com.c2h6s.etstlib.tool.modifiers.base.BasicPressurizableModifier;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.PnCIntegration.AirStorageProvider;
 import com.c2h6s.etstlib.util.EquipmentUtil;
+import com.c2h6s.etstlib.util.IToolUuidGetter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,6 +34,7 @@ import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
+import slimeknights.tconstruct.library.tools.stat.ToolStats;
 
 import java.util.List;
 import java.util.Optional;
@@ -120,12 +122,12 @@ public class AerialReinforced extends BasicPressurizableModifier implements Brea
     public void addAttributes(IToolStackView tool, ModifierEntry modifier, EquipmentSlot equipmentSlot, BiConsumer<Attribute, AttributeModifier> biConsumer) {
         if (getBonus(tool,modifier)>0) {
             if (EquipmentUtil.ARMOR.contains(equipmentSlot)) {
-                biConsumer.accept(Attributes.ARMOR, new AttributeModifier(UUID.fromString("dd956aaf-a7e7-ca28-f352-34e76c7a4ebf"), Attributes.ARMOR.getDescriptionId(), getBonus(tool, modifier), AttributeModifier.Operation.MULTIPLY_BASE));
-                biConsumer.accept(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(UUID.fromString("45bbb1ce-b4ee-7ee2-2f5c-df86d24c361a"), Attributes.ARMOR_TOUGHNESS.getDescriptionId(), getBonus(tool, modifier), AttributeModifier.Operation.MULTIPLY_BASE));
-                biConsumer.accept(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(UUID.fromString("4639fef7-40a3-4ecf-ff5b-0cd263d3c9c0"), Attributes.KNOCKBACK_RESISTANCE.getDescriptionId(), getBonus(tool, modifier), AttributeModifier.Operation.MULTIPLY_BASE));
+                biConsumer.accept(Attributes.ARMOR, new AttributeModifier(((IToolUuidGetter)tool).etstlib$getUuid(), Attributes.ARMOR.getDescriptionId(), getBonus(tool, modifier)*tool.getStats().get(ToolStats.ARMOR), AttributeModifier.Operation.ADDITION));
+                biConsumer.accept(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(((IToolUuidGetter)tool).etstlib$getUuid(), Attributes.ARMOR_TOUGHNESS.getDescriptionId(), getBonus(tool, modifier)*tool.getStats().get(ToolStats.ARMOR_TOUGHNESS), AttributeModifier.Operation.ADDITION));
+                biConsumer.accept(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(((IToolUuidGetter)tool).etstlib$getUuid(), Attributes.KNOCKBACK_RESISTANCE.getDescriptionId(), getBonus(tool, modifier)*tool.getStats().get(ToolStats.KNOCKBACK_RESISTANCE), AttributeModifier.Operation.ADDITION));
             }
             else if (EquipmentUtil.HAND.contains(equipmentSlot)){
-                biConsumer.accept(Attributes.ATTACK_SPEED, new AttributeModifier(UUID.fromString("ea03df0d-b06f-949a-8b4e-0a7c195df603"), Attributes.ATTACK_SPEED.getDescriptionId(), getBonus(tool, modifier), AttributeModifier.Operation.MULTIPLY_BASE));
+                biConsumer.accept(Attributes.ATTACK_SPEED, new AttributeModifier(((IToolUuidGetter)tool).etstlib$getUuid(), Attributes.ATTACK_SPEED.getDescriptionId(), getBonus(tool, modifier)*tool.getStats().get(ToolStats.ATTACK_SPEED), AttributeModifier.Operation.ADDITION));
             }
         }
     }
