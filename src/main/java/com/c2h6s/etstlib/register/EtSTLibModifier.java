@@ -10,6 +10,7 @@ import com.c2h6s.etstlib.tool.modifiers.Integration.MekIntegration.*;
 import com.c2h6s.etstlib.tool.modifiers.Common.*;
 import com.c2h6s.etstlib.tool.modifiers.Combat.Defense.*;
 import com.c2h6s.etstlib.tool.modifiers.Harvest.*;
+import com.c2h6s.etstlib.tool.modifiers.Test;
 import slimeknights.tconstruct.library.modifiers.util.ModifierDeferredRegister;
 import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 

@@ -86,7 +86,7 @@ public abstract class BasicFEModifier extends EtSTBaseModifier implements Modifi
         int FE = getEnergy(tool);
         int maxStorage = getMaxEnergy(tool);
         if (maxStorage>0) {
-            return new Vec2(Math.min(13, 13 * FE / maxStorage), 1);
+            return new Vec2(Math.min(13, 13F * FE / maxStorage), 1);
         }
         return new Vec2(0,0);
     }

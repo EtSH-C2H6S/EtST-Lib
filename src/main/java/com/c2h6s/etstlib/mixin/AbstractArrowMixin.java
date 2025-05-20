@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.capability.EntityModifierCapability;
 import slimeknights.tconstruct.library.tools.capability.PersistentDataCapability;
@@ -23,7 +24,8 @@ import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 
 import static com.c2h6s.etstlib.MixinTemp.*;
 
-@Mixin(AbstractArrow.class)
+//Set priority to 990 to avoid conflict with Immersive Weapons
+@Mixin(value = AbstractArrow.class,priority = 990)
 public class AbstractArrowMixin {
     @Shadow
     private IntOpenHashSet piercingIgnoreEntityIds;
