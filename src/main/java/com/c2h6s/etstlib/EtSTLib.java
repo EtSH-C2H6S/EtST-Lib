@@ -24,7 +24,9 @@ import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -58,6 +60,9 @@ public class EtSTLib {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerSerializers);
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, EtstLibClientConfig.ClientConfig, "etstlib-client.toml");
+
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);

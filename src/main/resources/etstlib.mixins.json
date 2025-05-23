@@ -15,14 +15,15 @@
     "AEMixin.ChargerBlockEntityMixin",
     "AEMixin.ChargerRecipesMixin",
     "TconMixin.RandomMaterial$RandomizedMixin",
+    "TconMixin.SlurpingModifierMixin",
     "TconMixin.ToolAttackUtilMixin",
-    "TconMixin.ToolStackMixin",
-    "TconMixin.SlurpingModifierMixin"
+    "TconMixin.ToolStackMixin"
   ],
   "client": [
     "AbstractClientPlayerMixin",
     "GameRendererMixin",
-    "GuiGraphicsMixin"
+    "GuiGraphicsMixin",
+    "TconMixin.ArmorStandRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

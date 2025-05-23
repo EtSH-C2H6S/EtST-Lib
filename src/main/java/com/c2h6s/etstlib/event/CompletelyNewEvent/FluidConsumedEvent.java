@@ -1,14 +1,19 @@
 package com.c2h6s.etstlib.event.CompletelyNewEvent;
 
+import lombok.Getter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.fluids.FluidStack;
 
 
 public class FluidConsumedEvent extends Event {
+    @Getter
     private final Player player;
+    @Getter
     private final FluidStack originalFluid;
-    private int consumed;
+    @Getter
+     private int consumed;
+    @Getter
     private FluidStack finalFluid;
     private boolean canceled = false;
 
@@ -24,20 +29,10 @@ public class FluidConsumedEvent extends Event {
         this.consumed = consumed;
         this.finalFluid.setAmount(finalFluid.getAmount() + delta);
     }
-    public int getConsumed(){
-        return consumed;
-    }
-
-    public FluidStack getOriginalFluid() {
-        return originalFluid;
-    }
 
     @Override
     public boolean isCanceled() {
         return canceled;
-    }
-    public FluidStack getFinalFluid(){
-        return finalFluid;
     }
 
     @Override
@@ -45,7 +40,4 @@ public class FluidConsumedEvent extends Event {
         this.canceled = canceled;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
 }

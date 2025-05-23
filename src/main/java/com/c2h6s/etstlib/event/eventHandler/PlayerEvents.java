@@ -3,6 +3,7 @@ package com.c2h6s.etstlib.event.eventHandler;
 import com.c2h6s.etstlib.EtSTLib;
 import com.c2h6s.etstlib.content.misc.vibration.ToolVibrationAcceptor;
 import com.c2h6s.etstlib.content.misc.vibration.ToolVibrationListener;
+import com.c2h6s.etstlib.event.CompletelyNewEvent.FluidConsumedEvent;
 import com.c2h6s.etstlib.tool.hooks.LeftClickModifierHook;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,6 +17,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 @Mod.EventBusSubscriber(modid = EtSTLib.MODID,bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerEvents {
