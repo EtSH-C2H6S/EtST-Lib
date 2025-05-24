@@ -1,4 +1,4 @@
-package com.c2h6s.etstlib;
+package com.c2h6s.etstlib.mixinUtil;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;

@@ -1,6 +1,6 @@
 package com.c2h6s.etstlib.mixin;
 
-import com.c2h6s.etstlib.MixinTemp;
+import com.c2h6s.etstlib.mixinUtil.MixinTemp;
 import com.c2h6s.etstlib.entity.specialDamageSources.LegacyDamageSource;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
@@ -15,14 +15,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.capability.EntityModifierCapability;
 import slimeknights.tconstruct.library.tools.capability.PersistentDataCapability;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 
-import static com.c2h6s.etstlib.MixinTemp.*;
+import static com.c2h6s.etstlib.mixinUtil.MixinTemp.*;
 
 //Set priority to 990 to avoid conflict with Immersive Weapons
 @Mixin(value = AbstractArrow.class,priority = 990)

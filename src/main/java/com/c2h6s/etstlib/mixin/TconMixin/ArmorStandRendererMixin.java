@@ -1,5 +1,6 @@
 package com.c2h6s.etstlib.mixin.TconMixin;
 
+import com.c2h6s.etstlib.EtstLibClientConfig;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -18,7 +19,9 @@ public abstract class ArmorStandRendererMixin <T extends BlockEntity, C extends 
     }
     @Inject(method = "init",at = @At("HEAD"), cancellable = true)
     protected void init(CallbackInfo ci){
-        super.init();
-        ci.cancel();
+        if (EtstLibClientConfig.notRenderArmorStand.get()) {
+            super.init();
+            ci.cancel();
+        }
     }
 }

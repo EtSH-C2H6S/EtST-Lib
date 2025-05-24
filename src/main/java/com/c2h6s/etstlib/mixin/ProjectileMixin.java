@@ -1,6 +1,6 @@
 package com.c2h6s.etstlib.mixin;
 
-import com.c2h6s.etstlib.MixinTemp;
+import com.c2h6s.etstlib.mixinUtil.MixinTemp;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -8,10 +8,8 @@ import net.minecraft.world.entity.TraceableEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;

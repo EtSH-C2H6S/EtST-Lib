@@ -1,6 +1,6 @@
 package com.c2h6s.etstlib.mixin;
 
-import com.c2h6s.etstlib.MixinTemp;
+import com.c2h6s.etstlib.mixinUtil.MixinTemp;
 import com.c2h6s.etstlib.entity.specialDamageSources.PercentageBypassArmorSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;

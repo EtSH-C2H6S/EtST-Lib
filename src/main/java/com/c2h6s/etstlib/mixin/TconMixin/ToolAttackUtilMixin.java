@@ -1,10 +1,9 @@
 package com.c2h6s.etstlib.mixin.TconMixin;
 
-import com.c2h6s.etstlib.MixinTemp;
+import com.c2h6s.etstlib.mixinUtil.MixinTemp;
 import com.c2h6s.etstlib.entity.specialDamageSources.LegacyDamageSource;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,7 +19,7 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
 import java.util.function.DoubleSupplier;
 
-import static com.c2h6s.etstlib.MixinTemp.attackUtilTemp;
+import static com.c2h6s.etstlib.mixinUtil.MixinTemp.attackUtilTemp;
 
 @Mixin(remap = false,value = ToolAttackUtil.class)
 public class ToolAttackUtilMixin {

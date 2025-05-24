@@ -23,6 +23,9 @@
     "AbstractClientPlayerMixin",
     "GameRendererMixin",
     "GuiGraphicsMixin",
+    "TconMixin.TinkerStationScreenMixin",
+    "TconMixin.SideButtonsWidgetMixin",
+    "GuiGraphicsMixin",
     "TconMixin.ArmorStandRendererMixin"
   ],
   "injectors": {
