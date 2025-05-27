@@ -17,4 +17,11 @@ public class EffectUtil {
         var map=livingEntity.getActiveEffectsMap();
         map.put(effect,new MobEffectInstance(effect,duration,Amplifier));
     }
+    public static void modifyEffectInstance(MobEffectInstance instance,int finalDuration,int finalAmplifier,boolean pAmbient, boolean pVisible, boolean pShowIcon){
+        instance.duration=finalDuration;
+        instance.amplifier=finalAmplifier;
+        instance.ambient=pAmbient;
+        instance.visible=pVisible;
+        instance.showIcon=pShowIcon;
+    }
 }
