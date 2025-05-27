@@ -79,5 +79,5 @@ public class EtSTLibModifier {
         public static final StaticModifier<TerraBeam> terra_beam = BOT_MODIFIERS.register("terra_beam", TerraBeam::new);
     }
 
-    //public static final StaticModifier<Test> test = MODIFIERS.register("test", Test::new);
+    public static final StaticModifier<Test> test = MODIFIERS.register("test", Test::new);
 }

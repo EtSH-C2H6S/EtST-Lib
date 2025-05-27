@@ -3,6 +3,7 @@ package com.c2h6s.etstlib;
 import com.c2h6s.etstlib.data.predicate.LivingEntityWithHealth;
 import com.c2h6s.etstlib.event.eventHandler.PlayerEvents;
 import com.c2h6s.etstlib.network.EtSTLibPacketHandler;
+import com.c2h6s.etstlib.register.EtSTLibEntityTickers;
 import com.c2h6s.etstlib.register.EtSTLibModifier;
 import com.c2h6s.etstlib.tool.fluid.fluidEffect.*;
 import com.c2h6s.etstlib.tool.hooks.modifierModules.AddDamageTypeTagArrowModule;
@@ -62,11 +63,13 @@ public class EtSTLib {
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, EtstLibClientConfig.ClientConfig, "etstlib-client.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EtSTLibConfig.COMMON_CONFIG, "etstlib-common.toml");
 
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         EFFECTS.register(modEventBus);
+        EtSTLibEntityTickers.ENTITY_TICKERS.register(modEventBus);
         EtSTLibModifier.MODIFIERS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);

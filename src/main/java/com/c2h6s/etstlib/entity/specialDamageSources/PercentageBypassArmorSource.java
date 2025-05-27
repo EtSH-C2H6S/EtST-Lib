@@ -1,5 +1,7 @@
 package com.c2h6s.etstlib.entity.specialDamageSources;
 
+import com.c2h6s.etstlib.entity.specialDamageSources.interfaces.IPercentageBypassArmor;
+import lombok.Getter;
 import net.minecraft.core.Holder;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
@@ -12,7 +14,8 @@ import org.jetbrains.annotations.Nullable;
 
 //A DamageSource that does armor pierce in percentage.
 //Final value equals to : originalAmount * percentage + amountAfterArmor * (1 - percentage)
-public class PercentageBypassArmorSource extends LegacyDamageSource {
+@Getter
+public class PercentageBypassArmorSource extends LegacyDamageSource implements IPercentageBypassArmor {
     private final float percentage;
     public PercentageBypassArmorSource(Holder<DamageType> holder, @Nullable Entity directEntity, @Nullable Entity causingEntity, @Nullable Vec3 sourcePos,float percentage) {
         super(holder, directEntity, causingEntity, sourcePos);
@@ -23,10 +26,6 @@ public class PercentageBypassArmorSource extends LegacyDamageSource {
     }
     public PercentageBypassArmorSource(Holder<DamageType> holder, @Nullable Entity directEntity,float percentage) {
         this(holder, directEntity, directEntity, null,percentage);
-    }
-
-    public float getPercentage(){
-        return this.percentage;
     }
 
 

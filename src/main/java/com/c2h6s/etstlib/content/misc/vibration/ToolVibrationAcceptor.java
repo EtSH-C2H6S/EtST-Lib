@@ -2,6 +2,7 @@ package com.c2h6s.etstlib.content.misc.vibration;
 
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import com.c2h6s.etstlib.tool.hooks.VibrationListeningModifierHook;
+import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,22 +12,17 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.gameevent.EntityPositionSource;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.gameevent.GameEventListener;
-import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 
 import java.util.*;
 
-import static com.c2h6s.etstlib.content.misc.vibration.ToolVibrationListener.removeAcceptor;
-
 public class ToolVibrationAcceptor{
     public final UUID acceptorUUID;
+    @Getter
     protected int totalLevel;
     public int listenRange;
 
@@ -34,10 +30,6 @@ public class ToolVibrationAcceptor{
         this.acceptorUUID = acceptorUUID;
         this.totalLevel = level;
         this.listenRange = listenRadius;
-    }
-
-    public int getTotalLevel(){
-        return totalLevel;
     }
 
     public ToolVibrationAcceptor mergeAcceptor(ToolVibrationAcceptor acceptor){
@@ -59,9 +51,7 @@ public class ToolVibrationAcceptor{
             ItemStack stack = player.getItemBySlot(slot);
             if (stack.getItem() instanceof IModifiable&&player.level() instanceof ServerLevel serverLevel) {
                 ToolStack toolStack = ToolStack.from(stack);
-                toolStack.getModifierList().forEach((modifier) -> {
-                    modifier.getHook(EtSTLibHooks.VIBRATION_LISTENING).onAcceptorTick(toolStack,modifier,player,serverLevel,slot,totalLevel);
-                });
+                toolStack.getModifierList().forEach((modifier) -> modifier.getHook(EtSTLibHooks.VIBRATION_LISTENING).onAcceptorTick(toolStack,modifier,player,serverLevel,slot,totalLevel));
             }
         }
     }

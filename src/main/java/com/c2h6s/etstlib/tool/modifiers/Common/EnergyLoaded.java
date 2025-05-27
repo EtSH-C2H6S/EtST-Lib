@@ -7,8 +7,6 @@ import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
 import static com.c2h6s.etstlib.util.ToolEnergyUtil.*;
-import static slimeknights.tconstruct.library.tools.capability.ToolEnergyCapability.*;
-
 
 public class EnergyLoaded extends BasicFEModifier {
     @Override

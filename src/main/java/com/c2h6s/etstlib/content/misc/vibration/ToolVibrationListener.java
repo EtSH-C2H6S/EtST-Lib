@@ -1,6 +1,8 @@
 package com.c2h6s.etstlib.content.misc.vibration;
 
 import com.c2h6s.etstlib.register.EtSTLibHooks;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,6 +31,8 @@ public class ToolVibrationListener implements GameEventListener.Holder<Vibration
     private final VibrationSystem.Data vibrationData;
     private final VibrationSystem.User vibrationUser;
     private final VibrationSystem.Listener vibrationListener;
+    @Getter
+    @Setter
     private int listenRadius;
     private boolean cachedCanListen;
 
@@ -37,13 +41,6 @@ public class ToolVibrationListener implements GameEventListener.Holder<Vibration
         this.vibrationData = new Data();
         this.vibrationUser = new VibrationUser();
         this.vibrationListener = new VibrationSystem.Listener(this);
-    }
-
-    public void setListenRadius(int radius){
-        this.listenRadius = radius;
-    }
-    public int getListenRadius(){
-        return this.listenRadius;
     }
 
     public void tick(){

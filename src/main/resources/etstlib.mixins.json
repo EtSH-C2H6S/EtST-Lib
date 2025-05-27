@@ -12,6 +12,7 @@
     "LivingEntityMixin",
     "ProjectileInvoker",
     "ProjectileMixin",
+    "ServerLevelMixin",
     "AEMixin.ChargerBlockEntityMixin",
     "AEMixin.ChargerRecipesMixin",
     "TconMixin.RandomMaterial$RandomizedMixin",
@@ -23,10 +24,9 @@
     "AbstractClientPlayerMixin",
     "GameRendererMixin",
     "GuiGraphicsMixin",
-    "TconMixin.TinkerStationScreenMixin",
+    "TconMixin.ArmorStandRendererMixin",
     "TconMixin.SideButtonsWidgetMixin",
-    "GuiGraphicsMixin",
-    "TconMixin.ArmorStandRendererMixin"
+    "TconMixin.TinkerStationScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
