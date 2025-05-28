@@ -32,14 +32,15 @@ public class EntityTickerManager {
             return true;
         }
         boolean doTick = true;
-        Map<EntityTicker,EntityTickerInstance> instances = TICKER_MAP.get(entity);
-        List<EntityTickerInstance> instancesCopy = List.copyOf(instances.values());
+        EntityTickerManagerInstance managerInstance = new EntityTickerManagerInstance(entity);
+        Map<EntityTicker,EntityTickerInstance> instances = managerInstance.instanceMap;
+        List<EntityTickerInstance> instancesCopy = List.copyOf(managerInstance.instanceMap.values());
         for (EntityTickerInstance instance:instancesCopy){
             EntityTicker ticker = instance.ticker;
             if (!ticker.isInfinite()) instance.duration--;
             doTick = doTick && ticker.tick(instance.duration,instance.level,entity);
-            if (instance.duration>0) instances.put(instance.ticker,instance);
-            else instances.remove(instance.ticker);
+            if (instance.duration>0) managerInstance.setTicker(instance);
+            else managerInstance.removeTicker(ticker);
         }
         return doTick;
     }
@@ -92,6 +93,9 @@ public class EntityTickerManager {
         }
         //直接把实体对应Ticker的Instance替换成指定的Instance
         public void setTicker(EntityTickerInstance instance){
+            if (!this.hasTicker(instance.ticker)){
+                instance.ticker.onTickerStart();
+            }
             this.instanceMap.put(instance.ticker,instance);
         }
         //用两个函数将你要添加的Instance和已有的融合。函数控制的是融合算法（比如你想让等级相加就给levelFunction填Integer::sum）
@@ -105,6 +109,12 @@ public class EntityTickerManager {
             }
             EntityTickerInstance merged = new EntityTickerInstance(instance.ticker,levelFunction.apply(existingLevel,instance.level),timeFunction.apply(existingTime,instance.duration));
             this.setTicker(merged);
+        }
+        public void removeTicker(EntityTicker ticker){
+            if (this.hasTicker(ticker)){
+                ticker.onTickerEnd();
+                this.instanceMap.remove(ticker);
+            }
         }
     }
 
