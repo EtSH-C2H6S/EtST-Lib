@@ -24,11 +24,11 @@ public abstract class EntityTicker {
         return true;
     }
     //当EntityTickerInstance通过EntityTickerManagerInstance的方法添加的时候调用
-    public void onTickerStart(){
+    public void onTickerStart(int duration,int level,Entity entity){
 
     }
     //当EntityTickerInstance通过EntityTickerManagerInstance的方法移除或者自然结束的时候调用
-    public void onTickerEnd(){
+    public void onTickerEnd(int level,Entity entity){
 
     }
 }

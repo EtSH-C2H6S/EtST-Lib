@@ -94,7 +94,7 @@ public class EntityTickerManager {
         //直接把实体对应Ticker的Instance替换成指定的Instance
         public void setTicker(EntityTickerInstance instance){
             if (!this.hasTicker(instance.ticker)){
-                instance.ticker.onTickerStart();
+                instance.ticker.onTickerStart(instance.duration,instance.level,this.entity);
             }
             this.instanceMap.put(instance.ticker,instance);
         }
@@ -112,7 +112,7 @@ public class EntityTickerManager {
         }
         public void removeTicker(EntityTicker ticker){
             if (this.hasTicker(ticker)){
-                ticker.onTickerEnd();
+                ticker.onTickerEnd(this.instanceMap.get(ticker).level,this.entity);
                 this.instanceMap.remove(ticker);
             }
         }
