@@ -11,6 +11,18 @@ public abstract class LivingEntityTicker extends EntityTicker {
         return true;
     }
 
+    @Override
+    public void onTickerStart(int duration, int level, Entity entity) {
+        if (entity instanceof LivingEntity living) this.onLivingTickerStart(duration,level,living);
+    }
+
+    @Override
+    public void onTickerEnd(int level, Entity entity) {
+        if (entity instanceof LivingEntity living) this.onLivingTickerEnd(level,living);
+    }
+
+    public void onLivingTickerStart(int duration, int level, LivingEntity entity){}
+    public void onLivingTickerEnd(int level, LivingEntity entity){}
     public boolean livingTick(int duration, int level, LivingEntity entity){
         return true;
     }

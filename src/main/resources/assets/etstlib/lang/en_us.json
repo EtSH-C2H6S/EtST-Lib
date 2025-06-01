@@ -165,6 +165,11 @@
   "fluid_effect.etstlib.radiate_entity": "Radiate %s To Entity",
   "fluid_effect.etstlib.radiate_block": "Radiate %s To World",
   "fluid_effect.etstlib.clear_radiation": "Clear Radiation Sources In %s Chunk",
+  "fluid_effect.etstlib.add_entity_ticker": "Add %s ticks %s level of ",
+
+
+
+  "entity_ticker.etstlib.freezing": "Freezing",
 
 
 

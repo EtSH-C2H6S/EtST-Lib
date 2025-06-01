@@ -110,7 +110,7 @@ public class EtSTLib {
             ModifierModule.LOADER.register(getResourceLocation("add_arrow_damage_type"), AddDamageTypeTagArrowModule.LOADER);
 
             LivingEntityPredicate.LOADER.register(getResourceLocation("with_health"), LivingEntityWithHealth.LOADER);
-
+            FluidEffect.ENTITY_EFFECTS.register(getResourceLocation("add_entity_ticker"), AddEntityTickerFluidEffect.LOADER);
             if (ModListConstants.MekLoaded){
                 FluidEffect.ENTITY_EFFECTS.register(getResourceLocation("radiate_entity"), RadiateEntityFluidEffect.LOADER);
                 FluidEffect.BLOCK_EFFECTS.register(getResourceLocation("radiate_block"), RadiateBlockFluidEffect.LOADER);

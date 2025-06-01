@@ -165,6 +165,11 @@
   "fluid_effect.etstlib.radiate_entity": "施加 %s 实体辐射",
   "fluid_effect.etstlib.radiate_block": "施加 %s 环境辐射",
   "fluid_effect.etstlib.clear_radiation": "消除 %s 区块内的辐射源",
+  "fluid_effect.etstlib.add_entity_ticker": "添加 %s 刻 %s 级的 ",
+
+
+
+  "entity_ticker.etstlib.freezing": "冻结",
 
 
 

@@ -20,7 +20,7 @@ import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import java.util.List;
 
 import static com.c2h6s.etstlib.mixinUtil.MixinTemp.statType;
-
+/*
 @Mixin(remap = false,targets ="slimeknights.tconstruct.library.materials.RandomMaterial$Randomized" )
 public class RandomMaterial$RandomizedMixin {
     @Final
@@ -44,3 +44,4 @@ public class RandomMaterial$RandomizedMixin {
         }).map(IMaterial::getIdentifier).toList();
     }
 }
+ */

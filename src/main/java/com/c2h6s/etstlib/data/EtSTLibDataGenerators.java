@@ -23,6 +23,5 @@ public class EtSTLibDataGenerators {
         ExistingFileHelper helper=event.getExistingFileHelper();
 
         generator.addProvider(event.includeServer(),new EtSTLibModifierProvider(output));
-        //generator.addProvider(event.includeClient(),new EtSTLibMaterialTagProvider(output,helper));
     }
 }
