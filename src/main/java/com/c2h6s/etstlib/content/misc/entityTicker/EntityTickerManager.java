@@ -11,11 +11,12 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 
 //EntityTicker的总控，可以很方便的来添加/减少Ticker。
 public class EntityTickerManager {
-    public static final Map<Entity, Map<EntityTicker,EntityTickerInstance>> TICKER_MAP = new HashMap<>();
+    public static final ConcurrentHashMap<Entity, ConcurrentHashMap<EntityTicker,EntityTickerInstance>> TICKER_MAP = new ConcurrentHashMap<>();
 
     public static EntityTickerManagerInstance getInstance(Entity entity){
         return new EntityTickerManagerInstance(entity);
@@ -50,7 +51,7 @@ public class EntityTickerManager {
 
     public static void load(Entity entity){
         CompoundTag nbt = entity.getPersistentData().getCompound("etstlib_tickers");
-        Map<EntityTicker,EntityTickerInstance> instances = new HashMap<>();
+        ConcurrentHashMap<EntityTicker,EntityTickerInstance> instances = new ConcurrentHashMap<>();
         if (!nbt.isEmpty()){
             nbt.getAllKeys().forEach(string -> {
                 if (nbt.contains(string, CompoundTag.TAG_COMPOUND)){
@@ -77,7 +78,7 @@ public class EntityTickerManager {
         //为实体创建ManagerInstance，不需要从总的表去再获取。
         public EntityTickerManagerInstance(Entity entity){
             this.entity = entity;
-            TICKER_MAP.computeIfAbsent(entity, k -> new HashMap<>());
+            TICKER_MAP.computeIfAbsent(entity, k -> new ConcurrentHashMap<>());
             this.instanceMap = TICKER_MAP.get(entity);
         }
         public boolean hasTicker(EntityTicker ticker){

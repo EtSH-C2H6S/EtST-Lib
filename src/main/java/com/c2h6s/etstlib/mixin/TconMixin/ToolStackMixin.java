@@ -5,13 +5,18 @@ import com.c2h6s.etstlib.util.CommonConstants;
 import com.c2h6s.etstlib.util.IToolUuidGetter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.*;
 
 import java.util.UUID;
@@ -22,15 +27,17 @@ public abstract class ToolStackMixin implements IToolUuidGetter {
 
     @Unique
     @Override
-    public @NotNull UUID etstlib$getUuid() {
-        return UUID.fromString(nbt.getString(CommonConstants.KEY_TOOL_UUID));
+    public @Nullable UUID etstlib$getUuid() {
+        if (nbt.contains(CommonConstants.KEY_TOOL_UUID,Tag.TAG_STRING)) return UUID.fromString(nbt.getString(CommonConstants.KEY_TOOL_UUID));
+        return null;
     }
 
-    @ModifyVariable(method = "<init>", at = @At("HEAD"), argsOnly = true)
-    private static CompoundTag addUuidToNbt(CompoundTag nbt){
-        if (!nbt.contains(CommonConstants.KEY_TOOL_UUID,Tag.TAG_STRING)){
-            nbt.putString(CommonConstants.KEY_TOOL_UUID,UUID.randomUUID().toString());
+    @Inject(method = "<init>", at = @At("RETURN"))
+    private void addUuidToNbt(Item item, ToolDefinition definition, CompoundTag nbt, CallbackInfo ci){
+        if (item instanceof IModifiable){
+            if (!nbt.contains(CommonConstants.KEY_TOOL_UUID,Tag.TAG_STRING)){
+                nbt.putString(CommonConstants.KEY_TOOL_UUID,UUID.randomUUID().toString());
+            }
         }
-        return nbt;
     }
 }

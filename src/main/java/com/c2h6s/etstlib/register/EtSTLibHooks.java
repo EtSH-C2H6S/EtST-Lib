@@ -57,16 +57,13 @@ public class EtSTLibHooks {
         public int getBarRGB(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
             return 0;
         }
-    } );
+    });
     public static final ModuleHook<ProjectileTickModifierHook> PROJECTILE_TICK = ModifierHooks.register(EtSTLib.getResourceLocation("projectile_tick"), ProjectileTickModifierHook.class, ProjectileTickModifierHook.AllMerger::new, new ProjectileTickModifierHook() {
         @Override
         public void onProjectileTick(ModifierNBT modifiers, ModifierEntry entry, Level level, @NotNull Projectile projectile, ModDataNBT persistentData, boolean hasBeenShot, boolean leftOwner) {
-
         }
-
         @Override
         public void onArrowTick(ModifierNBT modifiers, ModifierEntry entry, Level level, @NotNull AbstractArrow arrow, ModDataNBT persistentData, boolean hasBeenShot, boolean leftOwner,boolean inGround, @Nullable IntOpenHashSet piercingIgnoreEntityIds) {
-
         }
     });
     public static final ModuleHook<OnHoldingPreventDeathHook> PREVENT_DEATH = ModifierHooks.register(EtSTLib.getResourceLocation("holding_death"), OnHoldingPreventDeathHook.class, OnHoldingPreventDeathHook.FirstMerger::new, new OnHoldingPreventDeathHook() {
