@@ -6,6 +6,7 @@ import com.c2h6s.etstlib.util.IToolUuidGetter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -34,7 +35,7 @@ public abstract class ToolStackMixin implements IToolUuidGetter {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void addUuidToNbt(Item item, ToolDefinition definition, CompoundTag nbt, CallbackInfo ci){
-        if (item instanceof IModifiable){
+        if (item instanceof IModifiable&&item.getMaxStackSize(new ItemStack(item))<=1){
             if (!nbt.contains(CommonConstants.KEY_TOOL_UUID,Tag.TAG_STRING)){
                 nbt.putString(CommonConstants.KEY_TOOL_UUID,UUID.randomUUID().toString());
             }
