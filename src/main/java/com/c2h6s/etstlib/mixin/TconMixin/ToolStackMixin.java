@@ -35,7 +35,7 @@ public abstract class ToolStackMixin implements IToolUuidGetter {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void addUuidToNbt(Item item, ToolDefinition definition, CompoundTag nbt, CallbackInfo ci){
-        if (item instanceof IModifiable&&item.getMaxStackSize(new ItemStack(item))<=1){
+        if (item instanceof IModifiable&&item.getMaxStackSize()<=1){
             if (!nbt.contains(CommonConstants.KEY_TOOL_UUID,Tag.TAG_STRING)){
                 nbt.putString(CommonConstants.KEY_TOOL_UUID,UUID.randomUUID().toString());
             }
