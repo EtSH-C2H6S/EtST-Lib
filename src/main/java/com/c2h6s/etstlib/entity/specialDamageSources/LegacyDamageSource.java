@@ -157,6 +157,11 @@ public class LegacyDamageSource extends DamageSource {
     }
 
     @Override
+    public @NotNull String getMsgId() {
+        return this.msgId!=null? this.msgId : super.getMsgId();
+    }
+
+    @Override
     public boolean is(TagKey<DamageType> key) {
         if (!damageTypes.isEmpty()){
             return damageTypes.contains(ResourceKey.create(Registries.DAMAGE_TYPE, key.location())) || super.is(key);
