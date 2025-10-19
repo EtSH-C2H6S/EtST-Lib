@@ -8,12 +8,12 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import java.util.Collection;
 
 public interface EffectApplicableModifierHook {
-    Boolean isApplicable(IToolStackView tool, ModifierEntry entry, EquipmentSlot slot, MobEffectInstance instance, Boolean notApplicable);
+    boolean isApplicable(IToolStackView tool, ModifierEntry entry, EquipmentSlot slot, MobEffectInstance instance, Boolean notApplicable);
     record AllMerger(Collection<EffectApplicableModifierHook> modules) implements EffectApplicableModifierHook {
         @Override
-        public Boolean isApplicable(IToolStackView tool, ModifierEntry entry, EquipmentSlot slot, MobEffectInstance instance, Boolean notApplicable) {
+        public boolean isApplicable(IToolStackView tool, ModifierEntry entry, EquipmentSlot slot, MobEffectInstance instance, Boolean notApplicable) {
             for (EffectApplicableModifierHook module:this.modules){
-                Boolean NotApplicable =module.isApplicable(tool,entry,slot,instance,notApplicable);
+                boolean NotApplicable =module.isApplicable(tool,entry,slot,instance,notApplicable);
                 if (NotApplicable) return true;
             }
             return notApplicable;

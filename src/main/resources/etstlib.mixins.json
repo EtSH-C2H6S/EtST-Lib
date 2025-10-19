@@ -16,6 +16,7 @@
     "AEMixin.ChargerBlockEntityMixin",
     "AEMixin.ChargerRecipesMixin",
     "TconMixin.SlurpingModifierMixin",
+    "TconMixin.ToolAttackContextMixin",
     "TconMixin.ToolAttackUtilMixin",
     "TconMixin.ToolStackMixin"
   ],

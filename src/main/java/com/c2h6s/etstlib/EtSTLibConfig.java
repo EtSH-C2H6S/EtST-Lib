@@ -9,6 +9,8 @@ public class EtSTLibConfig {
 
     public static final ForgeConfigSpec.BooleanValue ALLOW_TICKER_ON_PLAYER = common.comment("是否允许EntityTicker作用于玩家，由于可能导致问题所以默认false")
             .define("allow_entity_ticker_on_player",false);
+    public static final ForgeConfigSpec.BooleanValue ALLOW_PROJECTILE_TICK_INGROUND = common.comment("是否允许弹射物在命中方块后依然通过ProjectileTickModifierHook遍历全词条，默认true")
+            .define("allow_projectile_tick_inground",false);
 
     public static final ForgeConfigSpec COMMON_CONFIG = common.pop().build();
 

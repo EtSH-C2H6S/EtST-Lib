@@ -77,6 +77,7 @@ public class EtSTLibHooks {
             return false;
         }
     });
+    @Deprecated(forRemoval = true,since = "beta.15")
     public static final ModuleHook<ArrowDamageModifierHook> ARROW_DAMAGE = ModifierHooks.register(EtSTLib.getResourceLocation("arrow_damage"), ArrowDamageModifierHook.class, ArrowDamageModifierHook.AllMerger::new, (modDataNBT,modifierEntry,modifierEntries,arrow,living,entity,baseDamage,damage) -> damage);
     public static final ModuleHook<ArrowHitModifierHook> ARROW_HIT = ModifierHooks.register(EtSTLib.getResourceLocation("arrow_hit"), ArrowHitModifierHook.class, ArrowHitModifierHook.AllMerger::new, new ArrowHitModifierHook() {
         @Override
@@ -104,4 +105,5 @@ public class EtSTLibHooks {
 
         }
     });
+    public static final ModuleHook<ProjectileDamageModifierHook> PROJECTILE_DAMAGE = ModifierHooks.register(EtSTLib.getResourceLocation("projectile_damage"), ProjectileDamageModifierHook.class, ProjectileDamageModifierHook.AllMerger::new, (modDataNBT,modifierEntry,modifierEntries,projectile,arrow,living,entity,baseDamage,damage) -> damage);
 }

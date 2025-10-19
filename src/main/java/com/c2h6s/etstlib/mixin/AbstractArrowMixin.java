@@ -1,5 +1,6 @@
 package com.c2h6s.etstlib.mixin;
 
+import com.c2h6s.etstlib.EtSTLibConfig;
 import com.c2h6s.etstlib.mixinUtil.MixinTemp;
 import com.c2h6s.etstlib.entity.specialDamageSources.LegacyDamageSource;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
@@ -50,6 +51,7 @@ public class AbstractArrowMixin {
         }
         return source0;
     }
+    /*
     @ModifyArg(method = "onHitEntity",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"),index =1)
     private float modifyDamage(float pAmount){
         AbstractArrow arrow = (AbstractArrow) (Object) this;
@@ -66,6 +68,7 @@ public class AbstractArrowMixin {
         }
         return damage;
     }
+    */
     @Inject(method = "onHitEntity",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;doPostHurtEffects(Lnet/minecraft/world/entity/LivingEntity;)V"))
     private void doAfterArrowHit(EntityHitResult pResult, CallbackInfo ci){
         AbstractArrow arrow = (AbstractArrow) (Object) this;
@@ -82,14 +85,16 @@ public class AbstractArrowMixin {
     }
     @Inject(method = "tick",at = @At(value = "HEAD"))
     private void tick(CallbackInfo ci){
-        AbstractArrow arrow = (AbstractArrow) (Object)this;
-        ModifierNBT nbt;
-        EntityModifierCapability.EntityModifiers cap= arrow.getCapability(EntityModifierCapability.CAPABILITY).orElse(null);
-        ModDataNBT projectileData = PersistentDataCapability.getOrWarn(arrow);
-        if (cap!=null&&!cap.getModifiers().isEmpty()){
-            nbt = cap.getModifiers();
-            for (ModifierEntry entry:nbt.getModifiers()){
-                entry.getHook(EtSTLibHooks.PROJECTILE_TICK).onArrowTick(nbt,entry, arrow.level(), arrow, projectileData,hasBeenShot,leftOwner,inGround,piercingIgnoreEntityIds);
+        if (!inGround|| EtSTLibConfig.ALLOW_PROJECTILE_TICK_INGROUND.get()) {
+            AbstractArrow arrow = (AbstractArrow) (Object) this;
+            ModifierNBT nbt;
+            EntityModifierCapability.EntityModifiers cap = arrow.getCapability(EntityModifierCapability.CAPABILITY).orElse(null);
+            ModDataNBT projectileData = PersistentDataCapability.getOrWarn(arrow);
+            if (cap != null && !cap.getModifiers().isEmpty()) {
+                nbt = cap.getModifiers();
+                for (ModifierEntry entry : nbt.getModifiers()) {
+                    entry.getHook(EtSTLibHooks.PROJECTILE_TICK).onArrowTick(nbt, entry, arrow.level(), arrow, projectileData, hasBeenShot, leftOwner, inGround, piercingIgnoreEntityIds);
+                }
             }
         }
     }

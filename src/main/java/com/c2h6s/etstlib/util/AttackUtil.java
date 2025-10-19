@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -30,7 +31,9 @@ import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.definition.module.ToolHooks;
+import slimeknights.tconstruct.library.tools.definition.module.weapon.MeleeHitToolHook;
 import slimeknights.tconstruct.library.tools.helper.ModifierLootingHandler;
+import slimeknights.tconstruct.library.tools.helper.ToolAttackUtil;
 import slimeknights.tconstruct.library.tools.helper.ToolDamageUtil;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
@@ -47,6 +50,163 @@ public class AttackUtil {
     private static final float DEGREE_TO_RADIANS = (float)Math.PI / 180F;
     private static final AttributeModifier ANTI_KNOCKBACK_MODIFIER = new AttributeModifier(TConstruct.MOD_ID + ".anti_knockback", 1f, AttributeModifier.Operation.ADDITION);
 
+    //修改过的近战攻击过程，保留全部攻击过程的同时允许不损坏工具和施加全局伤害修正。
+    public static boolean performAttack(IToolStackView tool, ToolAttackContext context,float damageOffset,float damageModifier,boolean noToolDamage) {
+        float baseDamage = context.getBaseDamage();
+        float damage = baseDamage;
+        List<ModifierEntry> modifiers = tool.getModifierList();
+        for (ModifierEntry entry : modifiers) {
+            damage = entry.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, entry, context, baseDamage, damage);
+        }
+        damage+=damageOffset;
+        if (damage <= 0) {
+            return false;
+        }
+        boolean isMagic = damage > baseDamage;
+
+        float criticalModifier = context.getCriticalModifier();
+        if (criticalModifier != 1) {
+            damage += baseDamage * (criticalModifier - 1);
+        }
+
+        float cooldown = context.getCooldown();
+        if (cooldown < 1) {
+            damage *= (0.2f + cooldown * cooldown * 0.8f);
+        }
+
+        float oldHealth = 0.0F;
+        LivingEntity targetLiving = context.getLivingTarget();
+        if (targetLiving != null) {
+            oldHealth = targetLiving.getHealth();
+        }
+
+        float baseKnockback = context.getBaseKnockback();
+        float knockback = baseKnockback;
+        for (ModifierEntry entry : modifiers) {
+            knockback = entry.getHook(ModifierHooks.MELEE_HIT).beforeMeleeHit(tool, entry, context, damage, baseKnockback, knockback);
+        }
+
+        LivingEntity attackerLiving = context.getAttacker();
+        EquipmentSlot sourceSlot = context.getSlotType();
+        ModifierLootingHandler.setLootingSlot(attackerLiving, sourceSlot);
+
+        AttributeInstance knockbackModifier = null;
+        if (knockback < 0.4f) {
+            knockbackModifier = ToolAttackUtil.disableKnockback(targetLiving);
+        } else if (targetLiving != null) {
+            knockback -= 0.4f;
+        }
+        damage*=damageModifier;
+        boolean didHit;
+        Projectile projectile = context.getProjectile();
+        Entity targetEntity = context.getTarget();
+        boolean isExtraAttack = context.isExtraAttack();
+        if (isExtraAttack) {
+            didHit = targetEntity.hurt(context.makeDamageSource(), damage);
+        } else {
+            didHit = MeleeHitToolHook.dealDamage(tool, context, damage);
+        }
+
+        ModifierLootingHandler.setLootingSlot(attackerLiving, EquipmentSlot.MAINHAND);
+        if (knockbackModifier != null) {
+            enableKnockback(knockbackModifier);
+        }
+
+        Level level = context.getLevel();
+        if (!didHit) {
+            if (!isExtraAttack) {
+                level.playSound(null, attackerLiving.getX(), attackerLiving.getY(), attackerLiving.getZ(), SoundEvents.PLAYER_ATTACK_NODAMAGE, attackerLiving.getSoundSource(), 1.0F, 1.0F);
+            }
+            for (ModifierEntry entry : modifiers) {
+                entry.getHook(ModifierHooks.MELEE_HIT).failedMeleeHit(tool, entry, context, damage);
+            }
+            return false;
+        }
+
+        float damageDealt = damage;
+        if (targetLiving != null) {
+            damageDealt = oldHealth - targetLiving.getHealth();
+        }
+
+        if (knockback > 0) {
+            if (targetLiving != null) {
+                targetLiving.knockback(knockback, Mth.sin(attackerLiving.getYRot() * DEGREE_TO_RADIANS), -Mth.cos(attackerLiving.getYRot() * DEGREE_TO_RADIANS));
+            } else {
+                targetEntity.push(-Mth.sin(attackerLiving.getYRot() * DEGREE_TO_RADIANS) * knockback, 0.1d, Mth.cos(attackerLiving.getYRot() * DEGREE_TO_RADIANS) * knockback);
+            }
+            attackerLiving.setDeltaMovement(attackerLiving.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
+            attackerLiving.setSprinting(false);
+        }
+
+        if (targetEntity.hurtMarked && targetEntity instanceof ServerPlayer serverPlayer) {
+            serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(targetEntity));
+            targetEntity.hurtMarked = false;
+        }
+
+        Player attackerPlayer = context.getPlayerAttacker();
+        if (attackerPlayer != null) {
+            if (criticalModifier > 1) {
+                attackerPlayer.crit(targetEntity);
+            }
+            if (isMagic) {
+                attackerPlayer.magicCrit(targetEntity);
+            }
+            level.playSound(null, attackerLiving.getX(), attackerLiving.getY(), attackerLiving.getZ(), context.getSound(), attackerLiving.getSoundSource(), 1.0F, 1.0F);
+        }
+        if (damageDealt > 2.0F && level instanceof ServerLevel server) {
+            int particleCount = (int)(damageDealt * 0.5f);
+            server.sendParticles(ParticleTypes.DAMAGE_INDICATOR, targetEntity.getX(), targetEntity.getY(0.5), targetEntity.getZ(), particleCount, 0.1, 0, 0.1, 0.2);
+        }
+
+        attackerLiving.setLastHurtMob(targetEntity);
+        if (targetLiving != null) {
+            EnchantmentHelper.doPostHurtEffects(targetLiving, attackerLiving);
+        }
+
+        for (ModifierEntry entry : modifiers) {
+            entry.getHook(ModifierHooks.MELEE_HIT).afterMeleeHit(tool, entry, context, damageDealt);
+        }
+
+        float speed = tool.getStats().get(ToolStats.ATTACK_SPEED);
+        int time = Math.round(20f / speed);
+        if (time < targetEntity.invulnerableTime) {
+            targetEntity.invulnerableTime = (targetEntity.invulnerableTime + time) / 2;
+        }
+
+        if (attackerPlayer != null) {
+            if (targetLiving != null) {
+                if (!level.isClientSide && !isExtraAttack) {
+                    ItemStack held = attackerLiving.getItemBySlot(sourceSlot);
+                    if (!held.isEmpty()) {
+                        held.hurtEnemy(targetLiving, attackerPlayer);
+                    }
+                }
+                attackerPlayer.awardStat(Stats.DAMAGE_DEALT, Math.round(damageDealt * 10.0F));
+            }
+            if (projectile == null) {
+                attackerPlayer.causeFoodExhaustion(0.1F);
+            }
+            if (!isExtraAttack && projectile == null) {
+                attackerPlayer.awardStat(Stats.ITEM_USED.get(tool.getItem()));
+            }
+        }
+
+        if (!tool.hasTag(TinkerTags.Items.UNARMED)&&!noToolDamage) {
+            int durabilityLost = targetLiving != null ? 1 : 0;
+            if (!tool.hasTag(TinkerTags.Items.MELEE_PRIMARY)) {
+                durabilityLost *= 2;
+            }
+            if (projectile != null) {
+                ToolDamageUtil.damage(tool, durabilityLost, attackerLiving, attackerLiving.getItemBySlot(sourceSlot));
+            } else {
+                ToolDamageUtil.damageAnimated(tool, durabilityLost, attackerLiving, sourceSlot);
+            }
+        }
+
+        return true;
+    }
+
+    @Deprecated(forRemoval = true)
     public static boolean attackEntity(IToolStackView tool, LivingEntity attackerLiving, InteractionHand hand,
                                        Entity targetEntity, DoubleSupplier cooldownFunction, boolean isExtraAttack, EquipmentSlot sourceSlot,boolean setDamage,float damageSet,boolean noToolDamage) {
         if (tool.isBroken() || !tool.hasTag(TinkerTags.Items.MELEE)) {
@@ -72,13 +232,11 @@ public class AttackUtil {
                 && !attackerLiving.isInWater() && !attackerLiving.hasEffect(MobEffects.BLINDNESS)
                 && !attackerLiving.isPassenger() && targetLiving != null && !attackerLiving.isSprinting();
 
-        Boolean setCritical;
+        boolean setCritical;
         for (ModifierEntry entry:tool.getModifierList()){
             setCritical = entry.getHook(EtSTLibHooks.CRITICAL_ATTACK).setCritical(tool,entry,attackerLiving,hand,targetEntity,sourceSlot,fullyCharged,isExtraAttack,isCritical);
-            if (setCritical!=null){
-                isCritical =setCritical;
-                break;
-            }
+            isCritical = setCritical;
+            break;
         }
 
         ToolAttackContext context = new ToolAttackContext(attackerLiving, attackerPlayer, hand, sourceSlot, targetEntity, targetLiving, isCritical, cooldown, isExtraAttack);

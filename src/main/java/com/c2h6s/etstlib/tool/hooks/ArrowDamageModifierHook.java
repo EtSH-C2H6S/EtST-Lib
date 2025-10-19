@@ -3,6 +3,8 @@ package com.c2h6s.etstlib.tool.hooks;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -13,13 +15,12 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**<h3>一个用于修改"箭矢造成的伤害"的钩子</h3>
- * <h5>对应的Hook标识符为
+ * <h5>Hook标识符为
  * <br>"EtSTLibHooks.ARROW_DAMAGE"</h5>
- * 处理逻辑通过Mixin实现,在{@link com.c2h6s.etstlib.mixin.AbstractArrowMixin}
- * <br>
- * <em>如果你想要在击中目标之后触发效果,可以使用<h5>ArrowHitModifierHook</h5></em>
- * @see ArrowHitModifierHook
+ * 在后续版本中会与ProjectileDamageModifierHook合并
+ * @see ProjectileDamageModifierHook
  */
+@Deprecated(forRemoval = true,since = "beta.15")
 public interface ArrowDamageModifierHook {
     /**
      * <h6>在箭矢伤害目标的时候调用</h6>
@@ -33,7 +34,7 @@ public interface ArrowDamageModifierHook {
      * @param target 被攻击者
      * @param baseDamage 基础伤害
      * @param damage 总伤害
-     * @return 箭矢的伤害,这个伤害类似于hurt,不会被箭矢本身所影响,修改这个返回值会直接修改箭矢调用hurt方法造成的伤害,而非箭矢的baseDamage常量
+     * @return 箭矢的伤害,不会影响箭矢本体,修改这个返回值会直接修改以该箭矢为来源的伤害事件的amount值,而非箭矢的baseDamage常量
      */
     float getArrowDamage(ModDataNBT persistentData, ModifierEntry entry, ModifierNBT modifiers, AbstractArrow arrow, @Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage);
 
