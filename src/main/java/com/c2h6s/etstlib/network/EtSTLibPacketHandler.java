@@ -15,8 +15,16 @@ public class EtSTLibPacketHandler {
     static int id = 0;
 
     public static void init() {
-        INSTANCE = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(EtSTLib.MODID, "etstlib_msg")).networkProtocolVersion(() -> "1").clientAcceptedVersions(s -> true).serverAcceptedVersions(s -> true).simpleChannel();
-        INSTANCE.messageBuilder(PLeftClickEmptyC2S.class,id++, NetworkDirection.PLAY_TO_SERVER).decoder(PLeftClickEmptyC2S::new).encoder(PLeftClickEmptyC2S::toByte).consumerMainThread(PLeftClickEmptyC2S::handle).add();
+        INSTANCE = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(EtSTLib.MODID, "etstlib_msg"))
+                .networkProtocolVersion(() -> "1").clientAcceptedVersions(s -> true)
+                .serverAcceptedVersions(s -> true).simpleChannel();
+
+        INSTANCE.messageBuilder(PLeftClickEmptyC2S.class,id++, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(PLeftClickEmptyC2S::new).encoder(PLeftClickEmptyC2S::toByte)
+                .consumerMainThread(PLeftClickEmptyC2S::handle).add();
+        INSTANCE.messageBuilder(PAddParticleS2C.class,id++,NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(PAddParticleS2C::new).encoder(PAddParticleS2C::toByte)
+                .consumerMainThread(PAddParticleS2C::handle).add();
     }
 
     public static <MSG> void sendToServer(MSG msg){

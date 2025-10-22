@@ -6,6 +6,7 @@
   "tooltip.etstlib.max_pressure": "压力",
   "tooltip.etstlib.pressure_bonus": "压缩空气属性增幅",
   "tooltip.etstlib.radiation_shielding": "辐射防护",
+  "tooltip.etstlib.faucet_transfer": "浇筑速率：",
 
 
   "tool_stat.etstlib.max_energy": "能量上限：",
