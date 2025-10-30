@@ -33,6 +33,9 @@ public class AbstractArrowMixin {
     @Inject(method = "onHitEntity",at = @At(value = "HEAD"))
     private void getEntity(EntityHitResult hitResult, CallbackInfo ci){
         MixinTemp.arrowHit = hitResult.getEntity();
+        if (hitResult.getEntity() instanceof LivingEntity living) {
+            entityHealth = living.getHealth();
+        }
     }
     @ModifyArg(method = "onHitEntity",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"),index =0)
     private DamageSource modifyDamageSource(DamageSource source0){
@@ -72,7 +75,7 @@ public class AbstractArrowMixin {
         ModifierNBT modifiers = EntityModifierCapability.getOrEmpty(arrow);
         Entity target = arrowHit;
         if (!modifiers.isEmpty()&&target instanceof LivingEntity living) {
-            float damageDealt = living.getHealth()- entityHealth;
+            float damageDealt = entityHealth - living.getHealth();
             ModDataNBT nbt = PersistentDataCapability.getOrWarn(arrow);
             LivingEntity attacker = arrow.getOwner() instanceof LivingEntity entity?entity:null;
             for (ModifierEntry entry:modifiers.getModifiers()){
