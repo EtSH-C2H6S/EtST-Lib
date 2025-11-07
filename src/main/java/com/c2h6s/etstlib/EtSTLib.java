@@ -12,7 +12,9 @@ import com.c2h6s.etstlib.tool.hooks.modifierModules.AddDamageTypeTagMeleeModule;
 import com.c2h6s.etstlib.tool.hooks.modifierModules.ForceDropModule;
 import com.c2h6s.etstlib.tool.hooks.modifierModules.SetCriticalModule;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.MekIntegration.RadiationShieldProvider;
+import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.MekIntegration.ToolBasicChemicalTankProvider;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.PnCIntegration.AirStorageProvider;
+import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.ToolUuidCapabilityProvider;
 import com.c2h6s.etstlib.util.CommonConstants;
 import com.c2h6s.etstlib.util.ModListConstants;
 import com.mojang.logging.LogUtils;
@@ -97,8 +99,10 @@ public class EtSTLib {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        ToolCapabilityProvider.register((stack, supplier) -> new ToolUuidCapabilityProvider());
         if (ModListConstants.MekLoaded){
             ToolCapabilityProvider.register(RadiationShieldProvider::new);
+            ToolCapabilityProvider.register(((itemStack, supplier) -> new ToolBasicChemicalTankProvider.CapabilityProvider()));
         }
         if (ModListConstants.PnCLoaded){
             ToolCapabilityProvider.register(AirStorageProvider::new);
