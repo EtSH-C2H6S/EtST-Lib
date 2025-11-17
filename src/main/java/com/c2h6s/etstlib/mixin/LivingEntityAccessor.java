@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(LivingEntity.class)
 public interface LivingEntityAccessor {
     @Invoker("getDamageAfterArmorAbsorb")
-    float getDamageAfterArmorAbsorb(DamageSource pDamageSource, float pDamageAmount);
+    float etstlib$getDamageAfterArmorAbsorb(DamageSource pDamageSource, float pDamageAmount);
 }
