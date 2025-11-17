@@ -51,6 +51,24 @@ public class MathUtil {
         }
         return String.format("%.2f",amount) +unit;
     }
+    public static String getUnitForFluid(int amount){
+        int a = (int) Math.log10(amount);
+        int b =a/3;
+        switch (b){
+            case 1->{
+                return String.format("%.2f",(float)amount/1E+3)+" B";
+            }
+            case 2->{
+                return String.format("%.2f",(float)amount/1E+6)+" kB";
+            }
+            case 3->{
+                return String.format("%.2f",(float)amount/1E+9)+" MB";
+            }
+            default-> {
+                return amount + " mB";
+            }
+        }
+    }
 
     /**
      *

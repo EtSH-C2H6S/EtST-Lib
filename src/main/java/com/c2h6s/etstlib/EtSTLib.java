@@ -3,6 +3,7 @@ package com.c2h6s.etstlib;
 import com.c2h6s.etstlib.data.predicate.LivingEntityWithHealth;
 import com.c2h6s.etstlib.event.eventHandler.PlayerEvents;
 import com.c2h6s.etstlib.network.EtSTLibPacketHandler;
+import com.c2h6s.etstlib.register.EtSTLibBlockEntityTypes;
 import com.c2h6s.etstlib.register.EtSTLibEntityTickers;
 import com.c2h6s.etstlib.register.EtSTLibModifier;
 import com.c2h6s.etstlib.tool.fluid.fluidEffect.*;
@@ -11,7 +12,9 @@ import com.c2h6s.etstlib.tool.hooks.modifierModules.AddDamageTypeTagMeleeModule;
 import com.c2h6s.etstlib.tool.hooks.modifierModules.ForceDropModule;
 import com.c2h6s.etstlib.tool.hooks.modifierModules.SetCriticalModule;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.MekIntegration.RadiationShieldProvider;
+import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.MekIntegration.ToolBasicChemicalTankProvider;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.PnCIntegration.AirStorageProvider;
+import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.ToolUuidCapabilityProvider;
 import com.c2h6s.etstlib.util.CommonConstants;
 import com.c2h6s.etstlib.util.ModListConstants;
 import com.mojang.logging.LogUtils;
@@ -41,7 +44,9 @@ import slimeknights.tconstruct.library.tools.capability.ToolCapabilityProvider;
 
 import java.util.Random;
 
+import static com.c2h6s.etstlib.register.EtSTLibBlock.BLOCKS;
 import static com.c2h6s.etstlib.register.EtSTLibEffects.EFFECTS;
+import static com.c2h6s.etstlib.register.EtSTLibItem.ITEMS;
 
 @Mod(EtSTLib.MODID)
 public class EtSTLib {
@@ -51,8 +56,7 @@ public class EtSTLib {
         return new ResourceLocation(MODID,string);
     }
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     public EtSTLib() {
@@ -69,6 +73,7 @@ public class EtSTLib {
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         EFFECTS.register(modEventBus);
+        EtSTLibBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);
         EtSTLibEntityTickers.ENTITY_TICKERS.register(modEventBus);
         EtSTLibModifier.MODIFIERS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
@@ -94,8 +99,10 @@ public class EtSTLib {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        ToolCapabilityProvider.register((stack, supplier) -> new ToolUuidCapabilityProvider());
         if (ModListConstants.MekLoaded){
             ToolCapabilityProvider.register(RadiationShieldProvider::new);
+            ToolCapabilityProvider.register(((itemStack, supplier) -> new ToolBasicChemicalTankProvider.CapabilityProvider()));
         }
         if (ModListConstants.PnCLoaded){
             ToolCapabilityProvider.register(AirStorageProvider::new);

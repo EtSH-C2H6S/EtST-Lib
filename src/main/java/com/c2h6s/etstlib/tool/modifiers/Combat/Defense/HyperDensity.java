@@ -30,7 +30,7 @@ public class HyperDensity extends EtSTBaseModifier {
                     if (level>0){
                         event.setAmount(CombatRules.getDamageAfterAbsorb(event.getAmount(), (float) living.getArmorValue(), (float) living.getAttributeValue(Attributes.ARMOR_TOUGHNESS)));
                     }
-                    event.setAmount(((LivingEntityAccessor)living).getDamageAfterArmorAbsorb(event.getSource(),event.getAmount()));
+                    event.setAmount(((LivingEntityAccessor)living).etstlib$getDamageAfterArmorAbsorb(event.getSource(),event.getAmount()));
                 }
             });
         }

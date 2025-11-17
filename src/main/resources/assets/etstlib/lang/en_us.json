@@ -6,6 +6,7 @@
   "tooltip.etstlib.max_pressure": "Pressure",
   "tooltip.etstlib.pressure_bonus": "Aerial Bonus",
   "tooltip.etstlib.radiation_shielding": "Radiation Protection",
+  "tooltip.etstlib.faucet_transfer": "Transfer Speed: ",
 
 
   "tool_stat.etstlib.max_energy": "Max Energy: ",

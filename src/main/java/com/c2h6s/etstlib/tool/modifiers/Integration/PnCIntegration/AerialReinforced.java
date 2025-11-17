@@ -122,7 +122,7 @@ public class AerialReinforced extends BasicPressurizableModifier implements Brea
     @Override
     public void addAttributes(IToolStackView tool, ModifierEntry modifier, EquipmentSlot equipmentSlot, BiConsumer<Attribute, AttributeModifier> biConsumer) {
         if (getBonus(tool,modifier)>0) {
-            UUID uuid = UUIDUtil.getUUIDFromTool(tool, modifier.getId(), equipmentSlot);
+            UUID uuid = UUIDUtil.UUIDFromSlot(equipmentSlot, modifier.getId());
             if (EquipmentUtil.ARMOR.contains(equipmentSlot)) {
                 biConsumer.accept(Attributes.ARMOR, new AttributeModifier(uuid, Attributes.ARMOR.getDescriptionId(), getBonus(tool, modifier) * tool.getStats().get(ToolStats.ARMOR), AttributeModifier.Operation.ADDITION));
                 biConsumer.accept(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, Attributes.ARMOR_TOUGHNESS.getDescriptionId(), getBonus(tool, modifier) * tool.getStats().get(ToolStats.ARMOR_TOUGHNESS), AttributeModifier.Operation.ADDITION));

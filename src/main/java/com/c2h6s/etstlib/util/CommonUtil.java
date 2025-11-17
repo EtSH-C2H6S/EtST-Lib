@@ -7,6 +7,7 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import java.util.UUID;
 
 public class CommonUtil {
+    @Deprecated(forRemoval = true)
     public static @Nullable UUID getUuidFromTool(ToolStack toolStack){
         return ((IToolUuidGetter) toolStack).etstlib$getUuid();
     }

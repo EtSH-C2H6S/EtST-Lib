@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(Projectile.class)
 public interface ProjectileInvoker {
     @Invoker("onHit")
-    void onHit(HitResult hitResult);
+    void etstlib$onHit(HitResult hitResult);
 }

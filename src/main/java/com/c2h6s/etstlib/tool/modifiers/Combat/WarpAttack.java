@@ -7,7 +7,6 @@ import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;
 import com.c2h6s.etstlib.util.EntityInRangeUtil;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -16,7 +15,6 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -25,8 +23,6 @@ import slimeknights.tconstruct.library.tools.helper.ToolAttackUtil;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
-
-import java.util.List;
 
 public class WarpAttack extends EtSTBaseModifier implements ProjectileTickModifierHook {
 
@@ -72,7 +68,7 @@ public class WarpAttack extends EtSTBaseModifier implements ProjectileTickModifi
         LivingEntity living = EntityInRangeUtil.getNearestLivingEntity(arrow, entry.getLevel() + 2.5F,piercingIgnoreEntityIds, (entity -> !(entity instanceof Player)));
         if (living!=null){
             EntityHitResult hitResult = new EntityHitResult(living);
-            ((ProjectileInvoker)arrow).onHit(hitResult);
+            ((ProjectileInvoker)arrow).etstlib$onHit(hitResult);
         }
     }
 }

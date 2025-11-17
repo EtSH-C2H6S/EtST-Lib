@@ -15,9 +15,12 @@
     "ServerLevelMixin",
     "AEMixin.ChargerBlockEntityMixin",
     "AEMixin.ChargerRecipesMixin",
+    "TconMixin.CastingBlockEntityMixin",
+    "TconMixin.FaucetBlockEntityMixin",
     "TconMixin.SlurpingModifierMixin",
     "TconMixin.ToolAttackContextMixin",
     "TconMixin.ToolAttackUtilMixin",
+    ,
     "TconMixin.ToolStackMixin"
   ],
   "client": [

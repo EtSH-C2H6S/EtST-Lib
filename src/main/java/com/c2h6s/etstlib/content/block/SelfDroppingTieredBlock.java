@@ -1,4 +1,4 @@
-package com.c2h6s.etstlib.content.misc;
+package com.c2h6s.etstlib.content.block;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
