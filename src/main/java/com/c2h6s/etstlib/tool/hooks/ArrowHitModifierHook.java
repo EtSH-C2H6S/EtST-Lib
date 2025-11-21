@@ -16,8 +16,8 @@ import java.util.Collection;
  * <br>"EtSTLibHooks.ARROW_HIT"</h5>
  * 处理逻辑通过Mixin实现,在{@link com.c2h6s.etstlib.mixin.AbstractArrowMixin}
  * <br>
- * <em>如果你想要在击中目标时触发效果,可以使用<h5>ArrowDamageModifierHook</h5></em>
- * @see ArrowDamageModifierHook
+ * <em>如果你想要修改弹射物伤害,可以使用<h5>ProjectileDamageModifierHook</h5></em>
+ * @see ProjectileDamageModifierHook
  */
 public interface ArrowHitModifierHook {
     /**

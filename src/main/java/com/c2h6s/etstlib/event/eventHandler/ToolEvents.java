@@ -11,6 +11,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,7 +30,7 @@ public class ToolEvents {
             for (EquipmentSlot slot : EquipmentUtil.ALL) {
                 if (event.getEntity().getItemBySlot(slot).getItem() instanceof IModifiable) {
                     ToolStack tool = ToolStack.from(event.getEntity().getItemBySlot(slot));
-                    Boolean notApplicable = event.getResult()== Event.Result.DENY;
+                    boolean notApplicable = event.getResult()== Event.Result.DENY;
                     for (ModifierEntry entry:tool.getModifierList()){
                         notApplicable = entry.getHook(EtSTLibHooks.EFFECT_APPLICABLE).isApplicable(tool,entry,slot,event.getEffectInstance(),notApplicable);
                         if (notApplicable){
@@ -69,5 +70,9 @@ public class ToolEvents {
                 }
             }
         }
+    }
+    @SubscribeEvent
+    public static void onCriticalAttack(CriticalHitEvent event){
+
     }
 }

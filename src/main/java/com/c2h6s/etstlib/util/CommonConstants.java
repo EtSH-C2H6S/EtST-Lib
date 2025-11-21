@@ -8,4 +8,6 @@ public class CommonConstants {
     public static final String KEY_CRITARROW = "is_critical";
     //工具UUID在nbt中的存储键名，你用不到这个常量，获取nbt用CommonUtil中的getUuidFromTool方法。
     public static final String KEY_TOOL_UUID = "etstlib_tool_uuid";
+    //弹射物的伤害键名，在弹射物造成伤害时伤害的原始值会被记录。
+    public static final String KEY_PROJECTILE_DAMAGE = "etstlib_damage";
 }

@@ -17,7 +17,7 @@ import java.util.Iterator;
 /**<h3>一个用于修改"弹射物造成的伤害"的钩子</h3>
  * <h5>对应的Hook标识符为
  * <br>"EtSTLibHooks.PROJECTILE_DAMAGE"</h5>
- * 处理逻辑通过事件实现,在{@link com.c2h6s.etstlib.event.eventHandler.LivingEvents#onLivingHurt(LivingHurtEvent)}
+ * 处理逻辑通过事件实现,在{@link com.c2h6s.etstlib.event.eventHandler.LivingEvents#onLivingHurtHigh}
  * 由于箭矢
  * <br>
  * <em>如果你想要在击中目标之后触发效果,可以使用<h5>ArrowHitModifierHook</h5></em>

@@ -44,7 +44,7 @@ public class Glowing extends EtSTBaseModifier implements OnAttackedModifierHook 
     }
 
     @Override
-    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
+    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt,float f) {
         if (context.getTarget() instanceof LivingEntity living){
             living.addEffect(new MobEffectInstance(MobEffects.GLOWING,200*modifier.getLevel()));
         }

@@ -26,7 +26,7 @@ import static com.c2h6s.etstlib.util.ModListConstants.AE2Loaded;
 
 public class EnergeticAttack extends EtSTBaseModifier {
     @Override
-    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
+    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt,float f) {
         Entity entity = context.getTarget();
         Level level  = context.getLevel();
         if (!level.isClientSide&&context.isFullyCharged()&&AE2Loaded) {

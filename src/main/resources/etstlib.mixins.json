@@ -18,9 +18,10 @@
     "TconMixin.CastingBlockEntityMixin",
     "TconMixin.FaucetBlockEntityMixin",
     "TconMixin.SlurpingModifierMixin",
+    "TconMixin.ToolAttackContextBuilderAccessor",
+    "TconMixin.ToolAttackContextBuilderMixin",
     "TconMixin.ToolAttackContextMixin",
     "TconMixin.ToolAttackUtilMixin",
-    ,
     "TconMixin.ToolStackMixin"
   ],
   "client": [

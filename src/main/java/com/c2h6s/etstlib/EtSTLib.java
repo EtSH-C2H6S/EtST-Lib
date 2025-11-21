@@ -78,8 +78,6 @@ public class EtSTLib {
         EtSTLibModifier.MODIFIERS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
-        forgeEventBus.addListener(PlayerEvents::onLeftClickBlock);
-        forgeEventBus.addListener(PlayerEvents::onLeftClick);
 
         EtSTLibPacketHandler.init();
 

@@ -19,7 +19,7 @@ import java.util.Collection;
 public interface LeftClickModifierHook {
     default void onLeftClickEmpty(IToolStackView tool, ModifierEntry entry, Player player, Level level , EquipmentSlot equipmentSlot){}
     default void onLeftClickBlock(IToolStackView tool, ModifierEntry entry, Player player, Level level , EquipmentSlot equipmentSlot, BlockState state, BlockPos pos){}
-    //default void onLeftClickEntity(IToolStackView tool, ModifierEntry entry, Player player, Level level , EquipmentSlot equipmentSlot, Entity entity){}
+    default void onLeftClickEntity(IToolStackView tool, ModifierEntry entry, Player player, Level level , EquipmentSlot equipmentSlot, Entity entity){}
     static void handleLeftClick(ItemStack stack,Player player,EquipmentSlot slot){
         Level level = player.level();
         IToolStackView tool = ToolStack.from(stack);
@@ -37,7 +37,6 @@ public interface LeftClickModifierHook {
             entry.getHook(EtSTLibHooks.LEFT_CLICK).onLeftClickBlock(tool,entry,player,level,slot,state,pos);
         }
     }
-    /*
     static void handleLeftClickEntity(ItemStack stack,Player player,EquipmentSlot slot,Entity entity){
         Level level = player.level();
         IToolStackView tool = ToolStack.from(stack);
@@ -45,7 +44,7 @@ public interface LeftClickModifierHook {
             entry.getHook(EtSTLibHooks.LEFT_CLICK).onLeftClickEntity(tool,entry,player,level,slot,entity);
         }
     }
-     */
+
     record AllMerger(Collection<LeftClickModifierHook> modules) implements LeftClickModifierHook {
         @Override
         public void onLeftClickEmpty(IToolStackView tool, ModifierEntry entry, Player player, Level level , EquipmentSlot equipmentSlot) {
@@ -59,14 +58,13 @@ public interface LeftClickModifierHook {
                 module.onLeftClickBlock(tool,entry,player,level,equipmentSlot,state,pos);
             }
         }
-        /*
         @Override
         public void onLeftClickEntity(IToolStackView tool, ModifierEntry entry, Player player, Level level , EquipmentSlot equipmentSlot, Entity entity) {
             for (LeftClickModifierHook module:this.modules){
                 module.onLeftClickEntity(tool,entry,player,level,equipmentSlot,entity);
             }
         }
-         */
+
     }
 
 }

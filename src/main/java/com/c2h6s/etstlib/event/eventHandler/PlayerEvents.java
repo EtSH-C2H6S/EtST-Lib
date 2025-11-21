@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,6 +28,7 @@ import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = EtSTLib.MODID,bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerEvents {
+    @SubscribeEvent
     public static void onLeftClick(PlayerInteractEvent.LeftClickEmpty event){
         Player player = event.getEntity();
         if (player!=null&&player.level().isClientSide) {
@@ -37,6 +39,7 @@ public class PlayerEvents {
             }
         }
     }
+    @SubscribeEvent
     public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event){
         Player player = event.getEntity();
         BlockPos pos = event.getPos();
@@ -48,6 +51,10 @@ public class PlayerEvents {
                 LeftClickModifierHook.handleLeftClickBlock(stack,player,slot,state,pos);
             }
         }
+    }
+    @SubscribeEvent
+    public static void onLeftClickEntity(AttackEntityEvent event){
+        LeftClickModifierHook.handleLeftClickEntity(event.getEntity().getMainHandItem(),event.getEntity(),EquipmentSlot.MAINHAND,event.getTarget());
     }
 
     @SubscribeEvent

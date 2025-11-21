@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 
 public class RadiationInflict extends EtSTBaseModifier {
     @Override
-    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
+    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt,float f) {
         if (!context.getLevel().isClientSide&&context.isFullyCharged()) {
             Entity entity = context.getTarget();
             if (entity instanceof LivingEntity living) {

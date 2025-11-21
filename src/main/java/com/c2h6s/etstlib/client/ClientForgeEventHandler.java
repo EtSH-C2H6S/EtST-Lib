@@ -6,10 +6,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import slimeknights.tconstruct.tables.client.inventory.TinkerStationScreen;
 
 @Mod.EventBusSubscriber(modid = EtSTLib.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class ClientEventHandler {
+public class ClientForgeEventHandler {
     @SubscribeEvent
     public static void postScreenInit(ScreenEvent.Init.Post event){
         if (event.getScreen() instanceof ITinkerStationScreenMixin screen){

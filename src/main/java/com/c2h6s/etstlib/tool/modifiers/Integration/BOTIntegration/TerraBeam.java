@@ -4,6 +4,7 @@ import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,22 +22,29 @@ public class TerraBeam extends EtSTBaseModifier {
     @Override
     public void onLeftClickEmpty(IToolStackView tool, ModifierEntry entry, Player player, Level level, EquipmentSlot equipmentSlot) {
         if (!level.isClientSide&&player.getAttackStrengthScale(0)>0.8){
-            if (ManaItemHandler.INSTANCE.requestManaExactForTool(new ItemStack(BotaniaItems.terraSword),player,100,true)) {
-                ManaBurstEntity entity = TerraBladeItem.getBurst(player, new ItemStack(BotaniaItems.terraSword));
-                player.level().addFreshEntity(entity);
-                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), BotaniaSounds.terraBlade, SoundSource.PLAYERS, 1F, 1F);
-            }
+            shootManaBeam(player);
         }
     }
 
     @Override
     public void onLeftClickBlock(IToolStackView tool, ModifierEntry entry, Player player, Level level, EquipmentSlot equipmentSlot, BlockState state, BlockPos pos) {
         if (!level.isClientSide&&player.getAttackStrengthScale(0)>0.8){
-            if (ManaItemHandler.INSTANCE.requestManaExactForTool(new ItemStack(BotaniaItems.terraSword),player,100,true)) {
-                ManaBurstEntity entity = TerraBladeItem.getBurst(player, new ItemStack(BotaniaItems.terraSword));
-                player.level().addFreshEntity(entity);
-                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), BotaniaSounds.terraBlade, SoundSource.PLAYERS, 1F, 1F);
-            }
+            shootManaBeam(player);
+        }
+    }
+
+    @Override
+    public void onLeftClickEntity(IToolStackView tool, ModifierEntry entry, Player player, Level level, EquipmentSlot equipmentSlot, Entity entity) {
+        if (!level.isClientSide&&player.getAttackStrengthScale(0)>0.8){
+            shootManaBeam(player);
+        }
+    }
+
+    public static void shootManaBeam(Player player){
+        if (ManaItemHandler.INSTANCE.requestManaExactForTool(new ItemStack(BotaniaItems.terraSword),player,100,true)) {
+            ManaBurstEntity entity = TerraBladeItem.getBurst(player, new ItemStack(BotaniaItems.terraSword));
+            player.level().addFreshEntity(entity);
+            player.level().playSound(null, player.getX(), player.getY(), player.getZ(), BotaniaSounds.terraBlade, SoundSource.PLAYERS, 1F, 1F);
         }
     }
 }

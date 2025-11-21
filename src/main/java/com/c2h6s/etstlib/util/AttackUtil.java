@@ -1,7 +1,9 @@
 package com.c2h6s.etstlib.util;
 
+import com.c2h6s.etstlib.content.misc.EtSTLibToolAttackTweak;
 import com.c2h6s.etstlib.entity.specialDamageSources.LegacyDamageSource;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -9,8 +11,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -23,6 +28,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import slimeknights.tconstruct.TConstruct;
@@ -43,6 +49,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.DoubleSupplier;
 
+import static net.minecraft.world.entity.LivingEntity.DATA_HEALTH_ID;
 import static slimeknights.tconstruct.library.tools.helper.ToolAttackUtil.*;
 
 public class AttackUtil {
@@ -50,8 +57,15 @@ public class AttackUtil {
     private static final float DEGREE_TO_RADIANS = (float)Math.PI / 180F;
     private static final AttributeModifier ANTI_KNOCKBACK_MODIFIER = new AttributeModifier(TConstruct.MOD_ID + ".anti_knockback", 1f, AttributeModifier.Operation.ADDITION);
 
+    public static boolean attackEntity(IToolStackView tool, LivingEntity attacker, Entity target,float damageOffset,float damageModifier,boolean noToolDamage){
+        if (!ToolAttackUtil.canPerformAttack(tool)) return false;
+        EtSTLibToolAttackTweak.onStart(tool);
+        return performAttack(tool,ToolAttackContext.attacker(attacker).target(target).defaultCooldown().applyAttributes().build(),damageOffset,damageModifier,noToolDamage);
+    }
+
     //修改过的近战攻击过程，保留全部攻击过程的同时允许不损坏工具和施加全局伤害修正。
     public static boolean performAttack(IToolStackView tool, ToolAttackContext context,float damageOffset,float damageModifier,boolean noToolDamage) {
+        EtSTLibToolAttackTweak.processContext(tool,context);
         float baseDamage = context.getBaseDamage();
         float damage = baseDamage;
         List<ModifierEntry> modifiers = tool.getModifierList();
@@ -60,6 +74,7 @@ public class AttackUtil {
         }
         damage+=damageOffset;
         if (damage <= 0) {
+            EtSTLibToolAttackTweak.onEnd();
             return false;
         }
         boolean isMagic = damage > baseDamage;
@@ -120,6 +135,7 @@ public class AttackUtil {
             for (ModifierEntry entry : modifiers) {
                 entry.getHook(ModifierHooks.MELEE_HIT).failedMeleeHit(tool, entry, context, damage);
             }
+            EtSTLibToolAttackTweak.onEnd();
             return false;
         }
 
@@ -202,7 +218,7 @@ public class AttackUtil {
                 ToolDamageUtil.damageAnimated(tool, durabilityLost, attackerLiving, sourceSlot);
             }
         }
-
+        EtSTLibToolAttackTweak.onEnd();
         return true;
     }
 
@@ -437,4 +453,64 @@ public class AttackUtil {
         }
         return hit;
     }
+
+    public static boolean hurtEntity(LivingEntity living, float amount, DamageSource source){
+        if (living instanceof Player) return false;
+        else if (living.level().isClientSide) return false;
+        else if (living.isDeadOrDying()) return false;
+        else {
+            if (living.isSleeping() && !living.level().isClientSide) {
+                living.stopSleeping();
+            }
+            living.setNoActionTime(0);
+            boolean flag = false;
+            living.walkAnimation.setSpeed(1.5F);
+            living.lastHurt = amount;
+            living.invulnerableTime = 20;
+            actualHurtEntity(living,amount, source);
+            living.hurtDuration = 10;
+            living.hurtTime = living.hurtDuration;
+
+            Entity entity1 = source.getEntity();
+            if (entity1 != null) {
+                if (entity1 instanceof LivingEntity living1) {
+                    if (!source.is(DamageTypeTags.NO_ANGER)) {
+                        living.setLastHurtByMob(living1);
+                    }
+                }
+                if (entity1 instanceof Player player1) {
+                    living.setLastHurtByPlayer(player1);
+                }
+            }
+
+            living.level().broadcastDamageEvent(living, source);
+            if (living.isDeadOrDying()) {
+                living.die(source);
+            }
+
+            living.lastDamageSource = source;
+            living.lastDamageStamp = living.level().getGameTime();
+
+            if (entity1 instanceof ServerPlayer) {
+                CriteriaTriggers.PLAYER_HURT_ENTITY.trigger((ServerPlayer)entity1, entity1, source, amount, amount, flag);
+            }
+
+            return true;
+        }
+    }
+    public static void actualHurtEntity(LivingEntity living,float amount,DamageSource source) {
+        if (amount <= 0) return;
+        living.getCombatTracker().recordDamage(source, amount);
+        setHealth(living,getHealth(living)-amount);
+        living.setAbsorptionAmount(living.getAbsorptionAmount() - amount);
+        living.gameEvent(GameEvent.ENTITY_DAMAGE);
+    }
+    public static float getHealth(LivingEntity living) {
+        return living.entityData.get(DATA_HEALTH_ID);
+    }
+
+    public static void setHealth(LivingEntity living,float pHealth) {
+        living.entityData.set(DATA_HEALTH_ID, Mth.clamp(pHealth, 0.0F, living.getMaxHealth()));
+    }
+
 }

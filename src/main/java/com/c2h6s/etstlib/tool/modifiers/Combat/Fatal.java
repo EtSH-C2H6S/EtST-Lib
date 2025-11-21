@@ -16,7 +16,7 @@ import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 public class Fatal extends EtSTBaseModifier {
 
     @Override
-    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damage) {
+    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damage,float f) {
         if (context.getTarget() instanceof LivingEntity living){
             living.addEffect(new MobEffectInstance(EtSTLibEffects.FATAL_TRAUMA.get(),100*modifier.getLevel(),0));
         }

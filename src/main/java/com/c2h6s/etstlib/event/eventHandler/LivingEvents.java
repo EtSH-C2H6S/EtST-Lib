@@ -3,12 +3,14 @@ package com.c2h6s.etstlib.event.eventHandler;
 import com.c2h6s.etstlib.EtSTLib;
 import com.c2h6s.etstlib.register.EtSTLibEffects;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
+import com.c2h6s.etstlib.util.CommonConstants;
 import com.google.common.util.concurrent.AtomicDouble;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -28,9 +30,17 @@ public class LivingEvents {
         var amount = event.getAmount();
         if (livingEntity.hasEffect(EtSTLibEffects.FATAL_TRAUMA.get())) event.setCanceled(true);
     }
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public static void onLivingDamageHigh(LivingDamageEvent event){
+        DamageSource source = event.getSource();
+        Entity entity = source.getDirectEntity();
+        if (!event.isCanceled()&&entity instanceof Projectile projectile) {
+            projectile.getPersistentData().putFloat(CommonConstants.KEY_PROJECTILE_DAMAGE,event.getAmount());
+        }
+    }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void onLivingHurt(LivingHurtEvent event){
+    public static void onLivingHurtHigh(LivingHurtEvent event){
         DamageSource source = event.getSource();
         Entity entity = source.getDirectEntity();
         if (!event.isCanceled()&&entity instanceof Projectile projectile){

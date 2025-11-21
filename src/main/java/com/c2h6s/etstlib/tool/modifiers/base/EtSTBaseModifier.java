@@ -36,6 +36,14 @@ public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, 
     public @NotNull Component getDisplayName(int level) {
         return this.isNoLevels() ? super.getDisplayName() : super.getDisplayName(level);
     }
+    public static float currentOriginalDamage = 0;
+
+    @Override
+    public float beforeMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damage, float baseKnockback, float knockback) {
+        currentOriginalDamage = damage;
+        this.onBeforeMeleeHit(tool,modifier,context,damage,baseKnockback,knockback);
+        return knockback;
+    }
 
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
@@ -88,18 +96,23 @@ public class EtSTBaseModifier extends Modifier implements MeleeHitModifierHook, 
     public float onGetProjectileDamage(ModDataNBT persistentData, ModifierEntry entry ,ModifierNBT modifiers, Projectile projectile, @org.jetbrains.annotations.Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage) {
         return damage;
     }
+    public void onBeforeMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damage, float baseKnockback, float knockback) {
+
+    }
 
     @Override
     public void failedMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageAttempted) {
-        this.postMeleeHit(tool,modifier,context,damageAttempted);
+        this.postMeleeHit(tool,modifier,context,0,currentOriginalDamage);
+        currentOriginalDamage = 0;
     }
 
     @Override
     public void afterMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt) {
-        this.postMeleeHit(tool,modifier,context,damageDealt);
+        this.postMeleeHit(tool,modifier,context,damageDealt,currentOriginalDamage);
+        currentOriginalDamage = 0;
     }
 
-    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damage){
+    public void postMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt,float damage){
 
     }
 

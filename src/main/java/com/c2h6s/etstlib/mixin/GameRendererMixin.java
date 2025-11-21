@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
     @Inject(at = @At(value = "HEAD"),method = "bobHurt",cancellable = true)
-    public void cancleShaking(PoseStack p_109118_, float p_109119_, CallbackInfo ci){
+    public void cancelShaking(PoseStack p_109118_, float p_109119_, CallbackInfo ci){
         Entity entity = ((GameRenderer) (Object) this).getMinecraft().getCameraEntity();
         if (entity instanceof LivingEntity living&& EquipmentUtil.isAntiStun(living)){
             ci.cancel();
