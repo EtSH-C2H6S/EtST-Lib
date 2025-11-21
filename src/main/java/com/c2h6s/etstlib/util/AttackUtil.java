@@ -116,6 +116,7 @@ public class AttackUtil {
         Projectile projectile = context.getProjectile();
         Entity targetEntity = context.getTarget();
         boolean isExtraAttack = context.isExtraAttack();
+        EtSTLibToolAttackTweak.setCachedDamage(damage);
         if (isExtraAttack) {
             didHit = targetEntity.hurt(context.makeDamageSource(), damage);
         } else {

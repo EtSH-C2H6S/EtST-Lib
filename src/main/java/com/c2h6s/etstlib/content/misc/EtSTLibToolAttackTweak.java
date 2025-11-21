@@ -4,6 +4,8 @@ import com.c2h6s.etstlib.entity.specialDamageSources.LegacyDamageSource;
 import com.c2h6s.etstlib.mixin.TconMixin.ToolAttackContextBuilderAccessor;
 import com.c2h6s.etstlib.mixinUtil.IToolAttackContextMixin;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
@@ -19,6 +21,9 @@ public class EtSTLibToolAttackTweak {
     private static @Nullable LivingEntity attacker;
     private static @Nullable Entity target;
     private static boolean fullyCharged;
+    @Setter
+    @Getter
+    private static float cachedDamage = 0;
     public static void onStart(IToolStackView tool){
         EtSTLibToolAttackTweak.tool = tool;
     }
@@ -61,12 +66,14 @@ public class EtSTLibToolAttackTweak {
             contextExtra.etstlib$setLegacySource(source);
         }
     }
+
     public static void onEnd(){
         context = null;
         tool = null;
         contextBuilder = null;
         attacker = null;
         target = null;
+        cachedDamage = 0;
     }
 
     public static boolean isToolAvailable(){
