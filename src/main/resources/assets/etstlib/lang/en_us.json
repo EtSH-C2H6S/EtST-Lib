@@ -19,6 +19,11 @@
   "tool_stat.etstlib.max_pressure.description": "The max pressure your tool can take.\nWon't make your tool explode.",
   "tool_stat.etstlib.radiation_protect": "Radiation Protection: ",
   "tool_stat.etstlib.radiation_protect.description": "Shielding capability against radiation from Mekanism.",
+  "tool_stat.etstlib.fluid_efficiency": "Fluid Efficiency: ",
+  "tool_stat.etstlib.range": "Range: ",
+  "tool_stat.etstlib.scale": "Scale: ",
+  "tool_stat.etstlib.power_multiplier": "Power Multiplier: ",
+  "tool_stat.etstlib.pierce": "Pierce: ",
 
 
   "modifier.etstlib.anti_stun_glasses": "Anti Stun Glasses",
@@ -101,9 +106,10 @@
   "modifier.etstlib.anisotropy.flavor": "Basic feature of mono-crystals.",
   "modifier.etstlib.anisotropy.description": "Increase damage on full charge attack.Decrease damage otherwise.",
 
-  "modifier.etstlib.crystal_armor": "Crystal Armor",
+  "modifier.etstlib.crystal_armor": "Anisotropy",
   "modifier.etstlib.crystal_armor.flavor": "Basic feature of mono-crystals.",
-  "modifier.etstlib.crystal_armor.description": "When hurt, reduces the damage if the damage is no more than 5, otherwise increase the damage.",
+  "modifier.etstlib.crystal_armor.description": "Increase protection when armor is less damaged.",
+  "modifier.etstlib.crystal_armor.resistance": "Anisotropy Resistance",
 
   "modifier.etstlib.glowing": "Glowing",
   "modifier.etstlib.glowing.flavor": "Glowing materials.",
@@ -160,6 +166,18 @@
   "modifier.etstlib.resonating": "Resonating",
   "modifier.etstlib.resonating.flavor": "Do you know how to measure distance using sound ?",
   "modifier.etstlib.resonating.description": "You will hear sound from the environment and gain buffs.",
+
+  "modifier.etstlib.static_discharge": "Static Electricity",
+  "modifier.etstlib.static_discharge.flavor": "Ouch!",
+  "modifier.etstlib.static_discharge.description": "Moving, attacking and mining will charge your tool and boost damage on hit.",
+
+  "modifier.etstlib.accelerate": "Accelerate",
+  "modifier.etstlib.accelerate.flavor": "Faster and faster",
+  "modifier.etstlib.accelerate.description": "Projectile velocity x1.15 over each 0.25s. 2 max acceleration each level.",
+
+  "modifier.etstlib.cheap": "Cheap",
+  "modifier.etstlib.cheap.flavor": "Great in quantities",
+  "modifier.etstlib.cheap.description": "Ammo craft count x4, but self destructs when landing.",
 
 
 

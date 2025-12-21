@@ -1,5 +1,6 @@
 package com.c2h6s.etstlib.entity.specialDamageSources;
 
+import com.c2h6s.etstlib.entity.specialDamageSources.interfaces.IPercentageBypassArmor;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -22,8 +23,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 
 //A DamageSource that can be simply used and changed similar to those in 1.19.2
-public class LegacyDamageSource extends DamageSource {
+//Final value equals to : originalAmount * percentage + amountAfterArmor * (1 - percentage)
+//类似于1.19.2的伤害类型，可以被临时修改tag。
+//百分比穿甲功能按 原伤害*百分比+护甲减免后伤害*(1-百分比) 计算，支持>100%对有甲目标增伤
+public class LegacyDamageSource extends DamageSource implements IPercentageBypassArmor {
     public String msgId=null;
+    private float percentage = 0;
     public ArrayList<ResourceKey<DamageType>> damageTypes =new ArrayList<>();
     public LegacyDamageSource(Holder<DamageType> holder, @Nullable Entity directEntity, @Nullable Entity causingEntity, @Nullable Vec3 sourcePos) {
         super(holder, directEntity, causingEntity, sourcePos);
@@ -131,6 +136,21 @@ public class LegacyDamageSource extends DamageSource {
         this.damageTypes.add(ResourceKey.create(Registries.DAMAGE_TYPE,DamageTypeTags.DAMAGES_HELMET.location()));
         return this;
     }
+    public LegacyDamageSource setPercentageBypassArmor(float percentage){
+        this.percentage = percentage;
+        return this;
+    }
+    public LegacyDamageSource addPercentageBypassArmor(float percentage){
+        this.percentage += percentage;
+        return this;
+    }
+
+    public LegacyDamageSource copyPropertiesFrom(LegacyDamageSource source){
+        this.damageTypes = source.damageTypes;
+        this.msgId = source.msgId;
+        this.percentage = source.percentage;
+        return this;
+    }
 
     public LegacyDamageSource setMsgId(String s){
         this.msgId=s;
@@ -174,5 +194,10 @@ public class LegacyDamageSource extends DamageSource {
             return damageTypes.contains(key) || super.is(key);
         }
         return super.is(key);
+    }
+
+    @Override
+    public float getPercentage() {
+        return this.percentage;
     }
 }

@@ -36,9 +36,10 @@ public class EtSTLibToolAttackTweak {
         EtSTLibToolAttackTweak.fullyCharged = fullyCharged;
     }
     public static boolean processCritical(boolean isCritical){
+        if (tool==null) return isCritical;
         var contextExtra = (ToolAttackContextBuilderAccessor) contextBuilder;
         for (ModifierEntry entry : tool.getModifierList()) {
-            isCritical = entry.getHook(EtSTLibHooks.CRITICAL_ATTACK).setCritical(tool, entry, attacker, contextExtra.getHand(), target, contextExtra.getSlot(), fullyCharged, contextExtra.getExtraAttack(), isCritical);
+            isCritical = entry.getHook(EtSTLibHooks.CRITICAL_ATTACK).setCritical(tool, entry, attacker, contextExtra.etstlib$getHand(), target, contextExtra.etstlib$getSlot(), fullyCharged, contextExtra.etstlib$getExtraAttack(), isCritical);
             if (isCritical) return true;
         }
         return isCritical;

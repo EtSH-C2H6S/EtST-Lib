@@ -45,7 +45,7 @@ public class ChargerBlockEntityMixin {
                 ToolStack tool = ToolStack.from(stack);
                 int modifierLevel = tool.getModifierLevel(EtSTLibModifier.EtSTLibModifierAE.applied_fixing.get());
                 int maxRepair = (int) Math.min(entity.getAEMaxPower()/100,tool.getDamage());
-                maxRepair = Math.min(maxRepair,modifierLevel*4);
+                maxRepair = Math.min(maxRepair,modifierLevel*64);
                 int require = maxRepair*100;
                 if (maxRepair>0){
                     tool.setDamage(tool.getDamage()-maxRepair);

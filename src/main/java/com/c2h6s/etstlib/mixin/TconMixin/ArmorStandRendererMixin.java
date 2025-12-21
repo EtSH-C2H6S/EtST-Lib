@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import slimeknights.tconstruct.tables.client.inventory.BaseTabbedScreen;
 import slimeknights.tconstruct.tables.client.inventory.ToolTableScreen;
 import slimeknights.tconstruct.tables.menu.TabbedContainerMenu;
-
+/*
 @Mixin(ToolTableScreen.class)
 public abstract class ArmorStandRendererMixin <T extends BlockEntity, C extends TabbedContainerMenu<T>> extends BaseTabbedScreen<T,C> {
     public ArmorStandRendererMixin(C c, Inventory playerInventory, Component title) {
@@ -25,3 +25,5 @@ public abstract class ArmorStandRendererMixin <T extends BlockEntity, C extends 
         }
     }
 }
+
+ */

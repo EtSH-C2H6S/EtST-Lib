@@ -6,6 +6,7 @@ import com.c2h6s.etstlib.network.EtSTLibPacketHandler;
 import com.c2h6s.etstlib.register.EtSTLibBlockEntityTypes;
 import com.c2h6s.etstlib.register.EtSTLibEntityTickers;
 import com.c2h6s.etstlib.register.EtSTLibModifier;
+import com.c2h6s.etstlib.register.EtSTLibToolStat;
 import com.c2h6s.etstlib.tool.fluid.fluidEffect.*;
 import com.c2h6s.etstlib.tool.hooks.modifierModules.AddDamageTypeTagArrowModule;
 import com.c2h6s.etstlib.tool.hooks.modifierModules.AddDamageTypeTagMeleeModule;
@@ -66,7 +67,7 @@ public class EtSTLib {
         modEventBus.addListener(this::registerSerializers);
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, EtstLibClientConfig.ClientConfig, "etstlib-client.toml");
+//        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, EtstLibClientConfig.ClientConfig, "etstlib-client.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EtSTLibConfig.COMMON_CONFIG, "etstlib-common.toml");
 
         BLOCKS.register(modEventBus);
@@ -109,6 +110,8 @@ public class EtSTLib {
 
     void registerSerializers(RegisterEvent event) {
         if (event.getRegistryKey() == Registries.RECIPE_SERIALIZER) {
+            EtSTLibToolStat.initStats();
+
             ModifierModule.LOADER.register(getResourceLocation("set_critical"), SetCriticalModule.LOADER);
             ModifierModule.LOADER.register(getResourceLocation("force_drop"), ForceDropModule.LOADER);
             ModifierModule.LOADER.register(getResourceLocation("add_melee_damage_type"), AddDamageTypeTagMeleeModule.LOADER);

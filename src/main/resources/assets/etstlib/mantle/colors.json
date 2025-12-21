@@ -31,7 +31,10 @@
     "hyper_density": "#522375",
     "secondary_armor": "#D9FFD8",
     "extra_dense" : "#AFC3FF",
-    "resonating" : "#00D6B4"
+    "resonating" : "#00D6B4",
+    "static_discharge" : "#FFE985",
+    "accelerate" : "#EDB292",
+    "cheap" : "#B8B8B8"
   },
   "material.etstlib": {
 

@@ -1,7 +1,6 @@
 package com.c2h6s.etstlib.tool.modifiers.Combat;
 
 import com.c2h6s.etstlib.entity.specialDamageSources.LegacyDamageSource;
-import com.c2h6s.etstlib.entity.specialDamageSources.PercentageBypassArmorSource;
 import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -18,11 +17,11 @@ import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 public class ArmorPiercing extends EtSTBaseModifier {
     @Override
     public LegacyDamageSource modifyDamageSource(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical, LegacyDamageSource source) {
-        return PercentageBypassArmorSource.Any(source.typeHolder(),attacker,attacker,entry.getLevel()*0.25f);
+        return source.addPercentageBypassArmor(0.25f*entry.getLevel());
     }
 
     @Override
     public LegacyDamageSource modifyArrowDamageSource(ModifierNBT modifiers, ModDataNBT persistentData, ModifierEntry modifier, AbstractArrow arrow, @Nullable LivingEntity attacker, @NotNull Entity target, LegacyDamageSource source) {
-        return PercentageBypassArmorSource.Any(source.typeHolder(),arrow,attacker,modifier.getLevel()*0.25f);
+        return source.addPercentageBypassArmor(0.25f*modifier.getLevel());
     }
 }

@@ -19,7 +19,16 @@
   "tool_stat.etstlib.max_pressure.description": "你工具存储压缩空气的最大压力。\n过压不会使你工具爆炸。",
   "tool_stat.etstlib.radiation_protect": "辐射抗性：",
   "tool_stat.etstlib.radiation_protect.description": "对Mek辐射的防护能力。",
-
+  "tool_stat.etstlib.fluid_efficiency": "流体效率：",
+  "tool_stat.etstlib.fluid_efficiency.description": "减少部分类型工具消耗流体的量或者概率。",
+  "tool_stat.etstlib.range": "作用距离：",
+  "tool_stat.etstlib.range.description": "影响部分工具其起效果的最远距离。",
+  "tool_stat.etstlib.scale": "效果倍率：",
+  "tool_stat.etstlib.scale.description": "某些工具的特殊效果会被这个属性增幅。",
+  "tool_stat.etstlib.power_multiplier": "功率因数：",
+  "tool_stat.etstlib.power_multiplier.description": "增强部分工具的效用，但是同时也增大资源消耗。",
+  "tool_stat.etstlib.pierce": "穿透：",
+  "tool_stat.etstlib.pierce.description": "部分工具的特殊穿透属性。",
 
   "modifier.etstlib.anti_stun_glasses": "防眩目镜",
   "modifier.etstlib.anti_stun_glasses.flavor": "指的是防止屏幕前的你晕眩",
@@ -101,9 +110,10 @@
   "modifier.etstlib.anisotropy.flavor": "单晶的基本特性",
   "modifier.etstlib.anisotropy.description": "增加工具全力打击时的伤害，减少不全力打击时的伤害，工具耐久越满这个效果越明显。",
 
-  "modifier.etstlib.crystal_armor": "晶质护甲",
+  "modifier.etstlib.crystal_armor": "各向异性",
   "modifier.etstlib.crystal_armor.flavor": "单晶的基本特性",
-  "modifier.etstlib.crystal_armor.description": "受伤时减少小于5点的伤害，增加大于5点的伤害。",
+  "modifier.etstlib.crystal_armor.description": "高耐久时增加抗性，但是低耐久时减少抗性。",
+  "modifier.etstlib.crystal_armor.resistance": "各向异性抗性",
 
   "modifier.etstlib.glowing": "外发光",
   "modifier.etstlib.glowing.flavor": "荧光物质",
@@ -131,7 +141,7 @@
 
   "modifier.etstlib.hardened": "硬化",
   "modifier.etstlib.hardened.flavor": "稳如老狗！",
-  "modifier.etstlib.hardened.description": "每级增加10%的耐久和伤害减免。",
+  "modifier.etstlib.hardened.description": "每级增加5%的耐久和保护。",
 
   "modifier.etstlib.terrafirma": "坚实基础",
   "modifier.etstlib.terrafirma.flavor": "大地本源的力量护佑着你",
@@ -160,6 +170,18 @@
   "modifier.etstlib.resonating": "稳态谐振",
   "modifier.etstlib.resonating.flavor": "本关考验你听声辩位功夫",
   "modifier.etstlib.resonating.description": "每隔一段时间，你会接收环境的声音，并根据声音的频率获得增益效果。",
+
+  "modifier.etstlib.static_discharge": "摩擦生电",
+  "modifier.etstlib.static_discharge.flavor": "嘻嘻 #被电# 不嘻嘻",
+  "modifier.etstlib.static_discharge.description": "跑动、挖掘、攻击会让你的工具带上静电。静电超过%1$s点后攻击释放静电并造成%2$s倍伤害并给予自身每级%3$s刻的固定%4$s级急迫和迅捷。",
+
+  "modifier.etstlib.accelerate": "逐级加速",
+  "modifier.etstlib.accelerate.flavor": "阶梯计划！",
+  "modifier.etstlib.accelerate.description": "每过0.25秒，弹射物速度翻1.15倍，每级最大加速2次。",
+
+  "modifier.etstlib.cheap": "廉价",
+  "modifier.etstlib.cheap.flavor": "量大，但不一定管饱",
+  "modifier.etstlib.cheap.description": "弹药制作数量x4，但是命中方块后立刻销毁。",
 
 
 

@@ -11,11 +11,18 @@ import com.c2h6s.etstlib.tool.modifiers.Common.*;
 import com.c2h6s.etstlib.tool.modifiers.Combat.Defense.*;
 import com.c2h6s.etstlib.tool.modifiers.Harvest.*;
 import com.c2h6s.etstlib.tool.modifiers.Test;
+import com.c2h6s.etstlib.tool.modifiers.ammo.AccelerateModifier;
+import com.c2h6s.etstlib.tool.modifiers.ammo.Cheap;
+import com.c2h6s.etstlib.tool.modifiers.base.IndividualProtectionDisplayModifier;
+import slimeknights.tconstruct.library.modifiers.modules.build.ModifierTraitModule;
 import slimeknights.tconstruct.library.modifiers.util.ModifierDeferredRegister;
 import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 
 public class EtSTLibModifier {
     public static ModifierDeferredRegister MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
+    //仅用于ModifierTraitHook，不在工具内显示
+    public static final StaticModifier<IndividualProtectionDisplayModifier> INDIVIDUAL_PROTECTION_DISPLAY =MODIFIERS.register("individual_protection_display",IndividualProtectionDisplayModifier::new);
+    public static final ModifierTraitModule indiProtectionModule = new ModifierTraitModule(INDIVIDUAL_PROTECTION_DISPLAY.getId(),1,true);
 
     //示例属性
     public static final StaticModifier<MagicStrike> magic_strike =MODIFIERS.register("magic_strike",MagicStrike::new);
@@ -45,6 +52,9 @@ public class EtSTLibModifier {
     public static final StaticModifier<HyperDensity> HYPER_DENSITY =MODIFIERS.register("hyper_density",HyperDensity::new);
     public static final StaticModifier<SecondaryArmor> SECONDARY_ARMOR =MODIFIERS.register("secondary_armor",SecondaryArmor::new);
     public static final StaticModifier<Resonating> RESONATING =MODIFIERS.register("resonating",Resonating::new);
+    public static final StaticModifier<StaticDischarge> STATIC_DISCHARGE =MODIFIERS.register("static_discharge",StaticDischarge::new);
+    public static final StaticModifier<AccelerateModifier> ACCELERATE =MODIFIERS.register("accelerate",AccelerateModifier::new);
+    public static final StaticModifier<Cheap> CHEAP =MODIFIERS.register("cheap",Cheap::new);
 
 
 

@@ -5,9 +5,12 @@ import com.c2h6s.etstlib.register.EtSTLibEffects;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import com.c2h6s.etstlib.util.CommonConstants;
 import com.google.common.util.concurrent.AtomicDouble;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -16,11 +19,18 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import slimeknights.tconstruct.library.modifiers.hook.armor.ProtectionModifierHook;
 import slimeknights.tconstruct.library.tools.capability.EntityModifierCapability;
 import slimeknights.tconstruct.library.tools.capability.PersistentDataCapability;
 import slimeknights.tconstruct.library.tools.capability.TinkerDataCapability;
+import slimeknights.tconstruct.library.tools.context.EquipmentContext;
+import slimeknights.tconstruct.library.tools.item.IModifiable;
 import slimeknights.tconstruct.library.tools.nbt.ModDataNBT;
 import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = EtSTLib.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class LivingEvents {
@@ -62,5 +72,29 @@ public class LivingEvents {
                                 event.getEntity(),baseDamage,atomicDouble.floatValue())));
             });
         }
+    }
+    @SubscribeEvent(priority = EventPriority.NORMAL)
+    public static void onLivingHurtNormal(LivingHurtEvent event){
+        var living = event.getEntity();
+        var source = event.getSource();
+        Map<String,Float> protectionMap = new HashMap<>();
+        for (var slot: EquipmentSlot.values()){
+            var itS = living.getItemBySlot(slot);
+            if (!(itS.getItem() instanceof IModifiable)) continue;
+            var tool = ToolStack.from(itS);
+            tool.getModifierList().forEach(entry -> {
+                var hook = entry.getHook(EtSTLibHooks.INDIVIDUAL_PROTECTION);
+                var str = hook.getProtectionName(tool,entry,living instanceof Player player?player:null);
+                if (str!=null) {
+                    var ctx = EquipmentContext.withTool(living,tool,slot);
+                    protectionMap.put(str,hook.getIndividualProtectionModifier(tool,entry,ctx,slot,source,protectionMap.getOrDefault(str,0f)));
+                }
+            });
+        }
+        protectionMap.values().stream().map(f-> Mth.clamp(f,-ProtectionModifierHook.getProtectionCap(living), ProtectionModifierHook.getProtectionCap(living))).map(Double::floatValue).forEach(value->{
+            var amount = event.getAmount();
+            amount-= amount*(0.04f*value);
+            event.setAmount(amount);
+        });
     }
 }

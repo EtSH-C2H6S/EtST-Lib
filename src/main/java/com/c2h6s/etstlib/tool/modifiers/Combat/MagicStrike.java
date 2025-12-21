@@ -17,13 +17,13 @@ import slimeknights.tconstruct.library.tools.nbt.ModifierNBT;
 public class MagicStrike extends EtSTBaseModifier {
     @Override
     public LegacyDamageSource modifyDamageSource(IToolStackView tool, ModifierEntry entry, LivingEntity attacker, InteractionHand hand, Entity target, EquipmentSlot sourceSlot, boolean isFullyCharged, boolean isExtraAttack, boolean isCritical, LegacyDamageSource source) {
-        return isFullyCharged ? LegacyDamageSource.indirectMagic(attacker):source;
+        return isFullyCharged ? LegacyDamageSource.indirectMagic(attacker).copyPropertiesFrom(source):source;
     }
 
     @Override
     public LegacyDamageSource modifyArrowDamageSource(ModifierNBT modifiers, ModDataNBT persistentData, ModifierEntry modifier, AbstractArrow arrow, @Nullable LivingEntity attacker, @NotNull Entity target, LegacyDamageSource source) {
         if (attacker != null) {
-            return arrow.isCritArrow()? LegacyDamageSource.indirectMagic(attacker):source;
+            return arrow.isCritArrow()? LegacyDamageSource.indirectMagic(attacker).copyPropertiesFrom(source):source;
         }
         return source;
     }

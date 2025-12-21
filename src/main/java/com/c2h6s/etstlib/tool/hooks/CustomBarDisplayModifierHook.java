@@ -25,11 +25,15 @@ public interface CustomBarDisplayModifierHook {
         return true;
     }
     default Vec2 getShadowXYSize(IToolStackView tool, ModifierEntry entry,int barsHadBeenShown){
+        if (isCustomPosition(tool,entry,barsHadBeenShown)) return new Vec2(13,1);
         return barsHadBeenShown>0?new Vec2(13,1):new Vec2(13,2);
     }
     //Place shift from the bar.
     default Vec2 getShadowXYOffset(IToolStackView tool, ModifierEntry entry,int barsHadBeenShown){
         return new Vec2(0,0);
+    }
+    default boolean isCustomPosition(IToolStackView tool, ModifierEntry entry,int barsHadBeenShown){
+        return false;
     }
 
     public static record FirstMerger(Collection<CustomBarDisplayModifierHook> modules) implements CustomBarDisplayModifierHook {
@@ -49,6 +53,15 @@ public interface CustomBarDisplayModifierHook {
                 if (s!=null) return s;
             }
             return s;
+        }
+        @Override
+        public boolean isCustomPosition(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
+            String s;
+            for (CustomBarDisplayModifierHook modules:this.modules){
+                s = modules.barId(tool,entry,barsHadBeenShown);
+                if (s!=null) return modules.isCustomPosition(tool,entry,barsHadBeenShown);
+            }
+            return false;
         }
 
         @Override

@@ -26,11 +26,7 @@
   ],
   "client": [
     "AbstractClientPlayerMixin",
-    "GameRendererMixin",
-    "GuiGraphicsMixin",
-    "TconMixin.ArmorStandRendererMixin",
-    "TconMixin.SideButtonsWidgetMixin",
-    "TconMixin.TinkerStationScreenMixin"
+    "GameRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -106,4 +106,22 @@ public class EtSTLibHooks {
         }
     });
     public static final ModuleHook<ProjectileDamageModifierHook> PROJECTILE_DAMAGE = ModifierHooks.register(EtSTLib.getResourceLocation("projectile_damage"), ProjectileDamageModifierHook.class, ProjectileDamageModifierHook.AllMerger::new, (modDataNBT,modifierEntry,modifierEntries,projectile,arrow,living,entity,baseDamage,damage) -> damage);
+    public static final ModuleHook<ItemFoilModifierHook> ITEM_FOIL = ModifierHooks.register(EtSTLib.getResourceLocation("item_foil"), ItemFoilModifierHook.class, ItemFoilModifierHook.FirstMerger::new, (tool, entry) -> false);
+    public static final ModuleHook<IndividualProtectionModifierHook> INDIVIDUAL_PROTECTION = ModifierHooks.register(EtSTLib.getResourceLocation("individual_protection"), IndividualProtectionModifierHook.class, IndividualProtectionModifierHook.Merger::new, new IndividualProtectionModifierHook(){
+
+        @Override
+        public float getIndividualProtectionModifier(IToolStackView tool, ModifierEntry modifier, EquipmentContext context, EquipmentSlot slotType, DamageSource source, float modifierValue) {
+            return modifierValue;
+        }
+
+        @Override
+        public String getProtectionName(IToolStackView tool, ModifierEntry modifier, @Nullable Player player) {
+            return null;
+        }
+
+        @Override
+        public float getProtectionModifierForDisplay(IToolStackView tool, ModifierEntry modifier, Player player, float value) {
+            return value;
+        }
+    });
 }

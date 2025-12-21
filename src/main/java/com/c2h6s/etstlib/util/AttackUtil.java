@@ -1,5 +1,6 @@
 package com.c2h6s.etstlib.util;
 
+import com.c2h6s.etstlib.EtSTLibConfig;
 import com.c2h6s.etstlib.content.misc.EtSTLibToolAttackTweak;
 import com.c2h6s.etstlib.entity.specialDamageSources.LegacyDamageSource;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
@@ -19,10 +20,12 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
@@ -60,7 +63,24 @@ public class AttackUtil {
     public static boolean attackEntity(IToolStackView tool, LivingEntity attacker, Entity target,float damageOffset,float damageModifier,boolean noToolDamage){
         if (!ToolAttackUtil.canPerformAttack(tool)) return false;
         EtSTLibToolAttackTweak.onStart(tool);
-        return performAttack(tool,ToolAttackContext.attacker(attacker).target(target).defaultCooldown().applyAttributes().build(),damageOffset,damageModifier,noToolDamage);
+        return performAttack(tool,ToolAttackContext.attacker(attacker).target(target).cooldown(1).applyAttributes().build(),damageOffset,damageModifier,noToolDamage);
+    }
+    public static boolean attackEntityExtra(IToolStackView tool, LivingEntity attacker, Entity target,float damageOffset,float damageModifier,boolean noToolDamage){
+        if (!ToolAttackUtil.canPerformAttack(tool)) return false;
+        EtSTLibToolAttackTweak.onStart(tool);
+        return performAttack(tool,ToolAttackContext.attacker(attacker).target(target).cooldown(1).applyAttributes().extraAttack().build(),damageOffset,damageModifier,noToolDamage);
+    }
+    public static boolean attackEntityWithBaseDamage(IToolStackView tool, LivingEntity attacker, Entity target,float damageSet,float damageModifier,boolean noToolDamage){
+        if (!ToolAttackUtil.canPerformAttack(tool)) return false;
+        EtSTLibToolAttackTweak.onStart(tool);
+        var context = ToolAttackContext.attacker(attacker).target(target).cooldown(1).applyAttributes().build();
+        return performAttack(tool,context,damageSet-context.getBaseDamage(),damageModifier,noToolDamage);
+    }
+    public static boolean attackEntityExtraWithBaseDamage(IToolStackView tool, LivingEntity attacker, Entity target,float damageSet,float damageModifier,boolean noToolDamage){
+        if (!ToolAttackUtil.canPerformAttack(tool)) return false;
+        EtSTLibToolAttackTweak.onStart(tool);
+        var context = ToolAttackContext.attacker(attacker).target(target).extraAttack().cooldown(1).applyAttributes().build();
+        return performAttack(tool,context,damageSet-context.getBaseDamage(),damageModifier,noToolDamage);
     }
 
     //修改过的近战攻击过程，保留全部攻击过程的同时允许不损坏工具和施加全局伤害修正。
@@ -68,11 +88,11 @@ public class AttackUtil {
         EtSTLibToolAttackTweak.processContext(tool,context);
         float baseDamage = context.getBaseDamage();
         float damage = baseDamage;
+        damage+=damageOffset;
         List<ModifierEntry> modifiers = tool.getModifierList();
         for (ModifierEntry entry : modifiers) {
             damage = entry.getHook(ModifierHooks.MELEE_DAMAGE).getMeleeDamage(tool, entry, context, baseDamage, damage);
         }
-        damage+=damageOffset;
         if (damage <= 0) {
             EtSTLibToolAttackTweak.onEnd();
             return false;
@@ -502,16 +522,18 @@ public class AttackUtil {
     public static void actualHurtEntity(LivingEntity living,float amount,DamageSource source) {
         if (amount <= 0) return;
         living.getCombatTracker().recordDamage(source, amount);
-        setHealth(living,getHealth(living)-amount);
+        living.setHealth(living.getHealth()-amount);
         living.setAbsorptionAmount(living.getAbsorptionAmount() - amount);
         living.gameEvent(GameEvent.ENTITY_DAMAGE);
     }
-    public static float getHealth(LivingEntity living) {
-        return living.entityData.get(DATA_HEALTH_ID);
-    }
 
-    public static void setHealth(LivingEntity living,float pHealth) {
-        living.entityData.set(DATA_HEALTH_ID, Mth.clamp(pHealth, 0.0F, living.getMaxHealth()));
+
+    public static boolean checkPlayer(Entity target,@Nullable Entity attacker){
+        if (!EtSTLibConfig.ALLOW_AOE_ATTACK_PLAYER.get()&&target instanceof Player) return false;
+        if (attacker instanceof Player player1&& target instanceof Player player2){
+            return player1.canHarmPlayer(player2);
+        }
+        return true;
     }
 
 }

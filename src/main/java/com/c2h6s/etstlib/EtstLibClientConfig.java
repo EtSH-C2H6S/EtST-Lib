@@ -3,6 +3,7 @@ package com.c2h6s.etstlib;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class EtstLibClientConfig {
+    /*
     public static final ForgeConfigSpec.Builder ToolBuilder = new ForgeConfigSpec.Builder()
             .comment("工匠砧显示的配置")
             .push("工匠砧显示");
@@ -15,4 +16,6 @@ public class EtstLibClientConfig {
             .defineInRange("ScrollingRollsThreshold",8,0,Integer.MAX_VALUE);
 
     public static final ForgeConfigSpec ClientConfig = ToolBuilder.pop().build();
+
+    */
 }

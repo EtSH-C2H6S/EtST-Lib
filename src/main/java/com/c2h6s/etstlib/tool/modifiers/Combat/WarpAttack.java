@@ -4,6 +4,7 @@ import com.c2h6s.etstlib.mixin.ProjectileInvoker;
 import com.c2h6s.etstlib.register.EtSTLibHooks;
 import com.c2h6s.etstlib.tool.hooks.ProjectileTickModifierHook;
 import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;
+import com.c2h6s.etstlib.util.AttackUtil;
 import com.c2h6s.etstlib.util.EntityInRangeUtil;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.core.BlockPos;
@@ -35,7 +36,7 @@ public class WarpAttack extends EtSTBaseModifier implements ProjectileTickModifi
     @Override
     public void onLeftClickBlock(IToolStackView tool, ModifierEntry entry, Player player, Level level, EquipmentSlot equipmentSlot, BlockState state, BlockPos pos) {
         if (player!=null&&!level.isClientSide) {
-            LivingEntity living = EntityInRangeUtil.getNearestLivingEntity(player, entry.getLevel() + 4, new IntOpenHashSet(), (entity -> !(entity instanceof Player)));
+            LivingEntity living = EntityInRangeUtil.getNearestLivingEntity(player, entry.getLevel() + 4, new IntOpenHashSet(), entity -> entity.isAttackable()&& AttackUtil.checkPlayer(entity,player));
             if (living!=null) ToolAttackUtil.attackEntity(tool,player,living);
         }
     }
@@ -43,7 +44,7 @@ public class WarpAttack extends EtSTBaseModifier implements ProjectileTickModifi
     @Override
     public void onLeftClickEmpty(IToolStackView tool, ModifierEntry entry, Player player, Level level, EquipmentSlot equipmentSlot) {
         if (player!=null&&!level.isClientSide) {
-            LivingEntity living = EntityInRangeUtil.getNearestLivingEntity(player, entry.getLevel() + 4, new IntOpenHashSet(), (entity -> !(entity instanceof Player)));
+            LivingEntity living = EntityInRangeUtil.getNearestLivingEntity(player, entry.getLevel() + 4, new IntOpenHashSet(), entity -> entity.isAttackable()&& AttackUtil.checkPlayer(entity,player));
             if (living!=null) ToolAttackUtil.attackEntity(tool,player,living);
         }
     }
@@ -65,7 +66,7 @@ public class WarpAttack extends EtSTBaseModifier implements ProjectileTickModifi
         if (arrow.getOwner()!=null){
             piercingIgnoreEntityIds.add(arrow.getOwner().getId());
         }
-        LivingEntity living = EntityInRangeUtil.getNearestLivingEntity(arrow, entry.getLevel() + 2.5F,piercingIgnoreEntityIds, (entity -> !(entity instanceof Player)));
+        LivingEntity living = EntityInRangeUtil.getNearestLivingEntity(arrow, entry.getLevel() + 2.5F,piercingIgnoreEntityIds, entity -> arrow.canHitEntity(entity)&& AttackUtil.checkPlayer(entity,arrow.getOwner()));
         if (living!=null){
             EntityHitResult hitResult = new EntityHitResult(living);
             ((ProjectileInvoker)arrow).etstlib$onHit(hitResult);

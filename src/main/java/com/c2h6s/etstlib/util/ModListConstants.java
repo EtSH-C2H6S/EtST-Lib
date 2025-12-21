@@ -13,4 +13,7 @@ public class ModListConstants {
     public static boolean CYCLoaded=ModList.get().isLoaded("cyclic");
     public static boolean MBOTLoaded = ModList.get().isLoaded("mythicbotany");
     public static boolean PnCLoaded = ModList.get().isLoaded("pneumaticcraft");
+    public static boolean ThermalLoaded = ModList.get().isLoaded("thermal");
+    public static boolean IFLoaded = ModList.get().isLoaded("industrialforegoing");
+    public static boolean CreateUtilitiesLoaded = ModList.get().isLoaded("createutilities");
 }

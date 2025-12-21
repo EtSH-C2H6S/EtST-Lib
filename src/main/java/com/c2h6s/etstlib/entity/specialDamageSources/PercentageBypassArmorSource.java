@@ -14,12 +14,12 @@ import org.jetbrains.annotations.Nullable;
 
 //A DamageSource that does armor pierce in percentage.
 //Final value equals to : originalAmount * percentage + amountAfterArmor * (1 - percentage)
-@Getter
+@Deprecated(forRemoval = true)
 public class PercentageBypassArmorSource extends LegacyDamageSource implements IPercentageBypassArmor {
     private final float percentage;
     public PercentageBypassArmorSource(Holder<DamageType> holder, @Nullable Entity directEntity, @Nullable Entity causingEntity, @Nullable Vec3 sourcePos,float percentage) {
         super(holder, directEntity, causingEntity, sourcePos);
-        this.percentage=Math.min(1,percentage);
+        this.percentage=percentage;
     }
     public PercentageBypassArmorSource(Holder<DamageType> holder, @Nullable Entity directEntity, @Nullable Entity causingEntity,float percentage) {
         this(holder, directEntity, causingEntity, null,percentage);

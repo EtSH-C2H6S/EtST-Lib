@@ -16,6 +16,7 @@ import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.build.ModifierRemovalHook;
+import slimeknights.tconstruct.library.modifiers.hook.build.ModifierTraitHook;
 import slimeknights.tconstruct.library.modifiers.hook.build.ToolStatsModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.build.ValidateModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.display.TooltipModifierHook;
@@ -24,12 +25,13 @@ import slimeknights.tconstruct.library.tools.capability.ToolEnergyCapability;
 import slimeknights.tconstruct.library.tools.nbt.IToolContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.stat.ModifierStatsBuilder;
+import slimeknights.tconstruct.tools.TinkerModifiers;
 
 import java.util.List;
 
 import static slimeknights.tconstruct.library.tools.capability.ToolEnergyCapability.*;
 
-public abstract class BasicFEModifier extends EtSTBaseModifier implements ModifierRemovalHook, TooltipModifierHook,ToolStatsModifierHook, CustomBarDisplayModifierHook, ValidateModifierHook {
+public abstract class BasicFEModifier extends EtSTBaseModifier implements ModifierTraitHook,ToolStatsModifierHook, CustomBarDisplayModifierHook {
 
     @Override
     public int getPriority() {
@@ -39,30 +41,14 @@ public abstract class BasicFEModifier extends EtSTBaseModifier implements Modifi
     @Override
     protected void registerHooks(ModuleHookMap.@NotNull Builder hookBuilder) {
         super.registerHooks(hookBuilder);
-        hookBuilder.addHook(this,ModifierHooks.REMOVE, ModifierHooks.TOOLTIP,ModifierHooks.TOOL_STATS,EtSTLibHooks.CUSTOM_BAR);
-    }
-
-    @Nullable
-    @Override
-    public Component validate(IToolStackView tool, ModifierEntry modifierEntry) {
-        checkEnergy(tool);
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public Component onRemoved(@NotNull IToolStackView tool, @NotNull Modifier modifier) {
-        if (getMaxEnergy(tool) <= 0) {
-            tool.getPersistentData().remove(ENERGY_KEY);
-        }
-        return null;
+        hookBuilder.addHook(this,ModifierHooks.TOOL_STATS,EtSTLibHooks.CUSTOM_BAR,ModifierHooks.MODIFIER_TRAITS);
     }
 
     @Override
-    public void addTooltip(IToolStackView tool, ModifierEntry modifierEntry, @Nullable Player player, List<Component> list, TooltipKey tooltipKey, TooltipFlag tooltipFlag) {
-        Component component = DynamicComponentUtil.ScrollColorfulText.getColorfulText("tooltip.etstlib.energy_storage",":"+" "+ MathUtil.getEnergyString(getEnergy(tool))+"/"+MathUtil.getEnergyString(getMaxEnergy(tool)),new int[]{0xFF0000,0xFF5A00},40,100,true);
-        if (!list.contains(component)) list.add(component);
+    public void addTraits(IToolContext iToolContext, ModifierEntry modifierEntry, TraitBuilder traitBuilder, boolean b) {
+        if (b) traitBuilder.add(TinkerModifiers.energyHandler.getId(), 1);
     }
+
 
     @Override
     public void addToolStats(IToolContext iToolContext, ModifierEntry modifierEntry, ModifierStatsBuilder modifierStatsBuilder) {

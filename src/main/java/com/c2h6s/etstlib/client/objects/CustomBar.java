@@ -14,6 +14,7 @@ public class CustomBar {
     public Vec2 xyShadowSize;
     public boolean showBar;
     public int barCount;
+    public boolean isSpecialPos = false;
     public CustomBar(Vec2 xyPos,Vec2 xySize,int col,boolean showShadow,Vec2 xyShadowOffset,Vec2 xyShadowSize,boolean showBar,int barCount){
         this.xyPos = xyPos;
         this.xySize =xySize;

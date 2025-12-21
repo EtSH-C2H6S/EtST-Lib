@@ -28,4 +28,18 @@ public class ItemStackMixin {
             }
         }
     }
+    @Inject(at = @At(value = "RETURN"),method = "hasFoil",cancellable = true)
+    public void setFoil(CallbackInfoReturnable<Boolean> cir){
+        var stack = (ItemStack) (Object) this;
+        if (stack.getItem() instanceof IModifiable){
+            ToolStack tool = ToolStack.from(stack);
+            if (cir.getReturnValueZ()) return;
+            for (ModifierEntry entry:tool.getModifierList()){
+                if (entry.getHook(EtSTLibHooks.ITEM_FOIL).hasFoil(tool,entry)){
+                    cir.setReturnValue(true);
+                    break;
+                }
+            }
+        }
+    }
 }

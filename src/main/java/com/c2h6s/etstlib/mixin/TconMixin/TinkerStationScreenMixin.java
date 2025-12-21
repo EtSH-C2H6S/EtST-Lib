@@ -18,7 +18,7 @@ import slimeknights.tconstruct.tables.client.inventory.TinkerStationScreen;
 import slimeknights.tconstruct.tables.client.inventory.ToolTableScreen;
 import slimeknights.tconstruct.tables.client.inventory.widget.TinkerStationButtonsWidget;
 import slimeknights.tconstruct.tables.menu.TinkerStationContainerMenu;
-
+/*
 @Mixin(value = TinkerStationScreen.class,remap = false)
 public class TinkerStationScreenMixin extends ToolTableScreen<TinkerStationBlockEntity, TinkerStationContainerMenu> implements ITinkerStationScreenMixin {
     @Shadow protected TinkerStationButtonsWidget buttonsScreen;
@@ -51,3 +51,5 @@ public class TinkerStationScreenMixin extends ToolTableScreen<TinkerStationBlock
         }
     }
 }
+
+ */

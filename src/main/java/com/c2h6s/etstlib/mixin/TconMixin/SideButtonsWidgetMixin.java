@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import slimeknights.tconstruct.tables.client.inventory.widget.SideButtonsWidget;
-
+/*
 @Mixin(value = SideButtonsWidget.class,remap = false)
 public class SideButtonsWidgetMixin {
     @ModifyVariable(method = "setButtonPositions",at = @At(value = "STORE"),ordinal = 2)
@@ -20,3 +20,5 @@ public class SideButtonsWidgetMixin {
         return par1;
     }
 }
+
+ */
