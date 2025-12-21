@@ -55,6 +55,7 @@ public class EtSTLibModifier {
     public static final StaticModifier<StaticDischarge> STATIC_DISCHARGE =MODIFIERS.register("static_discharge",StaticDischarge::new);
     public static final StaticModifier<AccelerateModifier> ACCELERATE =MODIFIERS.register("accelerate",AccelerateModifier::new);
     public static final StaticModifier<Cheap> CHEAP =MODIFIERS.register("cheap",Cheap::new);
+    public static final StaticModifier<CrystalineArrow> CRYSTALINE_ARROW =MODIFIERS.register("crystaline_arrow",CrystalineArrow::new);
 
 
 

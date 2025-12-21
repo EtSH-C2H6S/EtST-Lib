@@ -34,7 +34,8 @@
     "resonating" : "#00D6B4",
     "static_discharge" : "#FFE985",
     "accelerate" : "#EDB292",
-    "cheap" : "#B8B8B8"
+    "cheap" : "#B8B8B8",
+    "crystaline_arrow": "#ABD9EA"
   },
   "material.etstlib": {
 

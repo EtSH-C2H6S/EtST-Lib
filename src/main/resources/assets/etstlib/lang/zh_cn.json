@@ -181,7 +181,11 @@
 
   "modifier.etstlib.cheap": "廉价",
   "modifier.etstlib.cheap.flavor": "量大，但不一定管饱",
-  "modifier.etstlib.cheap.description": "弹药制作数量x4，但是命中方块后立刻销毁。",
+  "modifier.etstlib.cheap.description": "弹药制作数量增多，但是命中方块后立刻销毁。",
+
+  "modifier.etstlib.crystaline_arrow": "各向异性",
+  "modifier.etstlib.crystaline_arrow.flavor": "单晶的基本特性",
+  "modifier.etstlib.crystaline_arrow.description": "若满蓄力则箭矢伤害+20%，反之伤害-80%。",
 
 
 

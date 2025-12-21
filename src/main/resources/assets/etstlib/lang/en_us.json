@@ -179,6 +179,10 @@
   "modifier.etstlib.cheap.flavor": "Great in quantities",
   "modifier.etstlib.cheap.description": "Ammo craft count x4, but self destructs when landing.",
 
+  "modifier.etstlib.crystaline_arrow": "Anisotropy",
+  "modifier.etstlib.crystaline_arrow.flavor": "Basic feature of mono-crystals.",
+  "modifier.etstlib.crystaline_arrow.description": "+20% damage when full charged, otherwise -80% damage.",
+
 
 
   "fluid_effect.etstlib.radiate_entity": "Radiate %s To Entity",
