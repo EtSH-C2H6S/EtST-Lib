@@ -1,7 +1,6 @@
 package com.c2h6s.etstlib;
 
 import com.c2h6s.etstlib.data.predicate.LivingEntityWithHealth;
-import com.c2h6s.etstlib.event.eventHandler.PlayerEvents;
 import com.c2h6s.etstlib.network.EtSTLibPacketHandler;
 import com.c2h6s.etstlib.register.EtSTLibBlockEntityTypes;
 import com.c2h6s.etstlib.register.EtSTLibEntityTickers;
@@ -15,27 +14,25 @@ import com.c2h6s.etstlib.tool.hooks.modifierModules.SetCriticalModule;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.MekIntegration.RadiationShieldProvider;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.MekIntegration.ToolBasicChemicalTankProvider;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.PnCIntegration.AirStorageProvider;
+import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.RSAIntegration.TinkerFluxShieldedItemCapProvider;
 import com.c2h6s.etstlib.tool.modifiers.capabilityProvider.ToolUuidCapabilityProvider;
-import com.c2h6s.etstlib.util.CommonConstants;
 import com.c2h6s.etstlib.util.ModListConstants;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 import slimeknights.mantle.data.predicate.entity.LivingEntityPredicate;
@@ -105,6 +102,9 @@ public class EtSTLib {
         }
         if (ModListConstants.PnCLoaded){
             ToolCapabilityProvider.register(AirStorageProvider::new);
+        }
+        if (ModList.get().isLoaded("redstone_arsenal")){
+            ToolCapabilityProvider.register((stack, supplier) -> new TinkerFluxShieldedItemCapProvider(supplier));
         }
     }
 

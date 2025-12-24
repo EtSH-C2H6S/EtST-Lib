@@ -31,7 +31,7 @@ import java.util.List;
 
 import static slimeknights.tconstruct.library.tools.capability.ToolEnergyCapability.*;
 
-public abstract class BasicFEModifier extends EtSTBaseModifier implements ModifierTraitHook,ToolStatsModifierHook, CustomBarDisplayModifierHook {
+public abstract class BasicFEModifier extends EtSTBaseModifier implements ModifierTraitHook,ToolStatsModifierHook, CustomBarDisplayModifierHook,TooltipModifierHook {
 
     @Override
     public int getPriority() {
@@ -41,7 +41,7 @@ public abstract class BasicFEModifier extends EtSTBaseModifier implements Modifi
     @Override
     protected void registerHooks(ModuleHookMap.@NotNull Builder hookBuilder) {
         super.registerHooks(hookBuilder);
-        hookBuilder.addHook(this,ModifierHooks.TOOL_STATS,EtSTLibHooks.CUSTOM_BAR,ModifierHooks.MODIFIER_TRAITS);
+        hookBuilder.addHook(this,ModifierHooks.TOOL_STATS,EtSTLibHooks.CUSTOM_BAR,ModifierHooks.MODIFIER_TRAITS,ModifierHooks.TOOLTIP);
     }
 
     @Override
@@ -80,5 +80,10 @@ public abstract class BasicFEModifier extends EtSTBaseModifier implements Modifi
     @Override
     public String barId(IToolStackView tool, ModifierEntry entry, int barsHadBeenShown) {
         return "etstlib:fe_bar";
+    }
+
+    @Override
+    public void addTooltip(IToolStackView tool, ModifierEntry modifier, @Nullable Player player, List<Component> tooltip, TooltipKey tooltipKey, TooltipFlag tooltipFlag) {
+
     }
 }
