@@ -59,17 +59,11 @@ public class LivingEvents {
                 ModifierNBT modifiers = cap.getModifiers();
                 float baseDamage = event.getAmount();
                 AtomicDouble atomicDouble = new AtomicDouble(baseDamage);
-                if (projectile instanceof AbstractArrow arrow) {
-                    modifiers.forEach(entry -> atomicDouble.set(entry.getHook(EtSTLibHooks.ARROW_DAMAGE)
-                            .getArrowDamage(nbt, entry, modifiers, arrow,
-                                    source.getEntity() instanceof LivingEntity living ? living : null,
-                                    event.getEntity(), baseDamage, atomicDouble.floatValue())));
-                    event.setAmount(atomicDouble.floatValue());
-                }
                 modifiers.forEach(entry -> atomicDouble.set(entry.getHook(EtSTLibHooks.PROJECTILE_DAMAGE)
                         .getProjectileDamage(nbt,entry,modifiers,projectile,projectile instanceof AbstractArrow arrow?arrow:null,
                                 source.getEntity() instanceof LivingEntity living ? living : null,
                                 event.getEntity(),baseDamage,atomicDouble.floatValue())));
+                event.setAmount(atomicDouble.floatValue());
             });
         }
     }

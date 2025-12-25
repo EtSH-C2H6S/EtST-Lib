@@ -2,9 +2,7 @@ package com.c2h6s.etstlib.util;
 
 import com.c2h6s.etstlib.capability.EtSTLibCapabilities;
 import net.minecraft.nbt.Tag;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
@@ -60,11 +58,4 @@ public interface IToolUuidGetter {
 
     @Nullable default UUID etstlib$getUuid(){ return null; }
 
-    @Deprecated(forRemoval = true)
-    static @NotNull Optional<UUID> getUuid(IToolStackView tool){
-        if (getUuidForTool(tool).isPresent()) return getUuidForTool(tool);
-        if ((ToolStack) tool instanceof IToolUuidGetter uuidGetter)
-            return Optional.ofNullable(uuidGetter.getUuid(((ToolStack)tool).createStack()));
-        return Optional.empty();
-    }
 }

@@ -21,8 +21,7 @@
     "TconMixin.ToolAttackContextBuilderAccessor",
     "TconMixin.ToolAttackContextBuilderMixin",
     "TconMixin.ToolAttackContextMixin",
-    "TconMixin.ToolAttackUtilMixin",
-    "TconMixin.ToolStackMixin"
+    "TconMixin.ToolAttackUtilMixin"
   ],
   "client": [
     "AbstractClientPlayerMixin",

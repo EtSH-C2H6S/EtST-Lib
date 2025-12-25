@@ -54,24 +54,6 @@ public class AbstractArrowMixin {
         }
         return source0;
     }
-    /*
-    @ModifyArg(method = "onHitEntity",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"),index =1)
-    private float modifyDamage(float pAmount){
-        AbstractArrow arrow = (AbstractArrow) (Object) this;
-        ModifierNBT modifiers = EntityModifierCapability.getOrEmpty(arrow);
-        Entity target = arrowHit;
-        float damage = pAmount;
-        if (!modifiers.isEmpty()&&target !=null) {
-            ModDataNBT nbt = PersistentDataCapability.getOrWarn(arrow);
-            LivingEntity attacker = arrow.getOwner() instanceof LivingEntity living?living:null;
-            for (ModifierEntry entry:modifiers.getModifiers()){
-                damage = entry.getHook(EtSTLibHooks.ARROW_DAMAGE).getArrowDamage(nbt,entry,modifiers,arrow,attacker,target,pAmount,damage);
-            }
-            return damage;
-        }
-        return damage;
-    }
-    */
     @Inject(method = "onHitEntity",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;doPostHurtEffects(Lnet/minecraft/world/entity/LivingEntity;)V"))
     private void doAfterArrowHit(EntityHitResult pResult, CallbackInfo ci){
         AbstractArrow arrow = (AbstractArrow) (Object) this;

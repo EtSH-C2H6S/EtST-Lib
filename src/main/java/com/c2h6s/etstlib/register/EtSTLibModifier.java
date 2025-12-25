@@ -56,7 +56,7 @@ public class EtSTLibModifier {
     public static final StaticModifier<AccelerateModifier> ACCELERATE =MODIFIERS.register("accelerate",AccelerateModifier::new);
     public static final StaticModifier<Cheap> CHEAP =MODIFIERS.register("cheap",Cheap::new);
     public static final StaticModifier<CrystalineArrow> CRYSTALINE_ARROW =MODIFIERS.register("crystaline_arrow",CrystalineArrow::new);
-
+    public static final StaticModifier<EnergeticAttack> energetic_attack = MODIFIERS.register("energetic_attack", EnergeticAttack::new);
 
 
     //PnC集成属性
@@ -79,7 +79,7 @@ public class EtSTLibModifier {
     public static class EtSTLibModifierAE {
         public static ModifierDeferredRegister AE_MODIFIERS = ModifierDeferredRegister.create(EtSTLib.MODID);
         public static final StaticModifier<AppliedFixing> applied_fixing = AE_MODIFIERS.register("applied_fixing", AppliedFixing::new);
-        public static final StaticModifier<EnergeticAttack> energetic_attack = AE_MODIFIERS.register("energetic_attack", EnergeticAttack::new);
+        public static final StaticModifier<EnergeticAttack> energetic_attack = EtSTLibModifier.energetic_attack;
     }
 
     //植魔集成属性

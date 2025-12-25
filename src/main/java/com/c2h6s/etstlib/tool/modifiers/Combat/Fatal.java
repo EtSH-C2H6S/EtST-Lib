@@ -5,6 +5,8 @@ import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.phys.EntityHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -23,7 +25,9 @@ public class Fatal extends EtSTBaseModifier {
     }
 
     @Override
-    public void afterArrowHit(ModDataNBT persistentData, ModifierEntry entry, ModifierNBT modifiers, AbstractArrow arrow, @Nullable LivingEntity attacker, @NotNull LivingEntity target, float damageDealt) {
-        target.addEffect(new MobEffectInstance(EtSTLibEffects.FATAL_TRAUMA.get(),100*entry.getLevel(),0));
+    public boolean onProjectileHitEntity(ModifierNBT modifiers, ModDataNBT persistentData, ModifierEntry modifier, Projectile projectile, EntityHitResult hit, @Nullable LivingEntity attacker, @Nullable LivingEntity target, boolean notBlocked) {
+        if (target!=null)
+            target.addEffect(new MobEffectInstance(EtSTLibEffects.FATAL_TRAUMA.get(),100*modifier.getLevel(),0));
+        return super.onProjectileHitEntity(modifiers, persistentData, modifier, projectile, hit, attacker, target, notBlocked);
     }
 }

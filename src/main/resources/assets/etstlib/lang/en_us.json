@@ -181,7 +181,7 @@
 
   "modifier.etstlib.crystaline_arrow": "Anisotropy",
   "modifier.etstlib.crystaline_arrow.flavor": "Basic feature of mono-crystals.",
-  "modifier.etstlib.crystaline_arrow.description": "+20% damage when full charged, otherwise -80% damage.",
+  "modifier.etstlib.crystaline_arrow.description": "+20% arrow damage when full charged, otherwise -80% damage.",
 
 
 

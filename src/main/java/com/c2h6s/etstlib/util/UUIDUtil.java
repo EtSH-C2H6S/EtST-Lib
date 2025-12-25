@@ -18,9 +18,4 @@ public class UUIDUtil {
     public static UUID UUIDFromSlot(EquipmentSlot slot, ModifierId modifierId){
         return UUID.nameUUIDFromBytes((slot.getName() +modifierId.toString()).getBytes(StandardCharsets.UTF_8));
     }
-
-    @Deprecated(forRemoval = true)
-    public static @NotNull UUID getUUIDFromTool(IToolStackView tool, ModifierId modifierId, EquipmentSlot slot){
-        return IToolUuidGetter.getUuid(tool).isPresent()?IToolUuidGetter.getUuid(tool).get(): UUIDUtil.UUIDFromSlot(slot,modifierId);
-    }
 }

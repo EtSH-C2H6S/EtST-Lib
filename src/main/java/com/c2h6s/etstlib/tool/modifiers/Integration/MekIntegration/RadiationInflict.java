@@ -36,10 +36,11 @@ public class RadiationInflict extends EtSTBaseModifier {
     }
 
     @Override
-    public boolean onProjectileHitEntity(ModifierNBT modifiers, ModDataNBT persistentData, ModifierEntry modifier, Projectile projectile, EntityHitResult hit, @javax.annotation.Nullable LivingEntity attacker, @Nullable LivingEntity target) {
-        if (projectile instanceof AbstractArrow arrow &&!arrow.level().isClientSide&&arrow.isCritArrow()&&target!=null){
+    public boolean onProjectileHitEntity(ModifierNBT modifiers, ModDataNBT persistentData, ModifierEntry modifier, Projectile projectile, EntityHitResult hit, @org.jetbrains.annotations.Nullable LivingEntity attacker, @org.jetbrains.annotations.Nullable LivingEntity target, boolean notBlocked) {
+        if (!(projectile instanceof AbstractArrow)&&!projectile.level().isClientSide &&target!=null){
             IRadiationManager.INSTANCE.radiate(target, modifier.getLevel()*0.1);
         }
-        return false;
+        return super.onProjectileHitEntity(modifiers,persistentData,modifier,projectile,hit,attacker,target,notBlocked);
     }
+
 }

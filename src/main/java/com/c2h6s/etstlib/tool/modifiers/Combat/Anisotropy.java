@@ -1,7 +1,6 @@
 package com.c2h6s.etstlib.tool.modifiers.Combat;
 
 import com.c2h6s.etstlib.EtSTLib;
-import com.c2h6s.etstlib.tool.hooks.ArrowDamageModifierHook;
 import com.c2h6s.etstlib.tool.modifiers.base.EtSTBaseModifier;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
