@@ -177,7 +177,7 @@
 
   "modifier.etstlib.accelerate": "逐级加速",
   "modifier.etstlib.accelerate.flavor": "阶梯计划！",
-  "modifier.etstlib.accelerate.description": "每过0.25秒，弹射物速度翻1.15倍，每级最大加速2次。",
+  "modifier.etstlib.accelerate.description": "出射0.25秒后弹射物速度翻1.25倍，每级额外增加0.25倍。",
 
   "modifier.etstlib.cheap": "廉价",
   "modifier.etstlib.cheap.flavor": "量大，但不一定管饱",
@@ -185,7 +185,7 @@
 
   "modifier.etstlib.crystaline_arrow": "各向异性",
   "modifier.etstlib.crystaline_arrow.flavor": "单晶的基本特性",
-  "modifier.etstlib.crystaline_arrow.description": "若满蓄力则箭矢伤害+20%，反之伤害-80%。",
+  "modifier.etstlib.crystaline_arrow.description": "若满蓄力则箭矢伤害+20%，反之伤害-40%。",
 
 
 

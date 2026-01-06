@@ -36,7 +36,7 @@ public class CustomBarDecoration implements IItemDecorator {
                     boolean showShadow = entry.getHook(EtSTLibHooks.CUSTOM_BAR).showShadow(tool, entry, BarCount);
                     Vec2 ShadowPos = entry.getHook(EtSTLibHooks.CUSTOM_BAR).getShadowXYOffset(tool, entry, BarCount);
                     Vec2 ShadowSize = entry.getHook(EtSTLibHooks.CUSTOM_BAR).getShadowXYSize(tool, entry, BarCount);
-                    if (!map.containsKey(id)){
+                    if (!map.containsKey(id)&&!entry.getHook(EtSTLibHooks.CUSTOM_BAR).isCustomPosition(tool,entry,barCount)){
                         barCount++;
                     }
                     map.put(id,new CustomBar(Pos,Size,col,showShadow,ShadowPos,ShadowSize,showBar,BarCount));

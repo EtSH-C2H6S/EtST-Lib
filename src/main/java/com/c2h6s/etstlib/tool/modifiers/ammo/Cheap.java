@@ -29,6 +29,6 @@ public class Cheap extends Modifier implements CraftCountModifierHook, Projectil
 
     @Override
     public float modifyCraftCount(IToolStackView tool, ModifierEntry entry, float amount) {
-        return amount*(4+entry.getLevel());
+        return amount*(3+entry.getLevel());
     }
 }

@@ -54,7 +54,9 @@ public class PlayerEvents {
     }
     @SubscribeEvent
     public static void onLeftClickEntity(AttackEntityEvent event){
-        LeftClickModifierHook.handleLeftClickEntity(event.getEntity().getMainHandItem(),event.getEntity(),EquipmentSlot.MAINHAND,event.getTarget());
+        var stack = event.getEntity().getMainHandItem();
+        if (stack.getItem() instanceof IModifiable)
+            LeftClickModifierHook.handleLeftClickEntity(stack,event.getEntity(),EquipmentSlot.MAINHAND,event.getTarget());
     }
 
     @SubscribeEvent

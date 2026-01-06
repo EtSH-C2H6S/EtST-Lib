@@ -23,7 +23,7 @@ public class CrystalineArrow extends Modifier implements ProjectileDamageModifie
 
     @Override
     public float getProjectileDamage(ModDataNBT persistentData, ModifierEntry entry, ModifierNBT modifiers, @NotNull Projectile projectile, @Nullable AbstractArrow arrow, @Nullable LivingEntity attacker, @NotNull Entity target, float baseDamage, float damage) {
-        if (arrow!=null) damage+=arrow.isCritArrow()? baseDamage*0.2f:-baseDamage*0.8f;
+        if (arrow!=null) damage+=arrow.isCritArrow()? baseDamage*0.2f*entry.getLevel():-baseDamage*0.4f*entry.getLevel();
         return damage;
     }
 }

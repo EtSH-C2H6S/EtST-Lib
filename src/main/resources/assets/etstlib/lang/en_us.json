@@ -173,7 +173,7 @@
 
   "modifier.etstlib.accelerate": "Accelerate",
   "modifier.etstlib.accelerate.flavor": "Faster and faster",
-  "modifier.etstlib.accelerate.description": "Projectile velocity x1.15 over each 0.25s. 2 max acceleration each level.",
+  "modifier.etstlib.accelerate.description": "Projectile velocity x1.25 after 0.25s. Extra 0.25 each level.",
 
   "modifier.etstlib.cheap": "Cheap",
   "modifier.etstlib.cheap.flavor": "Great in quantities",
@@ -181,7 +181,7 @@
 
   "modifier.etstlib.crystaline_arrow": "Anisotropy",
   "modifier.etstlib.crystaline_arrow.flavor": "Basic feature of mono-crystals.",
-  "modifier.etstlib.crystaline_arrow.description": "+20% arrow damage when full charged, otherwise -80% damage.",
+  "modifier.etstlib.crystaline_arrow.description": "+20% arrow damage when full charged, otherwise -40% damage.",
 
 
 

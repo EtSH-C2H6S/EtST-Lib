@@ -19,6 +19,6 @@ public class RadiationShielding extends EtSTBaseModifier implements ToolStatsMod
 
     @Override
     public void addToolStats(IToolContext iToolContext, ModifierEntry modifierEntry, ModifierStatsBuilder modifierStatsBuilder) {
-        EtSTLibToolStat.RADIATION_PROTECT.add(modifierStatsBuilder,0.1);
+        EtSTLibToolStat.RADIATION_PROTECT.add(modifierStatsBuilder,0.1*modifierEntry.getLevel());
     }
 }
