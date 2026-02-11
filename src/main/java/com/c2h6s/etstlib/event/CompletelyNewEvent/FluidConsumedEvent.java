@@ -21,7 +21,9 @@ public class FluidConsumedEvent extends Event {
         this.player = player;
         this.originalFluid = originalFluid.copy();
         this.consumed = consumed;
-        this.finalFluid = new FluidStack(currentFluid.getFluid(), currentFluid.getAmount() - consumed);
+        var f=finalFluid.copy();
+        f.setAmount(currentFluid.getAmount() - consumed);
+        this.finalFluid=f;
     }
 
     public void setConsumed(int consumed) {

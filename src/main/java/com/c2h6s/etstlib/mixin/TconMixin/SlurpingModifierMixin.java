@@ -27,6 +27,7 @@ public abstract class SlurpingModifierMixin {
     private void onSetFluid(IToolStackView tool, Player player, CallbackInfo ci, FluidStack originalFluid, int consumed) {
         if (player.isCreative() || consumed <= 0||player.level().isClientSide()) return;
         FluidStack fluid = originalFluid.copy();
+        if(fluid==null)return;
         fluid.grow(consumed);
         FluidConsumedEvent event = new FluidConsumedEvent(player, fluid, consumed, fluid.copy());
         MinecraftForge.EVENT_BUS.post(event);

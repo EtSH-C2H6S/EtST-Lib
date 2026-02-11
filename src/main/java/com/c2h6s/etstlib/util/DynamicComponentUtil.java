@@ -53,28 +53,29 @@ public class DynamicComponentUtil {
 
         private static MutableComponent buildGradientText(String textKey, @Nullable String append, int[] colors, int step, int durationMs, boolean isTranslatable) {
             String safeAppend = append != null ? append : "";
-            String localizedText = isTranslatable ? Language.getInstance().getOrDefault(textKey) : textKey;
+            String localizedText = isTranslatable
+                    ? Language.getInstance().getOrDefault(textKey)
+                    : textKey;
             String fullText = localizedText + safeAppend;
-            int effectiveDuration = Math.max(1, durationMs); // 确保 durationMs >=1
             int[] gradientColors = generateLinearGradient(colors, step);
-            // 校验渐变数组长度（至少需要2个颜色）
-            if (gradientColors.length < 2) {
-                gradientColors = new int[]{0xFFFFFF, 0x000000};
-            }
-            int cycleLength = 2 * (gradientColors.length - 1);
+            int gradientLength = gradientColors.length;
+            int halfCycle = gradientLength - 1;
+            int cycleLength = 2 * halfCycle;
             long timestamp = System.currentTimeMillis();
             MutableComponent result = Component.empty();
             for (int i = 0; i < fullText.length(); i++) {
-                long timeStep = timestamp / effectiveDuration;
-                long rawProgress = i + timeStep;
-                int progress = Math.floorMod(rawProgress, cycleLength);
-                int colorIndex = (gradientColors.length - 1) - Math.abs(progress - (gradientColors.length - 1));
-                if (colorIndex < 0 || colorIndex >= gradientColors.length) {
-                    colorIndex = Math.max(0, Math.min(colorIndex, gradientColors.length - 1)); // 强制索引合法
+                int progress = (i + (int) (timestamp / durationMs)) % cycleLength;
+                int colorIndex;
+                if (progress < halfCycle) {
+                    colorIndex = progress;
+                } else {
+                    colorIndex = cycleLength - progress;
                 }
-                result.append(
-                        Component.literal(String.valueOf(fullText.charAt(i)))
-                                .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(gradientColors[colorIndex])))
+                if (colorIndex < 0 || colorIndex >= gradientLength) {
+                    colorIndex = 0;
+                }
+
+                result.append(Component.literal(String.valueOf(fullText.charAt(i))).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(gradientColors[colorIndex])))
                 );
             }
             return result;
@@ -82,7 +83,7 @@ public class DynamicComponentUtil {
 
         private static int[] generateLinearGradient(int[] colors, int totalSteps) {
             if (colors == null || colors.length == 0) {
-                throw new IllegalArgumentException("Colors array must not be null or empty");
+                throw new IllegalArgumentException("数组有误,别瞎几把输入");
             }
             if (totalSteps <= 0) {
                 return new int[0];
@@ -128,7 +129,7 @@ public class DynamicComponentUtil {
      * <br>这类为从浅到深色再到浅色变换颜色的
      * <br>这是单颜色呼吸灯效果
      * </h4>
-     * <h6>想要调用请直接用{@link DynamicComponentUtil.BreathColorfulText#getColorfulText(String, String, int, int, int, boolean)}这个静态方法</h6>
+     * <h6>想要调用请直接用{@link DynamicComponentUtil.BreathColorfulText#getColorfulText(String, String, int[], int, int, boolean)}这个静态方法</h6>
      * <h6>其他的均为逻辑处理和转化,无需在意</h6>
      */
     public static class BreathColorfulText {
@@ -136,9 +137,9 @@ public class DynamicComponentUtil {
          * <h4>这个是入口方法,
          * <br>和你看到的一样,他仅在客户端上工作.在服务端的supplier会直接返回正常的translate
          * </h4>
-         * @param translatableText 需要变色的文本本地化键
+         * @param textKey 需要变色的文本本地化键
          * @param append 文本后缀类,如数值等等
-         * @param color 颜色,是个int值
+         * @param colors 颜色,是个int值
          * @param totalSteps 总变化步数,越长越平滑
          * @param durationMs 这是整个进程的毫秒数,而非单个变换的毫秒数
          * @param isTranslatable 是否翻译为本地化键的内容
@@ -154,22 +155,23 @@ public class DynamicComponentUtil {
          *         }
          *     }
          */
-        public static Component getColorfulText(String translatableText, @Nullable String append, int color, int totalSteps, int durationMs, boolean isTranslatable) {
+        public static Component getColorfulText(String textKey, @Nullable String append, int[] colors, int totalSteps, int durationMs, boolean isTranslatable) {
             return DistExecutor.unsafeRunForDist(
-                    () -> () -> buildBreathText(translatableText, append, color, totalSteps, durationMs,isTranslatable),
-                    () -> () -> Component.translatable(translatableText)
+                    () -> () -> buildBreathText(textKey, append, colors, totalSteps, durationMs,isTranslatable),
+                    () -> () -> Component.translatable(textKey)
             );
         }
 
-        private static MutableComponent buildBreathText(String textKey, @Nullable String append, int color, int totalSteps, int durationMs, boolean isTranslatable) {
-            // 预处理文本
+        private static MutableComponent buildBreathText(String textKey, @Nullable String append, int[] colors, int totalSteps, int durationMs, boolean isTranslatable) {
+            Preconditions.checkArgument(colors.length >= 1, "至少需要指定一个基础颜色");
             String fullText = getLocalizedText(textKey, isTranslatable) + Optional.ofNullable(append).orElse("");
-            // 生成呼吸周期颜色数组
-            int[] breathColors = generateRGBBreathWave(color, totalSteps);
-            // 计算当前颜色相位
+            int baseColor = colors[0];
+            int[] breathColors = generateRGBBreathWave(baseColor, totalSteps);
             long cyclePosition = System.currentTimeMillis() % durationMs;
             int colorIndex = (int) (cyclePosition * totalSteps / durationMs) % totalSteps;
-            // 构建组件
+            if (colorIndex < 0 || colorIndex >= totalSteps) {
+                colorIndex = 0;
+            }
             return buildColoredComponents(fullText, breathColors[colorIndex]);
         }
 
@@ -179,7 +181,6 @@ public class DynamicComponentUtil {
 
         private static MutableComponent buildColoredComponents(String text, int color) {
             MutableComponent component = Component.empty();
-            //保证去除alpha通道
             TextColor textColor = TextColor.fromRgb(color & 0xFFFFFF);
             for (char c : text.toCharArray()) {
                 component.append(Component.literal(String.valueOf(c)).setStyle(Style.EMPTY.withColor(textColor)));
@@ -188,15 +189,12 @@ public class DynamicComponentUtil {
         }
 
         private static int[] generateRGBBreathWave(int baseColor, int totalSteps) {
-            // 提取RGB分量
             int r = (baseColor >> 16) & 0xFF;
             int g = (baseColor >> 8) & 0xFF;
             int b = baseColor & 0xFF;
             int[] wave = new int[totalSteps];
             for (int i = 0; i < totalSteps; i++) {
-                // 使用正弦波控制亮度 (0.2 ~ 1.0)
                 float ratio = 0.8f * (float) Math.abs(Math.sin(Math.PI * i / totalSteps)) + 0.2f;
-                // 应用亮度系数并限制范围
                 int dr = Mth.clamp((int) (r * ratio), 0, 255);
                 int dg = Mth.clamp((int) (g * ratio), 0, 255);
                 int db = Mth.clamp((int) (b * ratio), 0, 255);
