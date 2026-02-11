@@ -31,10 +31,8 @@ public class Anisotropy extends EtSTBaseModifier {
     }
     @Override
     public void modifierProjectileLaunch(IToolStackView tool, ModifierEntry modifier, LivingEntity shooter, Projectile projectile, @Nullable AbstractArrow arrow, ModDataNBT persistentData, boolean primary) {
-        if (arrow!=null){
-            persistentData.putInt(KEY_CURRENT,tool.getCurrentDurability());
-            persistentData.putInt(KEY_DAMAGE,tool.getDamage());
-        }
+        persistentData.putInt(KEY_CURRENT,tool.getCurrentDurability());
+        persistentData.putInt(KEY_DAMAGE,tool.getDamage());
     }
 
     @Override

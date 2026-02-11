@@ -1,6 +1,7 @@
 package com.c2h6s.etstlib.register;
 
 import com.c2h6s.etstlib.EtSTLib;
+import com.c2h6s.etstlib.tool.stat.FluidEfficiencyStat;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.library.tools.stat.FloatToolStat;
 import slimeknights.tconstruct.library.tools.stat.IToolStat;
@@ -31,10 +32,10 @@ public class EtSTLibToolStat {
             0xA9D699, 0F, 0.0F,100));
     public static final FloatToolStat FLUID_EFFICIENCY = regFloatStat(new FloatToolStat(name("fluid_efficiency"),
             0xC8FF5D, 0.0F, Integer.MIN_VALUE, 1.0F));
-    public static final FloatToolStat SCALE = regFloatStat(new FloatToolStat(name("range"),
-            0x4BFFAB, 12.0F, 0.0F, 64.0F));
-    public static final FloatToolStat RANGE = regFloatStat(new FloatToolStat(name("scale"),
-            0xA584FF, 1.0F, 0.0F, 8.0F));
+    public static final FloatToolStat SCALE = regFloatStat(new FloatToolStat(name("scale"),
+            0x4BFFAB, 1.0F, 0.0F, 16.0F));
+    public static final FloatToolStat RANGE = regFloatStat(new FloatToolStat(name("range"),
+            0xA584FF, 12.0F, 0.0F, 128.0F));
     public static final FloatToolStat POWER_MULTIPLIER = regFloatStat(new FloatToolStat(name("power_multiplier"),
             0xFF888A, 1.0F, 0.0F, Integer.MAX_VALUE));
     public static final FloatToolStat PIERCE = regFloatStat(new FloatToolStat(name("pierce"),
