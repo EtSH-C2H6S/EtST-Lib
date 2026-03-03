@@ -21,7 +21,7 @@ public class FluidConsumedEvent extends Event {
         this.player = player;
         this.originalFluid = originalFluid.copy();
         this.consumed = consumed;
-        var f=finalFluid.copy();
+        var f=currentFluid.copy();
         f.setAmount(currentFluid.getAmount() - consumed);
         this.finalFluid=f;
     }

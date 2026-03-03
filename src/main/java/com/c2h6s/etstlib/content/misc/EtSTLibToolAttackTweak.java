@@ -50,7 +50,7 @@ public class EtSTLibToolAttackTweak {
         var contextExtra = (IToolAttackContextMixin) context;
         if (isToolAvailable()) {
             if (context.isCritical()) {
-                float originalModifier = 1.5f;
+                float originalModifier = context.getCriticalModifier();
                 float modifier = originalModifier;
                 for (ModifierEntry entry : tool.getModifierList()) {
                     modifier = entry.getHook(EtSTLibHooks.CRITICAL_ATTACK).getCriticalModifier(tool, entry, context,

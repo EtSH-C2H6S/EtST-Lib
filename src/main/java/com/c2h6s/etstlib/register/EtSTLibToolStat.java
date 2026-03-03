@@ -40,6 +40,8 @@ public class EtSTLibToolStat {
             0xFF888A, 1.0F, 0.0F, Integer.MAX_VALUE));
     public static final FloatToolStat PIERCE = regFloatStat(new FloatToolStat(name("pierce"),
             0x7C6CFF,0,0,2048));
+    public static final FloatToolStat MAX_FLUX_SHIELD = regFloatStat(new FloatToolStat(name("max_flux_shields"),
+            0xD6D6D6, 0.0F, 0.0F, Integer.MAX_VALUE));
 
     public static void initStats(){
         ETSTLIB_STATS.forEach(ToolStats::register);
