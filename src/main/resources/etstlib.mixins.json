@@ -17,7 +17,6 @@
     "AEMixin.ChargerRecipesMixin",
     "TconMixin.CastingBlockEntityMixin",
     "TconMixin.FaucetBlockEntityMixin",
-    "TconMixin.SlurpingModifierMixin",
     "TconMixin.ToolAttackContextBuilderAccessor",
     "TconMixin.ToolAttackContextBuilderMixin",
     "TconMixin.ToolAttackContextMixin",

@@ -1,14 +1,14 @@
 package com.c2h6s.etstlib.content.misc.entityTicker;
 
 import com.c2h6s.etstlib.EtSTLibConfig;
-import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,7 +16,7 @@ import java.util.function.BiFunction;
 
 //EntityTicker的总控，可以很方便的来添加/减少Ticker。
 public class EntityTickerManager {
-    public static final ConcurrentHashMap<Entity, ConcurrentHashMap<EntityTicker,EntityTickerInstance>> TICKER_MAP = new ConcurrentHashMap<>();
+    public static final ConcurrentHashMap<UUID, ConcurrentHashMap<EntityTicker,EntityTickerInstance>> TICKER_MAP = new ConcurrentHashMap<>();
 
     public static EntityTickerManagerInstance getInstance(Entity entity){
         return new EntityTickerManagerInstance(entity);
@@ -27,9 +27,9 @@ public class EntityTickerManager {
         if (entity.getPersistentData().contains("etstlib_tickers")){
             load(entity);
         }
-        if (!TICKER_MAP.containsKey(entity)) return true;
-        if (TICKER_MAP.get(entity)==null||TICKER_MAP.get(entity).isEmpty()){
-            TICKER_MAP.remove(entity);
+        if (!TICKER_MAP.containsKey(entity.getUUID())) return true;
+        if (TICKER_MAP.get(entity.getUUID())==null||TICKER_MAP.get(entity.getUUID()).isEmpty()){
+            TICKER_MAP.remove(entity.getUUID());
             return true;
         }
         boolean doTick = true;
@@ -45,8 +45,29 @@ public class EntityTickerManager {
         }
         return doTick;
     }
-    public static void saveAll(){
-        TICKER_MAP.keySet().forEach(EntityTickerManager::save);
+    public static void saveAll(MinecraftServer server){
+        server.getAllLevels().forEach(serverLevel ->
+                TICKER_MAP.keySet().forEach(uuid -> save(uuid,serverLevel)));
+
+    }
+
+    public static void checkInvalid(MinecraftServer server){
+        var uuids = List.copyOf(TICKER_MAP.keySet());
+        for (UUID uuid:uuids){
+            boolean validEntity = false;
+            for (ServerLevel serverLevel:server.getAllLevels()) {
+                var entity = serverLevel.getEntity(uuid);
+                if (entity != null && !entity.isRemoved()) {
+                    validEntity=true;
+                    break;
+                }
+            }
+            if (!validEntity) TICKER_MAP.remove(uuid);
+        }
+    }
+
+    public static void removeEntity(Entity entity){
+        TICKER_MAP.remove(entity.getUUID());
     }
 
     public static void load(Entity entity){
@@ -60,14 +81,15 @@ public class EntityTickerManager {
                 }
             });
         }
-        TICKER_MAP.put(entity,instances);
+        TICKER_MAP.put(entity.getUUID(),instances);
         entity.getPersistentData().remove("etstlib_tickers");
     }
-    public static void save(Entity entity){
-        if (entity==null) return;
+    public static void save(UUID uuid, ServerLevel level){
+        if (uuid==null) return;
+        var entity = level.getEntity(uuid);
         CompoundTag nbt = new CompoundTag();
-        if (TICKER_MAP.get(entity)!=null) {
-            TICKER_MAP.get(entity).values().forEach(instance -> instance.writeToNbt(nbt));
+        if (TICKER_MAP.get(uuid)!=null&&entity!=null) {
+            TICKER_MAP.get(uuid).values().forEach(instance -> instance.writeToNbt(nbt));
             entity.getPersistentData().put("etstlib_tickers", nbt);
         }
     }
@@ -78,8 +100,8 @@ public class EntityTickerManager {
         //为实体创建ManagerInstance，不需要从总的表去再获取。
         public EntityTickerManagerInstance(Entity entity){
             this.entity = entity;
-            TICKER_MAP.computeIfAbsent(entity, k -> new ConcurrentHashMap<>());
-            this.instanceMap = TICKER_MAP.get(entity);
+            TICKER_MAP.computeIfAbsent(entity.getUUID(), k -> new ConcurrentHashMap<>());
+            this.instanceMap = TICKER_MAP.get(entity.getUUID());
         }
         public boolean hasTicker(EntityTicker ticker){
             return instanceMap.containsKey(ticker);

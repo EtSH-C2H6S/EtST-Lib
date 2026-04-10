@@ -2,22 +2,17 @@ package com.c2h6s.etstlib.mixin.TconMixin;
 
 import com.c2h6s.etstlib.content.misc.EtSTLibToolAttackTweak;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.helper.ToolAttackUtil;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
-
-import java.util.List;
 
 @Mixin(remap = false,value = ToolAttackUtil.class)
 public class ToolAttackUtilMixin {
@@ -36,9 +31,10 @@ public class ToolAttackUtilMixin {
         EtSTLibToolAttackTweak.onEnd();
     }
 
-    @Inject(method = "performAttack",at = @At(value = "INVOKE", target = "Lslimeknights/tconstruct/library/tools/context/ToolAttackContext;isExtraAttack()Z"),locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void cacheDamage(IToolStackView tool, ToolAttackContext context, CallbackInfoReturnable<Boolean> cir, float baseDamage, float damage, List modifiers, boolean isMagic, float criticalModifier, float cooldown, float oldHealth, LivingEntity targetLiving, float baseKnockback, float knockback, LivingEntity attackerLiving, EquipmentSlot sourceSlot, AttributeInstance knockbackModifier, Projectile projectile, Entity targetEntity){
+    @ModifyArg(method = "performAttack",at = @At(value = "INVOKE", target = "Lslimeknights/tconstruct/library/modifiers/hook/combat/MeleeHitModifierHook;beforeMeleeHit(Lslimeknights/tconstruct/library/tools/nbt/IToolStackView;Lslimeknights/tconstruct/library/modifiers/ModifierEntry;Lslimeknights/tconstruct/library/tools/context/ToolAttackContext;FFF)F"),index = 3)
+    private static float cacheDamage(float damage){
         EtSTLibToolAttackTweak.setCachedDamage(damage);
+        return damage;
     }
 
     @Inject(at = @At(value = "HEAD"),method = "getCriticalModifier")

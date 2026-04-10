@@ -1,6 +1,7 @@
 package com.c2h6s.etstlib.mixin.TconMixin;
-
+/*
 import com.c2h6s.etstlib.event.CompletelyNewEvent.FluidConsumedEvent;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidStack;
@@ -9,11 +10,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.capability.fluid.ToolTankHelper;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
-import slimeknights.tconstruct.tools.modifiers.ability.fluid.SlurpingModifier;
+import slimeknights.tconstruct.tools.modules.interaction.SlurpingModule;
 
-@Mixin(value = SlurpingModifier.class,remap = false)
+@Mixin(value = SlurpingModule.class,remap = false)
 public abstract class SlurpingModifierMixin {
     @Inject(
             method = "finishDrinking",
@@ -24,7 +26,7 @@ public abstract class SlurpingModifierMixin {
             cancellable = true,
             locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private void onSetFluid(IToolStackView tool, Player player, CallbackInfo ci, FluidStack originalFluid, int consumed) {
+    private void onSetFluid(IToolStackView tool, ModifierEntry modifier, LivingEntity entity, boolean playSound, CallbackInfo ci, FluidStack originalFluid, Player player, int consumed) {
         if (player.isCreative() || consumed <= 0||player.level().isClientSide()) return;
         FluidStack fluid = originalFluid.copy();
         if(fluid==null)return;
@@ -39,3 +41,5 @@ public abstract class SlurpingModifierMixin {
         }
     }
 }
+
+ */

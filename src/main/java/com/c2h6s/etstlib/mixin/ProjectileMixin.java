@@ -32,6 +32,7 @@ public abstract class ProjectileMixin extends Entity implements TraceableEntity 
 
     @Inject(method = "tick",at = @At(value = "HEAD"))
     private void tick(CallbackInfo ci){
+        if (isRemoved()) return;
         Projectile projectile = (Projectile) (Object)this;
         if (projectile instanceof AbstractArrow arrow){
             MixinTemp.leftOwner = leftOwner;

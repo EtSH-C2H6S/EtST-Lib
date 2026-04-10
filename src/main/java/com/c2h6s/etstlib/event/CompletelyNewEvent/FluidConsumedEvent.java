@@ -5,7 +5,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.fluids.FluidStack;
 
-
+@Deprecated
 public class FluidConsumedEvent extends Event {
     @Getter
     private final Player player;
